@@ -192,9 +192,63 @@
 
   /* ========== SECTIONS COMMON ========== */
   section.block {
-    padding: 64px 20px 48px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 90px 20px 80px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
   }
+  /* Section separator: glowing diamond + line */
+  section.block + section.block::before,
+  section.hero + section.block::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 16px; right: 16px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0,212,255,.5) 50%, transparent 100%);
+    z-index: 10;
+  }
+  section.block + section.block::after,
+  section.hero + section.block::after {
+    content: "";
+    position: absolute;
+    top: -5px; left: 50%; transform: translateX(-50%) rotate(45deg);
+    width: 10px; height: 10px;
+    background: var(--cyan);
+    box-shadow: 0 0 16px rgba(0,212,255,.7);
+    z-index: 11;
+  }
+  /* Floating page-number tag at top-right of each section */
+  section.block .page-tag {
+    position: absolute;
+    top: 18px; right: 16px;
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; letter-spacing: .25em;
+    color: var(--cyan);
+    background: rgba(15,27,46,.7); backdrop-filter: blur(4px);
+    border: 1px solid var(--line-strong);
+    padding: 4px 10px; border-radius: 99px;
+    z-index: 12;
+  }
+  /* Scroll continue hint at bottom */
+  section.block .next-hint {
+    position: absolute;
+    bottom: 18px; left: 50%; transform: translateX(-50%);
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 9px; letter-spacing: .3em; color: var(--text-3);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    opacity: .7; z-index: 5;
+  }
+  section.block .next-hint .arrow {
+    width: 1px; height: 16px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+  /* Last visit section: no next-hint, no separator above (already there) */
+  .visit .next-hint { display: none; }
   .section-head {
     margin-bottom: 28px;
   }
@@ -621,6 +675,74 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; cursor: pointer;
   }
+
+  /* ============= TAB MICRO-SITE ============= */
+  .stage { padding-bottom: calc(78px + var(--safe-bot)); }
+
+  .tab-page { display: none; }
+  .tab-page.active { display: block; animation: fadeInPage .35s ease both; }
+  @keyframes fadeInPage {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* In tab mode, hide cross-section dividers and next-hints since each tab is its own page */
+  .tab-page section.block + section.block::before,
+  .tab-page section.hero + section.block::before,
+  .tab-page section.block + section.block::after,
+  .tab-page section.hero + section.block::after { display: none; }
+  .tab-page .next-hint { display: none !important; }
+  .tab-page section.block:first-child { padding-top: 90px; }
+
+  /* Bottom Tab Bar */
+  .tabbar {
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; max-width: var(--max-w);
+    display: flex;
+    background: rgba(5,10,20,.94);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--line-strong);
+    padding: 6px 0 calc(6px + var(--safe-bot));
+    z-index: 100;
+    box-shadow: 0 -12px 32px rgba(0,0,0,.4);
+  }
+  .tabbar .tab {
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 3px;
+    color: var(--text-3);
+    text-decoration: none;
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    padding: 6px 0 4px;
+    position: relative;
+    cursor: pointer;
+    transition: color .25s ease, transform .15s ease;
+    font-family: inherit; background: none; border: 0;
+  }
+  .tabbar .tab svg {
+    width: 22px; height: 22px;
+    transition: transform .25s ease;
+  }
+  .tabbar .tab.active { color: var(--cyan); }
+  .tabbar .tab.active svg {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 4px 10px rgba(0,212,255,.6));
+  }
+  .tabbar .tab.active::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: 50%; transform: translateX(-50%);
+    width: 26px; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue));
+    box-shadow: 0 0 8px var(--cyan);
+  }
+  .tabbar .tab:active { transform: scale(.92); }
+  [data-lang="en"] .tabbar .tab { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+
+  /* FAB raised above the tabbar */
+  .fab { bottom: calc(84px + var(--safe-bot)) !important; }
 
 </style>
 </head>
@@ -1056,7 +1178,153 @@
   <video id="modalVideo" controls playsinline preload="none"></video>
 </div>
 
+<nav class="tabbar" role="tablist">
+  <button class="tab active" data-target="home" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11 L12 3 L21 11 L21 20 L14 20 L14 14 L10 14 L10 20 L3 20 Z"/>
+    </svg>
+    <span class="lang-zh">首页</span><span class="lang-en">Home</span>
+  </button>
+  <button class="tab" data-target="about" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 8 L12 8.5 M12 11 L12 16"/>
+    </svg>
+    <span class="lang-zh">关于</span><span class="lang-en">About</span>
+  </button>
+  <button class="tab" data-target="products" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="8" height="8"/>
+      <rect x="13" y="3" width="8" height="8"/>
+      <rect x="3" y="13" width="8" height="8"/>
+      <rect x="13" y="13" width="8" height="8"/>
+    </svg>
+    <span class="lang-zh">装备</span><span class="lang-en">Products</span>
+  </button>
+  <button class="tab" data-target="tech" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M12 2 L12 5 M12 19 L12 22 M2 12 L5 12 M19 12 L22 12 M5 5 L7 7 M17 17 L19 19 M5 19 L7 17 M17 7 L19 5"/>
+    </svg>
+    <span class="lang-zh">技术</span><span class="lang-en">Tech</span>
+  </button>
+  <button class="tab" data-target="contact" role="tab">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 4 L9 4 L11 10 L8.5 11.5 C9.5 14 11 15.5 13.5 16.5 L15 14 L21 16 L21 20 C12 20 4 12 4 5 Z"/>
+    </svg>
+    <span class="lang-zh">联系</span><span class="lang-en">Contact</span>
+  </button>
+</nav>
+
 <script>
+  /* ============= TAB MICRO-SITE — group sections, switch on click ============= */
+  (function() {
+    const stage = document.querySelector('.stage');
+    const tabMap = {
+      home:     ['.hero'],
+      about:    ['.about'],
+      products: ['#products', '#ugv', '#k9', '#cuas'],
+      tech:     ['.workflow-section', '.matrix-section'],
+      contact:  ['#visit']
+    };
+    // Build wrappers and move sections into them
+    Object.keys(tabMap).forEach((key, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'tab-page' + (i === 0 ? ' active' : '');
+      wrap.dataset.tab = key;
+      tabMap[key].forEach(sel => {
+        const el = stage.querySelector(sel);
+        if (el) wrap.appendChild(el);
+      });
+      stage.appendChild(wrap);
+    });
+    // Move footer into the last (contact) tab page
+    const footer = stage.querySelector('.foot');
+    const lastPage = stage.querySelector('.tab-page[data-tab="contact"]');
+    if (footer && lastPage) lastPage.appendChild(footer);
+
+    // Tab switching logic
+    const tabs = document.querySelectorAll('.tabbar .tab');
+    const pages = document.querySelectorAll('.tab-page');
+    function activate(target, scrollToId) {
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.target === target));
+      pages.forEach(p => p.classList.toggle('active', p.dataset.tab === target));
+      // Force-reveal animations within newly active page (in case IO didn't fire)
+      const active = document.querySelector('.tab-page.active');
+      if (active) {
+        active.querySelectorAll('.reveal').forEach((el, i) => {
+          setTimeout(() => el.classList.add('in'), 40 + i * 30);
+        });
+        // run counter animations
+        active.querySelectorAll('[data-counter]').forEach(c => animateCounter(c));
+      }
+      // Jump to top, or to specific sub-section
+      if (scrollToId) {
+        const sub = document.getElementById(scrollToId);
+        if (sub) {
+          setTimeout(() => sub.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+          return;
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    tabs.forEach(t => t.addEventListener('click', () => {
+      activate(t.dataset.target);
+      history.replaceState(null, '', '#' + t.dataset.target);
+    }));
+    // Intercept all in-page anchor links → route them to the right tab
+    const idToTab = {};
+    Object.keys(tabMap).forEach(k => tabMap[k].forEach(sel => {
+      if (sel.startsWith('#')) idToTab[sel.slice(1)] = k;
+    }));
+    document.body.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const tab = idToTab[id];
+      if (tab) {
+        e.preventDefault();
+        activate(tab, id);
+        history.replaceState(null, '', '#' + tab);
+      }
+    });
+    // Initial state from URL hash
+    const initial = (location.hash || '#home').slice(1);
+    const target = document.querySelector('.tabbar .tab[data-target="' + initial + '"]') ? initial
+                  : (idToTab[initial] || 'home');
+    activate(target, idToTab[initial] ? initial : null);
+
+    window._activateTab = activate; // exposed for debugging
+  })();
+
+  /* ============= PAGE TAGS + SCROLL HINTS (auto-inject) ============= */
+  (function() {
+    const sections = document.querySelectorAll('.stage section');
+    const total = sections.length;
+    const totalStr = String(total).padStart(2, '0');
+    sections.forEach((sec, idx) => {
+      // Hero has its own visuals — skip auto-injection
+      if (sec.classList.contains('hero')) return;
+      const pageNum = String(idx + 1).padStart(2, '0');
+      // Page tag at top-right
+      const tag = document.createElement('div');
+      tag.className = 'page-tag';
+      tag.textContent = pageNum + ' / ' + totalStr;
+      sec.appendChild(tag);
+      // Bottom scroll hint (skip the very last section)
+      if (idx < total - 1) {
+        const hint = document.createElement('div');
+        hint.className = 'next-hint';
+        hint.innerHTML =
+          '<span class="lang-zh">下滑继续</span>' +
+          '<span class="lang-en">SCROLL</span>' +
+          '<div class="arrow"></div>';
+        sec.appendChild(hint);
+      }
+    });
+  })();
+
   /* ============= LANG SWITCHER ============= */
   const langButtons = document.querySelectorAll('.lang-toggle button');
   langButtons.forEach(b => b.addEventListener('click', () => {
