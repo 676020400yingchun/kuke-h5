@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0A1424">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>智启新境 · 无人先行 | Unmanned Frontier</title>
+<style>
+  :root {
+    --bg-0: #050A14;
+    --bg-1: #0A1424;
+    --bg-2: #0F1B2E;
+    --bg-3: #18253B;
+    --bg-4: #1F3050;
+    --line: rgba(0,212,255,.18);
+    --line-strong: rgba(0,212,255,.4);
+    --cyan: #00D4FF;
+    --blue: #0091FF;
+    --sky: #7DD3FC;
+    --text: #F9FAFB;
+    --text-2: #D1D5DB;
+    --text-3: #9CA3AF;
+    --text-4: #6B7280;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bot: env(safe-area-inset-bottom, 0px);
+    --max-w: 480px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, "Helvetica Neue", system-ui, sans-serif;
+    background: var(--bg-0);
+    color: var(--text);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  [data-lang="en"] body { font-family: "Inter", "SF Pro Display", -apple-system, system-ui, sans-serif; }
+
+  .stage {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    background: var(--bg-1);
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  @media (min-width: 481px) {
+    body { background: radial-gradient(ellipse at center, #1a2540 0%, #050a14 80%); padding: 0; }
+    .stage { box-shadow: 0 0 80px rgba(0,212,255,.12); border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+  }
+
+  /* ========== TOP NAV ========== */
+  .top-nav {
+    position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: var(--max-w);
+    padding: calc(8px + var(--safe-top)) 16px 8px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(180deg, rgba(10,20,36,.95) 0%, rgba(10,20,36,.7) 80%, transparent);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    z-index: 100; transition: all .3s ease;
+  }
+  .top-nav .brand {
+    display: flex; align-items: center; gap: 8px;
+    font-weight: 800; font-size: 13px; letter-spacing: .14em; color: var(--text);
+  }
+  .top-nav .brand::before {
+    content: ""; width: 18px; height: 18px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .lang-toggle {
+    display: inline-flex; gap: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 99px; padding: 2px; background: rgba(15,27,46,.7);
+  }
+  .lang-toggle button {
+    background: none; border: 0; color: var(--text-3);
+    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    padding: 5px 12px; border-radius: 99px; cursor: pointer;
+    transition: all .25s ease; font-family: inherit;
+  }
+  .lang-toggle button.active {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #0a1424; box-shadow: 0 4px 12px rgba(0,212,255,.35);
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative; min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 24px calc(60px + var(--safe-bot));
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+  }
+  .hero-bg img, .hero-bg video {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.7) contrast(1.05) saturate(1.1);
+  }
+  .hero-bg::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,20,36,.4) 0%, rgba(10,20,36,.1) 30%, rgba(10,20,36,.85) 80%, var(--bg-1) 100%),
+      linear-gradient(0deg, rgba(0,145,255,.08), transparent 50%);
+  }
+  .hero-bg::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    z-index: 1; opacity: .4;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 10px; border: 1px solid var(--line-strong);
+    background: rgba(0,212,255,.08); backdrop-filter: blur(6px);
+    font-size: 10px; letter-spacing: .25em; color: var(--cyan);
+    margin-bottom: 16px;
+  }
+  .hero-kicker .dot {
+    width: 6px; height: 6px; background: var(--cyan); border-radius: 50%;
+    box-shadow: 0 0 10px var(--cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .3; }
+  }
+  .hero h1 {
+    font-size: clamp(34px, 9vw, 44px); font-weight: 900;
+    line-height: 1.05; letter-spacing: .02em;
+    background: linear-gradient(135deg, #ffffff 0%, var(--sky) 60%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 8px;
+  }
+  [data-lang="en"] .hero h1 { font-size: clamp(30px, 8vw, 40px); letter-spacing: -.01em; }
+  .hero h1 .sep { color: var(--cyan); -webkit-text-fill-color: var(--cyan); margin: 0 4px; }
+  .hero .hero-sub {
+    font-size: 16px; color: var(--text-2); font-weight: 600; letter-spacing: .04em;
+    margin-bottom: 6px;
+  }
+  .hero .hero-tag {
+    font-size: 11px; color: var(--text-3); letter-spacing: .35em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-cta {
+    display: flex; gap: 12px; margin-bottom: 12px;
+  }
+  .btn {
+    flex: 1; padding: 14px 18px;
+    font-size: 14px; font-weight: 700; letter-spacing: .08em;
+    border: none; cursor: pointer; text-align: center;
+    transition: all .25s ease; text-decoration: none; display: inline-flex;
+    align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #0a1424; box-shadow: 0 8px 24px rgba(0,212,255,.3);
+  }
+  .btn-primary:active { transform: scale(.96); }
+  .btn-ghost {
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--line-strong);
+    color: var(--text); backdrop-filter: blur(6px);
+  }
+  .btn-ghost:active { background: rgba(255,255,255,.1); }
+  .scroll-cue {
+    position: absolute; bottom: calc(14px + var(--safe-bot)); left: 50%;
+    transform: translateX(-50%);
+    color: var(--cyan); font-size: 10px; letter-spacing: .3em;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    z-index: 3; opacity: .8;
+  }
+  .scroll-cue .line {
+    width: 1px; height: 24px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+  @keyframes scrollDown {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ========== SECTIONS COMMON ========== */
+  section.block {
+    padding: 64px 20px 48px;
+    position: relative;
+  }
+  .section-head {
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; color: var(--cyan); letter-spacing: .3em;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 26px; font-weight: 900; line-height: 1.15; letter-spacing: .02em;
+    color: var(--text);
+  }
+  .section-title .accent {
+    background: linear-gradient(135deg, var(--cyan), var(--sky));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .section-bar {
+    width: 36px; height: 3px; background: linear-gradient(90deg, var(--cyan), transparent);
+    margin-top: 10px;
+  }
+  [data-lang="en"] .section-title { letter-spacing: -.01em; font-size: 24px; }
+
+  /* ========== ABOUT ========== */
+  .about {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  }
+  .about .lead {
+    font-size: 15px; color: var(--text-2); line-height: 1.75; margin-bottom: 28px;
+  }
+  .about .lead b { color: var(--text); font-weight: 700; }
+  .stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .stat {
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line);
+    padding: 16px 14px; position: relative; overflow: hidden;
+  }
+  .stat::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+  }
+  .stat .v {
+    font-size: 28px; font-weight: 900; color: var(--cyan);
+    letter-spacing: -.01em; line-height: 1;
+  }
+  .stat .v small { font-size: 14px; color: var(--cyan); font-weight: 700; }
+  .stat .l { font-size: 12px; color: var(--text-3); margin-top: 6px; letter-spacing: .15em; }
+  .stat .x { font-size: 10px; color: var(--text-4); margin-top: 8px; line-height: 1.5; }
+
+  /* ========== PRODUCTS OVERVIEW ========== */
+  .products {
+    background: var(--bg-1);
+  }
+  .pcards {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .pcard {
+    position: relative; aspect-ratio: 16 / 11;
+    overflow: hidden; cursor: pointer; user-select: none;
+    border: 1px solid var(--line);
+  }
+  .pcard img, .pcard video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .4s ease;
+  }
+  .pcard:active img { transform: scale(1.03); }
+  .pcard::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(15,27,46,.15) 0%, rgba(15,27,46,.5) 50%, rgba(10,20,36,.95) 100%);
+    pointer-events: none;
+  }
+  .pcard .corner {
+    position: absolute; top: 10px; left: 10px;
+    font-family: "SF Mono", Menlo, monospace; font-size: 10px;
+    color: var(--cyan); letter-spacing: .25em;
+    background: rgba(15,27,46,.7); padding: 4px 8px; backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+  .pcard .meta {
+    position: absolute; bottom: 14px; left: 14px; right: 14px;
+    z-index: 2;
+  }
+  .pcard .meta .tag {
+    font-size: 10px; color: var(--cyan); letter-spacing: .2em;
+    margin-bottom: 4px;
+  }
+  .pcard .meta h3 {
+    font-size: 20px; font-weight: 800; color: var(--text);
+    margin-bottom: 4px; letter-spacing: .02em;
+  }
+  .pcard .meta .desc {
+    font-size: 12px; color: var(--text-2); line-height: 1.5;
+  }
+  .pcard .meta .arrow {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: 32px; height: 32px;
+    border: 1px solid var(--cyan); color: var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  /* ========== PRODUCT DETAIL ========== */
+  .detail {
+    background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+  }
+  .detail-media {
+    position: relative; margin: -64px -20px 28px;
+    aspect-ratio: 16 / 10; overflow: hidden;
+  }
+  .detail-media img, .detail-media video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .detail-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(15,27,46,.4) 60%, var(--bg-2) 100%);
+  }
+  .play-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 64px; height: 64px;
+    background: rgba(0,212,255,.15); backdrop-filter: blur(8px);
+    border: 1.5px solid var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan); font-size: 22px;
+    z-index: 2; cursor: pointer;
+    transition: all .3s ease;
+  }
+  .play-btn::before {
+    content: ""; position: absolute; inset: -8px;
+    border: 1px solid var(--cyan); opacity: .35;
+    animation: ring 2.5s ease-out infinite;
+  }
+  @keyframes ring {
+    0% { transform: scale(.9); opacity: .6; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  .play-btn:active { background: rgba(0,212,255,.3); }
+  .play-btn .triangle {
+    width: 0; height: 0; border-left: 14px solid var(--cyan);
+    border-top: 9px solid transparent; border-bottom: 9px solid transparent;
+    margin-left: 4px;
+  }
+
+  .detail-head {
+    margin-bottom: 24px;
+  }
+  .detail-num {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 11px; color: var(--cyan); letter-spacing: .3em;
+    margin-bottom: 8px;
+  }
+  .detail-title {
+    font-size: 26px; font-weight: 900; line-height: 1.15;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .detail-tag {
+    font-size: 13px; color: var(--sky); letter-spacing: .15em; font-weight: 600;
+  }
+  .detail-lead {
+    font-size: 14px; color: var(--text-2); line-height: 1.8;
+    margin-bottom: 24px; text-align: justify;
+  }
+  .detail-lead b { color: var(--text); }
+
+  .specs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 24px;
+  }
+  .spec {
+    background: rgba(24,37,59,.6); border: 1px solid var(--line);
+    padding: 14px 12px; text-align: center; position: relative; overflow: hidden;
+  }
+  .spec::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue));
+  }
+  .spec .v {
+    font-size: 22px; font-weight: 900; color: var(--cyan);
+    letter-spacing: -.01em; line-height: 1;
+  }
+  .spec .v small { font-size: 12px; }
+  .spec .l { font-size: 11px; color: var(--text-3); letter-spacing: .15em; margin-top: 6px; }
+
+  .feature-list {
+    list-style: none; display: flex; flex-direction: column; gap: 10px;
+  }
+  .feature {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 14px;
+    background: rgba(24,37,59,.4); border-left: 2px solid var(--cyan);
+  }
+  .feature .icn {
+    width: 22px; height: 22px; flex-shrink: 0;
+    background: rgba(0,212,255,.12); border: 1px solid var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan); font-size: 11px; font-weight: 800;
+    margin-top: 2px;
+  }
+  .feature .txt { flex: 1; }
+  .feature .ttl { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; letter-spacing: .02em; }
+  .feature .d { font-size: 12px; color: var(--text-2); line-height: 1.6; }
+
+  /* ========== WORKFLOW (vertical timeline) ========== */
+  .workflow-section {
+    background: var(--bg-1);
+  }
+  .workflow {
+    position: relative; padding-left: 36px; margin-top: 28px;
+  }
+  .workflow::before {
+    content: ""; position: absolute; left: 16px; top: 10px; bottom: 10px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--cyan) 0%, var(--blue) 100%);
+  }
+  .wf-step { position: relative; padding-bottom: 22px; }
+  .wf-step:last-child { padding-bottom: 0; }
+  .wf-step::before {
+    content: ""; position: absolute; left: -28px; top: 4px;
+    width: 24px; height: 24px;
+    background: var(--bg-1); border: 2px solid var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(0,212,255,.15);
+  }
+  .wf-step::after {
+    content: ""; position: absolute; left: -22px; top: 10px;
+    width: 12px; height: 12px;
+    background: var(--cyan); border-radius: 50%;
+  }
+  .wf-step .n {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; color: var(--sky); letter-spacing: .25em;
+  }
+  .wf-step .t {
+    font-size: 18px; font-weight: 800; color: var(--text);
+    margin: 2px 0 4px; letter-spacing: .02em;
+  }
+  .wf-step .d {
+    font-size: 13px; color: var(--text-2); line-height: 1.6;
+  }
+
+  /* ========== CAPABILITY MATRIX ========== */
+  .matrix-section {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  }
+  .mat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px;
+  }
+  .mat-tile {
+    background: linear-gradient(160deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line);
+    padding: 18px 14px; position: relative; overflow: hidden;
+  }
+  .mat-tile .icn-box {
+    width: 32px; height: 32px;
+    border: 1.5px solid var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan); font-size: 16px; font-weight: 900;
+    margin-bottom: 12px;
+  }
+  .mat-tile .v {
+    font-size: 30px; font-weight: 900; color: var(--text);
+    letter-spacing: -.02em; line-height: 1;
+  }
+  .mat-tile .v small { font-size: 14px; color: var(--cyan); font-weight: 700; }
+  .mat-tile .l {
+    font-size: 11px; color: var(--cyan); letter-spacing: .2em; margin-top: 6px; font-weight: 700;
+  }
+  .mat-tile .x { font-size: 11px; color: var(--text-3); margin-top: 8px; line-height: 1.5; }
+
+  /* ========== CTA / VISIT ========== */
+  .visit {
+    background:
+      linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+    position: relative; overflow: hidden;
+  }
+  .visit::before {
+    content: ""; position: absolute; top: -100px; right: -120px; width: 280px; height: 280px;
+    background: radial-gradient(closest-side, rgba(0,212,255,.15), transparent 70%);
+  }
+  .visit::after {
+    content: ""; position: absolute; bottom: -120px; left: -120px; width: 320px; height: 320px;
+    background: radial-gradient(closest-side, rgba(0,145,255,.12), transparent 70%);
+  }
+  .visit-content { position: relative; z-index: 1; }
+  .visit-headline {
+    font-size: 30px; font-weight: 900; line-height: 1.1; letter-spacing: .02em;
+    background: linear-gradient(135deg, #ffffff 0%, var(--sky) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 8px;
+  }
+  .visit-sub {
+    font-size: 13px; color: var(--text-3); letter-spacing: .15em; margin-bottom: 28px;
+  }
+  .info-card {
+    background: linear-gradient(160deg, rgba(24,37,59,.85) 0%, rgba(15,27,46,.85) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    padding: 22px 20px; margin-bottom: 18px;
+  }
+  .info-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; }
+  .info-row + .info-row { border-top: 1px solid rgba(255,255,255,.06); }
+  .info-row .ico {
+    width: 36px; height: 36px;
+    border: 1px solid var(--cyan); background: rgba(0,212,255,.1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cyan); flex-shrink: 0;
+  }
+  .info-row .ico svg { width: 18px; height: 18px; }
+  .info-row .body { flex: 1; min-width: 0; }
+  .info-row .k {
+    font-size: 10px; color: var(--text-3); letter-spacing: .2em; margin-bottom: 2px;
+  }
+  .info-row .v {
+    font-size: 15px; color: var(--text); font-weight: 600; word-break: break-all;
+  }
+  .info-row.call .v { color: var(--cyan); font-size: 17px; letter-spacing: .04em; }
+  .info-row .call-btn {
+    padding: 6px 12px; background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #0a1424; font-size: 11px; font-weight: 800; letter-spacing: .1em;
+    flex-shrink: 0; text-decoration: none; align-self: center;
+  }
+
+  .qr-card {
+    background: linear-gradient(160deg, rgba(24,37,59,.85) 0%, rgba(15,27,46,.85) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    padding: 22px 20px; display: flex; gap: 16px; align-items: center;
+    margin-bottom: 18px;
+  }
+  .qr-card .qr {
+    width: 96px; height: 96px; background: #fff;
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 0 3px rgba(0,212,255,.18);
+    padding: 4px; flex-shrink: 0;
+  }
+  .qr-card .qr svg { width: 100%; height: 100%; display: block; }
+  .qr-card .qr-body { flex: 1; }
+  .qr-card .qr-body .h {
+    font-size: 16px; font-weight: 800; color: var(--text);
+    margin-bottom: 6px; letter-spacing: .02em;
+  }
+  .qr-card .qr-body .p {
+    font-size: 12px; color: var(--text-2); line-height: 1.6;
+  }
+
+  .visit .actions {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  /* ========== FOOTER ========== */
+  .foot {
+    padding: 28px 20px calc(80px + var(--safe-bot));
+    text-align: center;
+    background: var(--bg-0);
+    border-top: 1px solid rgba(255,255,255,.04);
+  }
+  .foot .copy {
+    font-size: 10px; color: var(--text-4); letter-spacing: .15em;
+    line-height: 1.7;
+  }
+  .foot .mark {
+    color: var(--cyan); font-weight: 700; margin-bottom: 6px; font-size: 11px; letter-spacing: .25em;
+  }
+
+  /* ========== FAB ========== */
+  .fab {
+    position: fixed; bottom: calc(20px + var(--safe-bot)); right: 20px;
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #0a1424;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,212,255,.4);
+    z-index: 90; cursor: pointer;
+    transition: all .3s ease;
+    text-decoration: none;
+  }
+  .fab:active { transform: scale(.92); }
+  .fab svg { width: 22px; height: 22px; }
+  .fab::before {
+    content: ""; position: absolute; inset: -6px;
+    border: 1px solid var(--cyan); opacity: .4;
+    animation: ring 2.5s ease-out infinite;
+  }
+  @media (min-width: 481px) {
+    .fab { right: calc(50% - 240px + 20px); }
+  }
+
+  /* ========== ANIMATIONS ========== */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in {
+    opacity: 1; transform: translateY(0);
+  }
+  .reveal[data-delay="1"] { transition-delay: .1s; }
+  .reveal[data-delay="2"] { transition-delay: .2s; }
+  .reveal[data-delay="3"] { transition-delay: .3s; }
+  .reveal[data-delay="4"] { transition-delay: .4s; }
+
+  /* hidden lang based on data attr — toggle via JS */
+  .lang-zh, .lang-en { display: none; }
+  [data-lang="zh"] .lang-zh { display: inline; }
+  [data-lang="en"] .lang-en { display: inline; }
+  [data-lang="zh"] .lang-zh.block, [data-lang="en"] .lang-en.block { display: block; }
+  [data-lang="zh"] .lang-zh.flex, [data-lang="en"] .lang-en.flex { display: flex; }
+
+  /* video modal */
+  .video-modal {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(5,10,20,.92);
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .video-modal.open { display: flex; }
+  .video-modal video {
+    width: 100%; max-width: 480px;
+    background: #000; max-height: 80vh;
+  }
+  .video-modal .close-btn {
+    position: absolute; top: calc(16px + var(--safe-top)); right: 16px;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,.1); color: #fff;
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; cursor: pointer;
+  }
+
+</style>
+</head>
+<body>
+
+<header class="top-nav">
+  <div class="brand">
+    <span class="lang-zh">无人装备 · KUKE</span>
+    <span class="lang-en">UNMANNED · KUKE</span>
+  </div>
+  <div class="lang-toggle">
+    <button data-lang="zh" class="active">中</button>
+    <button data-lang="en">EN</button>
+  </div>
+</header>
+
+<main class="stage">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="assets/ugv-hero.jpg" alt="">
+    </div>
+    <div class="hero-content">
+      <div class="hero-kicker">
+        <span class="dot"></span>
+        <span class="lang-zh">无人装备 · 全场景方案</span>
+        <span class="lang-en">UNMANNED · FULL-SCENE</span>
+      </div>
+      <h1>
+        <span class="lang-zh block">智启新境<span class="sep">·</span>无人先行</span>
+        <span class="lang-en block">Pioneer<br>The Unmanned Era.</span>
+      </h1>
+      <div class="hero-sub">
+        <span class="lang-zh">三大硬核装备 · 重塑作业边界</span>
+        <span class="lang-en">Three powerhouse platforms. One mission frontier.</span>
+      </div>
+      <div class="hero-tag">
+        <span class="lang-zh">智驭无人时代 · 筑牢安全防线</span>
+        <span class="lang-en">Command · Detect · Defend</span>
+      </div>
+      <div class="hero-cta">
+        <a href="#products" class="btn btn-primary">
+          <span class="lang-zh">探索产品</span>
+          <span class="lang-en">Explore</span>
+          <span>→</span>
+        </a>
+        <a href="#visit" class="btn btn-ghost">
+          <span class="lang-zh">联系我们</span>
+          <span class="lang-en">Contact</span>
+        </a>
+      </div>
+    </div>
+    <div class="scroll-cue">
+      <span>SCROLL</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="block about">
+    <div class="section-head reveal">
+      <div class="section-num">SECTION · 01</div>
+      <div class="section-title">
+        <span class="lang-zh">关于 <span class="accent">我们</span></span>
+        <span class="lang-en">About <span class="accent">Us</span></span>
+      </div>
+      <div class="section-bar"></div>
+    </div>
+    <p class="lead reveal" data-delay="1">
+      <span class="lang-zh">深耕无人智能装备研发与场景化落地，集 <b>研发 · 制造 · 方案</b> 于一体。聚焦复杂地形作业、全域低空安防、智能协同作业三大核心需求，以自主硬核技术，打造高性能、高可靠、全适配的无人装备体系。</span>
+      <span class="lang-en">We engineer field-proven unmanned platforms end-to-end — <b>research, manufacturing and integrated solutions</b> under one roof. Focused on three frontiers: complex-terrain operations, low-altitude security and intelligent swarm collaboration.</span>
+    </p>
+    <div class="stats">
+      <div class="stat reveal" data-delay="1">
+        <div class="v" data-counter="3">3<small>+</small></div>
+        <div class="l"><span class="lang-zh">核心赛道</span><span class="lang-en">Core Tracks</span></div>
+        <div class="x"><span class="lang-zh">地面 / 仿生 / 低空</span><span class="lang-en">Ground / Bionic / Air</span></div>
+      </div>
+      <div class="stat reveal" data-delay="2">
+        <div class="v" data-counter="5">5<small>+</small></div>
+        <div class="l"><span class="lang-zh">行业落地</span><span class="lang-en">Verticals</span></div>
+        <div class="x"><span class="lang-zh">能源·应急·交通·安防·工业</span><span class="lang-en">Energy · Emergency · Industry</span></div>
+      </div>
+      <div class="stat reveal" data-delay="3">
+        <div class="v" data-counter="24">24<small>h</small></div>
+        <div class="l"><span class="lang-zh">全天候作业</span><span class="lang-en">All-Weather</span></div>
+        <div class="x"><span class="lang-zh">极端环境稳定运行</span><span class="lang-en">Stable in extremes</span></div>
+      </div>
+      <div class="stat reveal" data-delay="4">
+        <div class="v">360<small>°</small></div>
+        <div class="l"><span class="lang-zh">全域覆盖</span><span class="lang-en">Full Coverage</span></div>
+        <div class="x"><span class="lang-zh">立体防护 · 无死角</span><span class="lang-en">Volumetric · No blind spots</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTS OVERVIEW ================= -->
+  <section class="block products" id="products">
+    <div class="section-head reveal">
+      <div class="section-num">SECTION · 02</div>
+      <div class="section-title">
+        <span class="lang-zh">三大 <span class="accent">硬核装备</span></span>
+        <span class="lang-en">Three <span class="accent">Powerhouses</span></span>
+      </div>
+      <div class="section-bar"></div>
+    </div>
+    <div class="pcards">
+      <a href="#ugv" class="pcard reveal">
+        <img src="assets/ugv-product.jpg" alt="">
+        <div class="corner">UGV · 6×6</div>
+        <div class="meta">
+          <div class="tag"><span class="lang-zh">PRODUCT · 01</span><span class="lang-en">PRODUCT · 01</span></div>
+          <h3><span class="lang-zh">全地形六轮无人车</span><span class="lang-en">6×6 All-Terrain UGV</span></h3>
+          <div class="desc"><span class="lang-zh">多任务智能作业平台</span><span class="lang-en">Multi-mission ground platform</span></div>
+          <div class="arrow">→</div>
+        </div>
+      </a>
+      <a href="#k9" class="pcard reveal" data-delay="1">
+        <img src="assets/robot-dog.png" alt="">
+        <div class="corner">K9 · BIONIC</div>
+        <div class="meta">
+          <div class="tag"><span class="lang-zh">PRODUCT · 02</span><span class="lang-en">PRODUCT · 02</span></div>
+          <h3><span class="lang-zh">全地形四足机器狗</span><span class="lang-en">Quadruped K9 Robot</span></h3>
+          <div class="desc"><span class="lang-zh">无人协同作战尖兵</span><span class="lang-en">Mission wingman, bionic</span></div>
+          <div class="arrow">→</div>
+        </div>
+      </a>
+      <a href="#cuas" class="pcard reveal" data-delay="2">
+        <img src="assets/cuas-vehicle.jpg" alt="">
+        <div class="corner">C-UAS · MOBILE</div>
+        <div class="meta">
+          <div class="tag"><span class="lang-zh">PRODUCT · 03</span><span class="lang-en">PRODUCT · 03</span></div>
+          <h3><span class="lang-zh">低空反制装备体系</span><span class="lang-en">Counter-UAS Defense</span></h3>
+          <div class="desc"><span class="lang-zh">侦测—识别—压制 全流程闭环</span><span class="lang-en">Detect · Identify · Neutralize</span></div>
+          <div class="arrow">→</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= UGV DETAIL ================= -->
+  <section class="block detail" id="ugv">
+    <div class="detail-media" data-video="assets/video-ugv.mp4">
+      <img src="assets/ugv-fleet.jpg" alt="">
+      <div class="play-btn" data-video="assets/video-ugv.mp4">
+        <div class="triangle"></div>
+      </div>
+    </div>
+    <div class="detail-head reveal">
+      <div class="detail-num">PRODUCT · 01 &nbsp;·&nbsp; UGV</div>
+      <h2 class="detail-title">
+        <span class="lang-zh">全地形六轮无人车</span>
+        <span class="lang-en">All-Terrain 6×6 UGV</span>
+      </h2>
+      <div class="detail-tag">
+        <span class="lang-zh">UGV · 多任务智能作业平台</span>
+        <span class="lang-en">Multi-Mission Ground Vehicle</span>
+      </div>
+    </div>
+    <p class="detail-lead reveal" data-delay="1">
+      <span class="lang-zh">直面泥土、砂石、坑洼、湿滑等复杂路况。<b>专业底盘 + 模块化任务载荷</b>，分钟级切换巡检、运输、反制、救援角色，让一台车胜任全场景任务。</span>
+      <span class="lang-en">Built for mud, gravel, ruts and slick surfaces. <b>A purpose-built chassis with modular payloads</b> — patrol, transport, counter-drone or rescue, swapped in minutes.</span>
+    </p>
+    <div class="specs-grid">
+      <div class="spec reveal"><div class="v">3-5<small>km</small></div><div class="l"><span class="lang-zh">图传半径</span><span class="lang-en">TELEMETRY</span></div></div>
+      <div class="spec reveal" data-delay="1"><div class="v">RTK</div><div class="l"><span class="lang-zh">北斗导航</span><span class="lang-en">NAVIGATION</span></div></div>
+      <div class="spec reveal" data-delay="2"><div class="v">IP65</div><div class="l"><span class="lang-zh">整车防护</span><span class="lang-en">PROTECTION</span></div></div>
+      <div class="spec reveal" data-delay="3"><div class="v">24<small>h</small></div><div class="l"><span class="lang-zh">快换续航</span><span class="lang-en">ENDURANCE</span></div></div>
+    </div>
+    <ul class="feature-list">
+      <li class="feature reveal">
+        <div class="icn">◎</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">三模驾驶</span><span class="lang-en">Triple-Mode Control</span></div>
+          <div class="d"><span class="lang-zh">遥控 / 自动驾驶 / 智能跟随，灵活适配各种任务场景</span><span class="lang-en">Remote · autonomous · follow — adapts to any mission</span></div>
+        </div>
+      </li>
+      <li class="feature reveal" data-delay="1">
+        <div class="icn">▣</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">热成像双目云台</span><span class="lang-en">Dual-Spectrum Gimbal</span></div>
+          <div class="d"><span class="lang-zh">昼夜无死角侦察 · 音视频实时回传 · AI 智能识别</span><span class="lang-en">24/7 surveillance · Live AV feed · AI recognition</span></div>
+        </div>
+      </li>
+      <li class="feature reveal" data-delay="2">
+        <div class="icn">↯</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">极端环境作业</span><span class="lang-en">Extreme Environment</span></div>
+          <div class="d"><span class="lang-zh">大荷载 · 强越障 · 快换电池 · 高温/严寒/雨雪稳定运行</span><span class="lang-en">Heavy payload · Step-over · Hot-swap · Any climate</span></div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ================= K9 DETAIL ================= -->
+  <section class="block detail" id="k9">
+    <div class="detail-media">
+      <img src="assets/robot-dog.png" alt="">
+    </div>
+    <div class="detail-head reveal">
+      <div class="detail-num">PRODUCT · 02 &nbsp;·&nbsp; K9</div>
+      <h2 class="detail-title">
+        <span class="lang-zh">全地形越野四足机器狗</span>
+        <span class="lang-en">All-Terrain Quadruped K9</span>
+      </h2>
+      <div class="detail-tag">
+        <span class="lang-zh">QUADRUPED · 无人协同作战尖兵</span>
+        <span class="lang-en">Bionic · Mission Wingman</span>
+      </div>
+    </div>
+    <p class="detail-lead reveal" data-delay="1">
+      <span class="lang-zh">仿生四足结构 + AI 智能算法，突破地形限制。<b>40cm 越障 · 1m 涉水 · 宽温域适配</b>，支持空地集群协同——巡检、搜救、运维的极致伙伴。</span>
+      <span class="lang-en">Bionic four-legged geometry meets onboard AI to clear terrain that wheels can't. <b>40cm step-over, 1m wading, wide-temperature</b> — built for inspection, rescue and air-ground swarming.</span>
+    </p>
+    <div class="specs-grid">
+      <div class="spec reveal"><div class="v">40<small>kg</small></div><div class="l"><span class="lang-zh">超大载荷</span><span class="lang-en">PAYLOAD</span></div></div>
+      <div class="spec reveal" data-delay="1"><div class="v">40<small>°</small></div><div class="l"><span class="lang-zh">爬坡能力</span><span class="lang-en">GRADIENT</span></div></div>
+      <div class="spec reveal" data-delay="2"><div class="v">6<small>h</small></div><div class="l"><span class="lang-zh">长效续航</span><span class="lang-en">ENDURANCE</span></div></div>
+      <div class="spec reveal" data-delay="3"><div class="v">IP67</div><div class="l"><span class="lang-zh">防水防尘</span><span class="lang-en">SEALING</span></div></div>
+    </div>
+    <ul class="feature-list">
+      <li class="feature reveal">
+        <div class="icn">◇</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">仿生越野结构</span><span class="lang-en">Bionic Geometry</span></div>
+          <div class="d"><span class="lang-zh">突破地形限制，行业领先性能指标</span><span class="lang-en">Defeats terrain that wheels cannot — leading specs</span></div>
+        </div>
+      </li>
+      <li class="feature reveal" data-delay="1">
+        <div class="icn">▲</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">国军标电磁兼容</span><span class="lang-en">MIL-Grade EMC</span></div>
+          <div class="d"><span class="lang-zh">符合国军标 · 复杂电磁环境稳定作业</span><span class="lang-en">Certified for complex electromagnetic environments</span></div>
+        </div>
+      </li>
+      <li class="feature reveal" data-delay="2">
+        <div class="icn">◐</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">空地集群协同</span><span class="lang-en">Air-Ground Swarming</span></div>
+          <div class="d"><span class="lang-zh">与无人机/无人车协同 · AI 自主任务规划</span><span class="lang-en">Pairs with UAV/UGV · Autonomous mission planning</span></div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ================= C-UAS DETAIL + WORKFLOW ================= -->
+  <section class="block detail" id="cuas">
+    <div class="detail-media" data-video="assets/video-cuas.mp4">
+      <img src="assets/cuas-vehicle.jpg" alt="">
+      <div class="play-btn" data-video="assets/video-cuas.mp4">
+        <div class="triangle"></div>
+      </div>
+    </div>
+    <div class="detail-head reveal">
+      <div class="detail-num">PRODUCT · 03 &nbsp;·&nbsp; C-UAS</div>
+      <h2 class="detail-title">
+        <span class="lang-zh">低空反制装备体系</span>
+        <span class="lang-en">Counter-UAS Defense System</span>
+      </h2>
+      <div class="detail-tag">
+        <span class="lang-zh">便携 + 车载 · 双重防护体系</span>
+        <span class="lang-en">Portable + Vehicle · Dual-Layer Defense</span>
+      </div>
+    </div>
+    <p class="detail-lead reveal" data-delay="1">
+      <span class="lang-zh">针对无人机黑飞、非法入侵等低空安全隐患，打造<b>便携式探测反制 + 低空车载防御</b>双重防护体系，实现侦测—识别—压制全流程闭环。</span>
+      <span class="lang-en">Against unauthorized drones and low-altitude threats, we deliver a <b>portable + vehicle-mounted</b> dual-layer system — a closed loop from detection to neutralization.</span>
+    </p>
+    <ul class="feature-list">
+      <li class="feature reveal">
+        <div class="icn">◆</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">便携式反制系统</span><span class="lang-en">Portable C-UAS Kit</span></div>
+          <div class="d"><span class="lang-zh">融合雷达 · 光学 · 无线电三重侦测，5km 探测 · 2km 精准压制</span><span class="lang-en">Radar · EO · RF triple sensing. 5 km detection · 2 km jamming</span></div>
+        </div>
+      </li>
+      <li class="feature reveal" data-delay="1">
+        <div class="icn">◈</div>
+        <div class="txt">
+          <div class="ttl"><span class="lang-zh">低空车载防御平台</span><span class="lang-en">Mobile C-UAS Platform</span></div>
+          <div class="d"><span class="lang-zh">基于无人车底盘 · 电磁干扰 · 导航夺控 · 立体拦截</span><span class="lang-en">UGV-based · RF disruption · GNSS takeover · Kinetic intercept</span></div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ================= WORKFLOW ================= -->
+  <section class="block workflow-section">
+    <div class="section-head reveal">
+      <div class="section-num">SECTION · 04</div>
+      <div class="section-title">
+        <span class="lang-zh">全流程 <span class="accent">闭环</span></span>
+        <span class="lang-en">Closed-Loop <span class="accent">Defense</span></span>
+      </div>
+      <div class="section-bar"></div>
+    </div>
+    <div class="workflow">
+      <div class="wf-step reveal">
+        <div class="n">PHASE · 01</div>
+        <div class="t"><span class="lang-zh">侦 · DETECT</span><span class="lang-en">DETECT</span></div>
+        <div class="d"><span class="lang-zh">雷达 · 光学 · 频谱融合感知，黑飞早发现、早预警</span><span class="lang-en">Radar · EO · RF fusion sensing — catch threats early</span></div>
+      </div>
+      <div class="wf-step reveal" data-delay="1">
+        <div class="n">PHASE · 02</div>
+        <div class="t"><span class="lang-zh">识 · IDENTIFY</span><span class="lang-en">IDENTIFY</span></div>
+        <div class="d"><span class="lang-zh">AI 自动判型 · 敌我甄别 · 威胁等级评估</span><span class="lang-en">AI classification · Friend-or-foe · Threat scoring</span></div>
+      </div>
+      <div class="wf-step reveal" data-delay="2">
+        <div class="n">PHASE · 03</div>
+        <div class="t"><span class="lang-zh">制 · NEUTRALIZE</span><span class="lang-en">NEUTRALIZE</span></div>
+        <div class="d"><span class="lang-zh">电磁压制 · 导航夺控 · 立体拦截 · 安全迫降</span><span class="lang-en">Jam · Takeover · Kinetic intercept · Safe landing</span></div>
+      </div>
+      <div class="wf-step reveal" data-delay="3">
+        <div class="n">PHASE · 04</div>
+        <div class="t"><span class="lang-zh">证 · RECORD</span><span class="lang-en">RECORD</span></div>
+        <div class="d"><span class="lang-zh">全程音视频取证 · 回溯分析 · 数据归档</span><span class="lang-en">Full-track evidence · Replay · Archive</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CAPABILITY MATRIX ================= -->
+  <section class="block matrix-section">
+    <div class="section-head reveal">
+      <div class="section-num">SECTION · 05</div>
+      <div class="section-title">
+        <span class="lang-zh">硬核 <span class="accent">能力矩阵</span></span>
+        <span class="lang-en">Capability <span class="accent">Matrix</span></span>
+      </div>
+      <div class="section-bar"></div>
+    </div>
+    <div class="mat-grid">
+      <div class="mat-tile reveal">
+        <div class="icn-box">↯</div>
+        <div class="v">5<small>km</small></div>
+        <div class="l"><span class="lang-zh">远距侦测</span><span class="lang-en">DETECTION</span></div>
+        <div class="x"><span class="lang-zh">多源融合，黑飞早发现</span><span class="lang-en">Multi-sensor fusion. Early detection.</span></div>
+      </div>
+      <div class="mat-tile reveal" data-delay="1">
+        <div class="icn-box">◎</div>
+        <div class="v">2<small>km</small></div>
+        <div class="l"><span class="lang-zh">精准压制</span><span class="lang-en">JAMMING</span></div>
+        <div class="x"><span class="lang-zh">电磁干扰，安全迫降</span><span class="lang-en">Precision RF. Safe landing.</span></div>
+      </div>
+      <div class="mat-tile reveal" data-delay="2">
+        <div class="icn-box">◐</div>
+        <div class="v">24<small>h</small></div>
+        <div class="l"><span class="lang-zh">全天候作业</span><span class="lang-en">ALL-WEATHER</span></div>
+        <div class="x"><span class="lang-zh">昼夜不间断，气象稳定</span><span class="lang-en">Day, night, any weather.</span></div>
+      </div>
+      <div class="mat-tile reveal" data-delay="3">
+        <div class="icn-box">◇</div>
+        <div class="v">360<small>°</small></div>
+        <div class="l"><span class="lang-zh">全域覆盖</span><span class="lang-en">COVERAGE</span></div>
+        <div class="x"><span class="lang-zh">立体防护，无方向死角</span><span class="lang-en">Volumetric shield. No blind spots.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VISIT US ================= -->
+  <section class="block visit" id="visit">
+    <div class="visit-content">
+      <div class="reveal">
+        <div class="section-num">SECTION · 06</div>
+        <h2 class="visit-headline">
+          <span class="lang-zh">聚力同行<br>智创未来</span>
+          <span class="lang-en">Build The Future,<br>Unmanned.</span>
+        </h2>
+        <div class="visit-sub">
+          <span class="lang-zh">以匠心铸精品 · 以科技守安全</span>
+          <span class="lang-en">Crafted with rigor · Engineered for safety</span>
+        </div>
+      </div>
+
+      <div class="info-card reveal" data-delay="1">
+        <div class="info-row">
+          <div class="ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2 C8 2 5 5 5 9 C5 14 12 22 12 22 C12 22 19 14 19 9 C19 5 16 2 12 2 Z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="k"><span class="lang-zh">展位地址</span><span class="lang-en">BOOTH</span></div>
+            <div class="v">
+              <span class="lang-zh">深圳会展中心（福田）<br>7B95</span>
+              <span class="lang-en">Shenzhen Convention Center<br>(Futian) · 7B95</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-row call">
+          <div class="ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M5 4 L9 4 L11 10 L8.5 11.5 C9.5 14 11 15.5 13.5 16.5 L15 14 L21 16 L21 20 C12 20 4 12 4 5 Z"/>
+            </svg>
+          </div>
+          <div class="body">
+            <div class="k"><span class="lang-zh">咨询热线</span><span class="lang-en">HOTLINE</span></div>
+            <div class="v">__________________</div>
+          </div>
+          <a href="tel:" class="call-btn"><span class="lang-zh">拨打</span><span class="lang-en">CALL</span></a>
+        </div>
+      </div>
+
+      <div class="actions reveal" data-delay="2">
+        <a href="#products" class="btn btn-primary">
+          <span class="lang-zh">查看全部装备</span>
+          <span class="lang-en">View All Platforms</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="mark">UNMANNED · KUKE</div>
+    <div class="copy">
+      <span class="lang-zh">无人智能装备 · 全场景方案 · 一站式服务<br>© 2026 · ALL RIGHTS RESERVED</span>
+      <span class="lang-en">Unmanned platforms · Full-scene solutions · End-to-end<br>© 2026 · ALL RIGHTS RESERVED</span>
+    </div>
+  </footer>
+
+</main>
+
+<a href="tel:" class="fab" aria-label="Call">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M5 4 L9 4 L11 10 L8.5 11.5 C9.5 14 11 15.5 13.5 16.5 L15 14 L21 16 L21 20 C12 20 4 12 4 5 Z"/>
+  </svg>
+</a>
+
+<div class="video-modal" id="videoModal">
+  <button class="close-btn" id="closeVideo">✕</button>
+  <video id="modalVideo" controls playsinline preload="metadata"></video>
+</div>
+
+<script>
+  /* ============= LANG SWITCHER ============= */
+  const langButtons = document.querySelectorAll('.lang-toggle button');
+  langButtons.forEach(b => b.addEventListener('click', () => {
+    const lang = b.dataset.lang;
+    document.documentElement.dataset.lang = lang;
+    langButtons.forEach(x => x.classList.toggle('active', x.dataset.lang === lang));
+    document.title = lang === 'zh'
+      ? '智启新境 · 无人先行 | 无人装备微站'
+      : 'Unmanned Frontier · Pioneered | KUKE';
+  }));
+
+  /* ============= SCROLL REVEAL ============= */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        // counter animation
+        const counters = e.target.querySelectorAll('[data-counter]');
+        counters.forEach(c => animateCounter(c));
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.counter, 10);
+    if (isNaN(target)) return;
+    const dur = 1200;
+    const start = performance.now();
+    const suffix = el.querySelector('small') ? el.querySelector('small').outerHTML : '';
+    function tick(now) {
+      const t = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(target * eased);
+      el.innerHTML = val + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ============= VIDEO MODAL ============= */
+  const modal = document.getElementById('videoModal');
+  const modalVideo = document.getElementById('modalVideo');
+  const closeVideo = document.getElementById('closeVideo');
+
+  document.querySelectorAll('[data-video]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const src = el.dataset.video;
+      if (!src) return;
+      modalVideo.src = src;
+      modal.classList.add('open');
+      modalVideo.play().catch(() => {});
+    });
+  });
+  closeVideo.addEventListener('click', () => {
+    modal.classList.remove('open');
+    modalVideo.pause();
+    modalVideo.src = '';
+  });
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeVideo.click();
+  });
+
+  /* ============= NAV BAR HIDE/SHOW ON SCROLL ============= */
+  let lastY = 0;
+  const nav = document.querySelector('.top-nav');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 100 && y > lastY) {
+      nav.style.transform = 'translate(-50%, -110%)';
+    } else {
+      nav.style.transform = 'translateX(-50%)';
+    }
+    lastY = y;
+  }, { passive: true });
+
+</script>
+</body>
+</html>
