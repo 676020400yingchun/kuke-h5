@@ -162,14 +162,16 @@
     50% { opacity: .3; }
   }
   .hero h1 {
-    font-size: clamp(36px, 10vw, 48px); font-weight: 900;
-    line-height: 1.02; letter-spacing: .02em;
+    font-size: clamp(26px, 8.4vw, 44px); font-weight: 900;
+    line-height: 1.02; letter-spacing: .01em;
     background: linear-gradient(135deg, #ffffff 0%, var(--sky) 55%, var(--cyan) 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
     margin: 0;
   }
-  [data-lang="en"] .hero h1 { font-size: clamp(32px, 9vw, 44px); letter-spacing: -.01em; }
-  .hero h1 .sep { color: var(--cyan); -webkit-text-fill-color: var(--cyan); margin: 0 4px; }
+  [data-lang="en"] .hero h1 { font-size: clamp(28px, 8vw, 42px); letter-spacing: -.01em; }
+  .hero h1 .sep { color: var(--cyan); -webkit-text-fill-color: var(--cyan); margin: 0 2px; }
+  /* Force Chinese title to a single line, never wrap */
+  .hero h1 .lang-zh.block { white-space: nowrap; }
   .hero .hero-sub {
     font-size: 15px; color: var(--text-2); font-weight: 600; letter-spacing: .04em;
     margin: 0;
@@ -705,84 +707,69 @@
     font-size: 20px; cursor: pointer;
   }
 
-  /* ============= CONTACT FORM ============= */
-  .form-card {
-    background: linear-gradient(160deg, rgba(24,37,59,.85) 0%, rgba(15,27,46,.85) 100%);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--line-strong);
-    padding: 22px 18px;
-    margin-bottom: 18px;
-    position: relative;
+  /* ============= COMPACT LEAD FORM (page footer) ============= */
+  section.lean-form {
+    min-height: auto !important;
+    padding: 28px 18px 20px !important;
+    display: block !important;
+    border-top: 1px solid rgba(255,255,255,.06);
   }
-  .form-card::before {
-    content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-    background: linear-gradient(180deg, var(--cyan), transparent);
+  .lean-form .lean-form-head {
+    font-size: 11px; color: var(--text-3);
+    letter-spacing: .12em; text-align: center;
+    margin-bottom: 12px;
   }
-  .form-card .form-head {
-    margin-bottom: 16px;
+  .lean-form .lean-form-head .accent {
+    color: var(--cyan); font-weight: 700;
   }
-  .form-card .form-head .label {
-    font-family: "SF Mono", Menlo, monospace; font-size: 10px;
-    color: var(--cyan); letter-spacing: .3em;
+  .lean-form form { display: block; }
+  .lean-form .form-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
     margin-bottom: 6px;
   }
-  .form-card .form-head .ttl {
-    font-size: 18px; font-weight: 800; color: var(--text);
-    letter-spacing: .02em;
-  }
-  .form-card .form-head .hint {
-    font-size: 11px; color: var(--text-3); margin-top: 4px;
-    letter-spacing: .08em;
-  }
-  .form-field { margin-bottom: 12px; position: relative; }
-  .form-field:last-of-type { margin-bottom: 18px; }
-  .form-field label {
-    display: block;
-    font-size: 10px; color: var(--text-3);
-    letter-spacing: .18em; margin-bottom: 5px;
-    font-weight: 700;
-  }
-  .form-field label .req { color: var(--cyan); margin-left: 2px; }
-  .form-field input {
-    width: 100%; padding: 11px 14px;
-    background: rgba(10,20,36,.5);
-    border: 1px solid rgba(0,212,255,.18);
+  .lean-form input {
+    width: 100%; padding: 9px 11px;
+    background: rgba(10,20,36,.55);
+    border: 1px solid rgba(0,212,255,.2);
     color: var(--text);
-    font-size: 14px; letter-spacing: .02em;
+    font-size: 12.5px; letter-spacing: .02em;
     font-family: inherit;
     outline: none;
     transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
     -webkit-appearance: none; appearance: none;
     border-radius: 0;
+    min-width: 0;
   }
-  .form-field input::placeholder { color: var(--text-4); font-size: 13px; }
-  .form-field input:focus {
-    background: rgba(10,20,36,.8);
+  .lean-form input::placeholder { color: var(--text-4); font-size: 12px; }
+  .lean-form input:focus {
+    background: rgba(10,20,36,.85);
     border-color: var(--cyan);
     box-shadow: 0 0 0 2px rgba(0,212,255,.16);
   }
-  .form-submit {
-    width: 100%; padding: 14px 18px;
+  .lean-form .form-submit {
+    width: 100%; margin-top: 8px;
+    padding: 11px 16px;
     background: linear-gradient(135deg, var(--cyan), var(--blue));
     color: #0a1424;
-    font-size: 14px; font-weight: 800; letter-spacing: .12em;
+    font-size: 13px; font-weight: 800; letter-spacing: .14em;
     border: 0; cursor: pointer;
-    box-shadow: 0 8px 24px rgba(0,212,255,.3);
+    box-shadow: 0 6px 18px rgba(0,212,255,.28);
     transition: transform .15s ease;
     font-family: inherit;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
   }
-  .form-submit:active { transform: scale(.97); }
-  .form-success {
-    margin-top: 12px;
-    padding: 12px 14px;
+  .lean-form .form-submit:active { transform: scale(.97); }
+  .lean-form .form-success {
+    margin-top: 8px;
+    padding: 8px 12px;
     background: rgba(0,212,255,.12);
     border: 1px solid var(--line-strong);
     color: var(--cyan);
-    font-size: 13px; letter-spacing: .04em; line-height: 1.5;
+    font-size: 11.5px; letter-spacing: .04em; line-height: 1.5;
+    text-align: center;
     display: none;
   }
-  .form-success.show { display: block; animation: fadeInPage .4s ease both; }
+  .lean-form .form-success.show { display: block; animation: fadeInPage .4s ease both; }
 
   /* ============= TAB MICRO-SITE ============= */
   .stage { padding-bottom: calc(78px + var(--safe-bot)); }
@@ -1209,56 +1196,31 @@
     </div>
   </section>
 
-  <!-- ================= LEAD FORM ================= -->
-  <section class="block lead-form" id="contact-form">
-    <div class="section-head reveal">
-      <div class="section-num">SECTION · 03</div>
-      <div class="section-title">
-        <span class="lang-zh">留下您的 <span class="accent">联系方式</span></span>
-        <span class="lang-en">Drop Your <span class="accent">Details</span></span>
-      </div>
-      <div class="section-bar"></div>
+  <!-- ================= LEAD FORM (compact, footer) ================= -->
+  <section class="lean-form" id="contact-form">
+    <div class="lean-form-head">
+      <span class="lang-zh"><span class="accent">留下联系方式</span> · 我们尽快与您联系</span>
+      <span class="lang-en"><span class="accent">Leave your details</span> · We'll be in touch</span>
     </div>
-    <div class="form-card reveal" data-delay="1">
-      <div class="form-head">
-        <div class="label">CONTACT · 留资入口</div>
-        <div class="ttl">
-          <span class="lang-zh">我们会主动与您联系</span>
-          <span class="lang-en">We'll reach out shortly</span>
-        </div>
-        <div class="hint">
-          <span class="lang-zh">填写后点提交，可直接调起邮件 App 发送至我方</span>
-          <span class="lang-en">Submit to send a pre-filled email to our team</span>
-        </div>
+    <form id="leadForm" novalidate>
+      <div class="form-row">
+        <input type="text" name="company" required placeholder="联系单位 *" autocomplete="organization" data-ph-zh="联系单位 *" data-ph-en="Company *">
+        <input type="text" name="name" required placeholder="联系人 *" autocomplete="name" data-ph-zh="联系人 *" data-ph-en="Name *">
       </div>
-      <form id="leadForm" novalidate>
-        <div class="form-field">
-          <label><span class="lang-zh">联系单位</span><span class="lang-en">Company</span><span class="req">*</span></label>
-          <input type="text" name="company" required placeholder="—" autocomplete="organization">
-        </div>
-        <div class="form-field">
-          <label><span class="lang-zh">联系人</span><span class="lang-en">Name</span><span class="req">*</span></label>
-          <input type="text" name="name" required placeholder="—" autocomplete="name">
-        </div>
-        <div class="form-field">
-          <label><span class="lang-zh">联系电话</span><span class="lang-en">Phone</span><span class="req">*</span></label>
-          <input type="tel" name="phone" required placeholder="—" autocomplete="tel">
-        </div>
-        <div class="form-field">
-          <label><span class="lang-zh">联系邮箱</span><span class="lang-en">Email</span></label>
-          <input type="email" name="email" placeholder="—" autocomplete="email">
-        </div>
-        <button type="submit" class="form-submit">
-          <span class="lang-zh">提交咨询</span>
-          <span class="lang-en">Submit</span>
-          <span>→</span>
-        </button>
-        <div class="form-success" id="formSuccess">
-          <span class="lang-zh">✓ 已为您调起邮件 App，发送即可，我们将尽快与您联系。</span>
-          <span class="lang-en">✓ Your email app is opened. Send it off — we'll get back to you soon.</span>
-        </div>
-      </form>
-    </div>
+      <div class="form-row">
+        <input type="tel" name="phone" required placeholder="联系电话 *" autocomplete="tel" data-ph-zh="联系电话 *" data-ph-en="Phone *">
+        <input type="email" name="email" placeholder="联系邮箱" autocomplete="email" data-ph-zh="联系邮箱" data-ph-en="Email">
+      </div>
+      <button type="submit" class="form-submit">
+        <span class="lang-zh">提交咨询</span>
+        <span class="lang-en">Submit</span>
+        <span>→</span>
+      </button>
+      <div class="form-success" id="formSuccess">
+        <span class="lang-zh">✓ 已为您调起邮件 App，发送即可</span>
+        <span class="lang-en">✓ Email app opened — tap send</span>
+      </div>
+    </form>
   </section>
 
   <!-- ================= VISIT US ================= -->
@@ -1390,7 +1352,7 @@
       home:     ['.hero'],
       products: ['#products', '#ugv', '#k9', '#cuas'],
       tech:     ['.workflow-section', '.matrix-section'],
-      mine:     ['.about', '#contact-form', '#visit']
+      mine:     ['.about', '#visit', '#contact-form']
     };
     // Build wrappers and move sections into them
     Object.keys(tabMap).forEach((key, i) => {
@@ -1492,6 +1454,11 @@
 
   /* ============= LANG SWITCHER ============= */
   const langButtons = document.querySelectorAll('.lang-toggle button');
+  function applyLangPlaceholders(lang) {
+    document.querySelectorAll('input[data-ph-zh][data-ph-en]').forEach(i => {
+      i.placeholder = i.dataset['ph' + (lang === 'en' ? 'En' : 'Zh')];
+    });
+  }
   langButtons.forEach(b => b.addEventListener('click', () => {
     const lang = b.dataset.lang;
     document.documentElement.dataset.lang = lang;
@@ -1499,7 +1466,9 @@
     document.title = lang === 'zh'
       ? '智启新境 · 无人先行 | 无人装备微站'
       : 'Unmanned Frontier · Pioneered | KUKE';
+    applyLangPlaceholders(lang);
   }));
+  applyLangPlaceholders(document.documentElement.dataset.lang || 'zh');
 
   /* ============= SCROLL REVEAL ============= */
   const io = new IntersectionObserver((entries) => {
