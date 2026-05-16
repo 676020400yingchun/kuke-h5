@@ -87,35 +87,64 @@
     color: #0a1424; box-shadow: 0 4px 12px rgba(0,212,255,.35);
   }
 
-  /* ========== HERO ========== */
+  /* ========== HERO (minimal · focal product card) ========== */
   .hero {
     position: relative; min-height: 100vh; min-height: 100dvh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 24px calc(60px + var(--safe-bot));
+    display: flex; flex-direction: column; justify-content: center;
+    padding: calc(70px + var(--safe-top)) 24px calc(50px + var(--safe-bot));
     overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0; z-index: 0;
-  }
-  .hero-bg img, .hero-bg video {
-    width: 100%; height: 100%; object-fit: cover;
-    filter: brightness(.7) contrast(1.05) saturate(1.1);
-  }
-  .hero-bg::after {
-    content: ""; position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(10,20,36,.4) 0%, rgba(10,20,36,.1) 30%, rgba(10,20,36,.85) 80%, var(--bg-1) 100%),
-      linear-gradient(0deg, rgba(0,145,255,.08), transparent 50%);
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,145,255,.18), transparent 70%),
+      radial-gradient(ellipse 100% 50% at 50% 100%, rgba(0,212,255,.10), transparent 70%),
+      var(--bg-1);
   }
-  .hero-bg::before {
-    content: ""; position: absolute; inset: 0;
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
     background-image:
-      linear-gradient(rgba(0,212,255,.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,.05) 1px, transparent 1px);
-    background-size: 32px 32px;
-    z-index: 1; opacity: .4;
+      linear-gradient(rgba(0,212,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 75%);
   }
-  .hero-content { position: relative; z-index: 2; }
+  .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 14px; }
+
+  /* HD focal card image — small but crisp */
+  .hero-card {
+    margin: 14px 0 10px;
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid rgba(0,212,255,.4);
+    box-shadow:
+      0 24px 60px rgba(0,0,0,.55),
+      0 0 0 6px rgba(0,212,255,.06),
+      0 0 40px rgba(0,212,255,.25);
+  }
+  .hero-card img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: contrast(1.06) saturate(1.06);
+  }
+  .hero-card::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(10,20,36,.7) 100%);
+    pointer-events: none;
+  }
+  .hero-card .card-corner {
+    position: absolute; width: 14px; height: 14px;
+    border: 1.5px solid var(--cyan);
+    opacity: .85;
+  }
+  .hero-card .card-corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+  .hero-card .card-corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+  .hero-card .card-corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+  .hero-card .card-corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+  .hero-card .card-badge {
+    position: absolute; bottom: 12px; left: 12px;
+    font-family: "SF Mono", Menlo, monospace; font-size: 9px; letter-spacing: .25em;
+    color: var(--cyan); background: rgba(10,20,36,.7); backdrop-filter: blur(6px);
+    padding: 4px 8px; border: 1px solid rgba(0,212,255,.35);
+  }
   .hero-kicker {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 5px 10px; border: 1px solid var(--line-strong);
@@ -133,24 +162,24 @@
     50% { opacity: .3; }
   }
   .hero h1 {
-    font-size: clamp(34px, 9vw, 44px); font-weight: 900;
-    line-height: 1.05; letter-spacing: .02em;
-    background: linear-gradient(135deg, #ffffff 0%, var(--sky) 60%, var(--cyan) 100%);
+    font-size: clamp(36px, 10vw, 48px); font-weight: 900;
+    line-height: 1.02; letter-spacing: .02em;
+    background: linear-gradient(135deg, #ffffff 0%, var(--sky) 55%, var(--cyan) 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin-bottom: 8px;
+    margin: 0;
   }
-  [data-lang="en"] .hero h1 { font-size: clamp(30px, 8vw, 40px); letter-spacing: -.01em; }
+  [data-lang="en"] .hero h1 { font-size: clamp(32px, 9vw, 44px); letter-spacing: -.01em; }
   .hero h1 .sep { color: var(--cyan); -webkit-text-fill-color: var(--cyan); margin: 0 4px; }
   .hero .hero-sub {
-    font-size: 16px; color: var(--text-2); font-weight: 600; letter-spacing: .04em;
-    margin-bottom: 6px;
+    font-size: 15px; color: var(--text-2); font-weight: 600; letter-spacing: .04em;
+    margin: 0;
   }
   .hero .hero-tag {
     font-size: 11px; color: var(--text-3); letter-spacing: .35em; text-transform: uppercase;
-    margin-bottom: 28px;
+    margin: 0;
   }
   .hero-cta {
-    display: flex; gap: 12px; margin-bottom: 12px;
+    display: flex; gap: 12px; margin-top: 6px;
   }
   .btn {
     flex: 1; padding: 14px 18px;
@@ -676,6 +705,85 @@
     font-size: 20px; cursor: pointer;
   }
 
+  /* ============= CONTACT FORM ============= */
+  .form-card {
+    background: linear-gradient(160deg, rgba(24,37,59,.85) 0%, rgba(15,27,46,.85) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line-strong);
+    padding: 22px 18px;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .form-card::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+  }
+  .form-card .form-head {
+    margin-bottom: 16px;
+  }
+  .form-card .form-head .label {
+    font-family: "SF Mono", Menlo, monospace; font-size: 10px;
+    color: var(--cyan); letter-spacing: .3em;
+    margin-bottom: 6px;
+  }
+  .form-card .form-head .ttl {
+    font-size: 18px; font-weight: 800; color: var(--text);
+    letter-spacing: .02em;
+  }
+  .form-card .form-head .hint {
+    font-size: 11px; color: var(--text-3); margin-top: 4px;
+    letter-spacing: .08em;
+  }
+  .form-field { margin-bottom: 12px; position: relative; }
+  .form-field:last-of-type { margin-bottom: 18px; }
+  .form-field label {
+    display: block;
+    font-size: 10px; color: var(--text-3);
+    letter-spacing: .18em; margin-bottom: 5px;
+    font-weight: 700;
+  }
+  .form-field label .req { color: var(--cyan); margin-left: 2px; }
+  .form-field input {
+    width: 100%; padding: 11px 14px;
+    background: rgba(10,20,36,.5);
+    border: 1px solid rgba(0,212,255,.18);
+    color: var(--text);
+    font-size: 14px; letter-spacing: .02em;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+    -webkit-appearance: none; appearance: none;
+    border-radius: 0;
+  }
+  .form-field input::placeholder { color: var(--text-4); font-size: 13px; }
+  .form-field input:focus {
+    background: rgba(10,20,36,.8);
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 2px rgba(0,212,255,.16);
+  }
+  .form-submit {
+    width: 100%; padding: 14px 18px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #0a1424;
+    font-size: 14px; font-weight: 800; letter-spacing: .12em;
+    border: 0; cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,212,255,.3);
+    transition: transform .15s ease;
+    font-family: inherit;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .form-submit:active { transform: scale(.97); }
+  .form-success {
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: rgba(0,212,255,.12);
+    border: 1px solid var(--line-strong);
+    color: var(--cyan);
+    font-size: 13px; letter-spacing: .04em; line-height: 1.5;
+    display: none;
+  }
+  .form-success.show { display: block; animation: fadeInPage .4s ease both; }
+
   /* ============= TAB MICRO-SITE ============= */
   .stage { padding-bottom: calc(78px + var(--safe-bot)); }
 
@@ -763,9 +871,6 @@
 
   <!-- ================= HERO ================= -->
   <section class="hero">
-    <div class="hero-bg">
-      <img src="assets/ugv-hero.jpg" alt="" fetchpriority="high" decoding="async">
-    </div>
     <div class="hero-content">
       <div class="hero-kicker">
         <span class="dot"></span>
@@ -779,6 +884,14 @@
       <div class="hero-sub">
         <span class="lang-zh">三大硬核装备 · 重塑作业边界</span>
         <span class="lang-en">Three powerhouse platforms. One mission frontier.</span>
+      </div>
+      <div class="hero-card">
+        <img src="assets/ugv-hero.jpg" alt="" fetchpriority="high" decoding="async">
+        <span class="card-corner tl"></span>
+        <span class="card-corner tr"></span>
+        <span class="card-corner bl"></span>
+        <span class="card-corner br"></span>
+        <div class="card-badge">FLAGSHIP · UGV 6×6</div>
       </div>
       <div class="hero-tag">
         <span class="lang-zh">智驭无人时代 · 筑牢安全防线</span>
@@ -1096,6 +1209,58 @@
     </div>
   </section>
 
+  <!-- ================= LEAD FORM ================= -->
+  <section class="block lead-form" id="contact-form">
+    <div class="section-head reveal">
+      <div class="section-num">SECTION · 03</div>
+      <div class="section-title">
+        <span class="lang-zh">留下您的 <span class="accent">联系方式</span></span>
+        <span class="lang-en">Drop Your <span class="accent">Details</span></span>
+      </div>
+      <div class="section-bar"></div>
+    </div>
+    <div class="form-card reveal" data-delay="1">
+      <div class="form-head">
+        <div class="label">CONTACT · 留资入口</div>
+        <div class="ttl">
+          <span class="lang-zh">我们会主动与您联系</span>
+          <span class="lang-en">We'll reach out shortly</span>
+        </div>
+        <div class="hint">
+          <span class="lang-zh">填写后点提交，可直接调起邮件 App 发送至我方</span>
+          <span class="lang-en">Submit to send a pre-filled email to our team</span>
+        </div>
+      </div>
+      <form id="leadForm" novalidate>
+        <div class="form-field">
+          <label><span class="lang-zh">联系单位</span><span class="lang-en">Company</span><span class="req">*</span></label>
+          <input type="text" name="company" required placeholder="—" autocomplete="organization">
+        </div>
+        <div class="form-field">
+          <label><span class="lang-zh">联系人</span><span class="lang-en">Name</span><span class="req">*</span></label>
+          <input type="text" name="name" required placeholder="—" autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label><span class="lang-zh">联系电话</span><span class="lang-en">Phone</span><span class="req">*</span></label>
+          <input type="tel" name="phone" required placeholder="—" autocomplete="tel">
+        </div>
+        <div class="form-field">
+          <label><span class="lang-zh">联系邮箱</span><span class="lang-en">Email</span></label>
+          <input type="email" name="email" placeholder="—" autocomplete="email">
+        </div>
+        <button type="submit" class="form-submit">
+          <span class="lang-zh">提交咨询</span>
+          <span class="lang-en">Submit</span>
+          <span>→</span>
+        </button>
+        <div class="form-success" id="formSuccess">
+          <span class="lang-zh">✓ 已为您调起邮件 App，发送即可，我们将尽快与您联系。</span>
+          <span class="lang-en">✓ Your email app is opened. Send it off — we'll get back to you soon.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <!-- ================= VISIT US ================= -->
   <section class="block visit" id="visit">
     <div class="visit-content">
@@ -1225,7 +1390,7 @@
       home:     ['.hero'],
       products: ['#products', '#ugv', '#k9', '#cuas'],
       tech:     ['.workflow-section', '.matrix-section'],
-      mine:     ['.about', '#visit']
+      mine:     ['.about', '#contact-form', '#visit']
     };
     // Build wrappers and move sections into them
     Object.keys(tabMap).forEach((key, i) => {
@@ -1389,6 +1554,48 @@
   modal.addEventListener('click', (e) => {
     if (e.target === modal) closeVideo.click();
   });
+
+  /* ============= LEAD FORM SUBMIT ============= */
+  (function() {
+    const form = document.getElementById('leadForm');
+    const success = document.getElementById('formSuccess');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const company = (data.get('company') || '').trim();
+      const name = (data.get('name') || '').trim();
+      const phone = (data.get('phone') || '').trim();
+      const email = (data.get('email') || '').trim();
+      if (!company || !name || !phone) {
+        // briefly highlight empty required fields
+        form.querySelectorAll('input[required]').forEach(inp => {
+          if (!inp.value.trim()) {
+            inp.style.borderColor = '#ff6b6b';
+            inp.style.boxShadow = '0 0 0 2px rgba(255,107,107,.2)';
+            setTimeout(() => { inp.style.borderColor = ''; inp.style.boxShadow = ''; }, 1500);
+          }
+        });
+        return;
+      }
+      const lang = document.documentElement.dataset.lang;
+      const body = [
+        '联系单位 / Company: ' + company,
+        '联系人 / Name: ' + name,
+        '联系电话 / Phone: ' + phone,
+        '联系邮箱 / Email: ' + (email || '-'),
+        '',
+        '— ' + (lang === 'zh' ? '来自 H5 微站留言' : 'Submitted via H5 site')
+      ].join('\n');
+      const subject = lang === 'zh' ? '展会咨询留言 - H5 微站' : 'Inquiry - H5 Micro-site';
+      const mailto = 'mailto:1226273808@qq.com'
+                   + '?subject=' + encodeURIComponent(subject)
+                   + '&body='    + encodeURIComponent(body);
+      window.location.href = mailto;
+      success.classList.add('show');
+      setTimeout(() => success.classList.remove('show'), 8000);
+    });
+  })();
 
   /* ============= NAV BAR HIDE/SHOW ON SCROLL ============= */
   let lastY = 0;
