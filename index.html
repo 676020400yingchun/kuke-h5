@@ -53,6 +53,145 @@
   }
 
   /* ========== TOP NAV ========== */
+  /* ============= THEMES ============= */
+  /* Default = blue-dark (defined in :root above) */
+  [data-theme="blue-light"] {
+    --bg-0: #E5EFF7; --bg-1: #F4F8FC; --bg-2: #FFFFFF;
+    --bg-3: #F8FAFD; --bg-4: #E2EAF3;
+    --line: rgba(0,145,255,.22);
+    --line-strong: rgba(0,145,255,.45);
+    --cyan: #0099D9; --blue: #0066B3; --sky: #2D8FC9;
+    --text: #0A1424; --text-2: #1F3550;
+    --text-3: #4A5970; --text-4: #6B7891;
+  }
+  [data-theme="red-dark"] {
+    --bg-0: #0E0506; --bg-1: #1A0709; --bg-2: #2A0E13;
+    --bg-3: #3D1722; --bg-4: #5A1F2E;
+    --line: rgba(255,77,94,.2);
+    --line-strong: rgba(255,77,94,.42);
+    --cyan: #FF4D5E; --blue: #FF7847; --sky: #FFB4B4;
+    --text: #FFEBEC; --text-2: #FFCAD0;
+    --text-3: #C4828E; --text-4: #8A5560;
+  }
+  [data-theme="red-light"] {
+    --bg-0: #FCEEEF; --bg-1: #FFF7F8; --bg-2: #FFFFFF;
+    --bg-3: #FFEBED; --bg-4: #FFD8DC;
+    --line: rgba(190,30,45,.22);
+    --line-strong: rgba(190,30,45,.45);
+    --cyan: #BE1E2D; --blue: #D84B2C; --sky: #E83E5C;
+    --text: #1F0A0E; --text-2: #3D1722;
+    --text-3: #6B3340; --text-4: #8F5F69;
+  }
+
+  /* Light-mode global tweaks */
+  [data-theme$="-light"] body {
+    background: var(--bg-1);
+  }
+  [data-theme$="-light"] .top-nav {
+    background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.85) 70%, rgba(255,255,255,0) 100%);
+  }
+  [data-theme$="-light"] .top-nav .brand { color: var(--text); }
+  [data-theme$="-light"] .lang-toggle button { color: var(--text-3); }
+  [data-theme$="-light"] .lang-toggle button.active { color: var(--cyan); }
+  [data-theme$="-light"] .tabbar {
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 -8px 24px rgba(0,0,0,.06);
+  }
+  [data-theme$="-light"] .tabbar .tab { color: var(--text-3); }
+  [data-theme$="-light"] .tabbar .tab.active { color: var(--cyan); }
+  [data-theme$="-light"] .fab {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #fff;
+  }
+  /* Image filter for light mode (slight desaturation, keep punch) */
+  [data-theme$="-light"] .cat-img img,
+  [data-theme$="-light"] .hero-card img,
+  [data-theme$="-light"] .detail-media img {
+    filter: contrast(1) saturate(1);
+  }
+  /* Card backgrounds in light mode */
+  [data-theme$="-light"] .stat,
+  [data-theme$="-light"] .pillar,
+  [data-theme$="-light"] .vm-card,
+  [data-theme$="-light"] .val-card,
+  [data-theme$="-light"] .mat-tile,
+  [data-theme$="-light"] .info-row,
+  [data-theme$="-light"] .form-card,
+  [data-theme$="-light"] .cat-item,
+  [data-theme$="-light"] .spec-table {
+    background: var(--bg-2);
+    box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.06);
+  }
+  /* Form inputs in light mode */
+  [data-theme$="-light"] .lean-form input {
+    background: var(--bg-2); color: var(--text);
+    border-color: var(--line);
+  }
+
+  /* ============= THEME SWITCHER UI ============= */
+  .nav-actions {
+    display: flex; align-items: center; gap: 8px;
+    pointer-events: auto;
+  }
+  .theme-switcher {
+    width: 36px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,20,36,.6); backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+    color: var(--cyan);
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .theme-switcher svg { width: 16px; height: 16px; }
+  .theme-switcher:active { transform: scale(.94); }
+  .theme-panel {
+    position: fixed;
+    top: calc(54px + var(--safe-top));
+    right: 16px;
+    width: 220px;
+    background: var(--bg-2);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    backdrop-filter: blur(20px);
+    padding: 8px;
+    z-index: 200;
+    display: none;
+    pointer-events: auto;
+  }
+  .theme-panel.open { display: block; animation: fadeInPage .25s ease both; }
+  .theme-panel-head {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 9px; color: var(--cyan);
+    letter-spacing: .3em; padding: 8px 10px 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 6px;
+  }
+  .theme-opt {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; padding: 8px 10px;
+    background: transparent; border: 0;
+    color: var(--text-2); font-family: inherit;
+    cursor: pointer; text-align: left;
+    transition: background .15s ease;
+  }
+  .theme-opt:hover { background: rgba(0,212,255,.06); }
+  .theme-opt.active {
+    background: rgba(0,212,255,.1);
+    color: var(--cyan);
+  }
+  .theme-opt .swatch {
+    display: inline-flex; flex-shrink: 0;
+    width: 28px; height: 18px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .theme-opt .swatch i { display: block; flex: 1; }
+  .theme-opt .t-name {
+    font-size: 12px; letter-spacing: .04em;
+    font-weight: 600;
+  }
+  .theme-opt.active .t-name { color: var(--cyan); }
+
   .top-nav {
     position: fixed; top: 0; left: 50%; transform: translateX(-50%);
     width: 100%; max-width: var(--max-w);
@@ -481,6 +620,157 @@
   .feature .ttl { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; letter-spacing: .02em; }
   .feature .d { font-size: 12px; color: var(--text-2); line-height: 1.6; }
 
+  /* ========== FULL CATALOG (装备 Tab) ========== */
+  .catalog-section { background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%); }
+  .cat-group { margin-top: 36px; }
+  .cat-group:first-child { margin-top: 24px; }
+  .cat-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; margin-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .cat-head::before {
+    content: ""; position: absolute; left: 0; bottom: -1px;
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), transparent);
+  }
+  .cat-head .cat-num {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; color: var(--cyan); letter-spacing: .3em;
+  }
+  .cat-head .cat-name {
+    flex: 1; font-size: 18px; font-weight: 800; color: var(--text);
+    letter-spacing: .02em;
+  }
+  .cat-head .cat-name .accent { color: var(--cyan); }
+  .cat-head .cat-count {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; color: var(--sky); letter-spacing: .15em;
+  }
+
+  .cat-list { display: flex; flex-direction: column; gap: 14px; }
+  .cat-item {
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    position: relative;
+  }
+  .cat-item::before {
+    content: ""; position: absolute; top: 0; left: 0;
+    width: 3px; height: 36px;
+    background: linear-gradient(180deg, var(--cyan), transparent);
+  }
+  .cat-item .cat-img {
+    position: relative; overflow: hidden; background: var(--bg-2);
+  }
+  .cat-item .cat-img img {
+    width: 100%; height: auto; display: block;
+    filter: contrast(1.04) saturate(1.04);
+  }
+  .cat-item .cat-img::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+    background: linear-gradient(180deg, transparent 0%, rgba(10,20,36,.7) 100%);
+    pointer-events: none;
+  }
+  .cat-item .cat-img .badge {
+    position: absolute; top: 8px; left: 8px;
+    font-family: "SF Mono", Menlo, monospace; font-size: 9px;
+    color: var(--cyan); background: rgba(10,20,36,.78);
+    border: 1px solid var(--line-strong);
+    padding: 3px 8px; letter-spacing: .2em;
+  }
+  .cat-item .cat-img .coming-soon {
+    position: absolute; bottom: 8px; right: 8px;
+    font-size: 11px; font-weight: 700;
+    color: #FFB84D; background: rgba(10,20,36,.88);
+    border: 1px solid rgba(255, 184, 77, .45);
+    padding: 4px 10px; letter-spacing: .15em;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.4);
+    display: flex; align-items: center; gap: 6px;
+    z-index: 2;
+  }
+  .cat-item .cat-img .coming-soon::before {
+    content: ""; width: 6px; height: 6px;
+    background: #FFB84D; border-radius: 50%;
+    box-shadow: 0 0 8px #FFB84D;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  .cat-item .cat-body { padding: 14px 14px 16px; }
+  .cat-item h4 {
+    font-size: 16px; font-weight: 800; color: var(--text);
+    letter-spacing: .02em; margin-bottom: 4px; line-height: 1.25;
+  }
+  .cat-item .cat-tag {
+    font-size: 11px; color: var(--sky); letter-spacing: .12em;
+    margin-bottom: 8px; font-weight: 600;
+  }
+  .cat-item .cat-desc {
+    font-size: 12.5px; color: var(--text-2); line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .cat-item .cat-specs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    margin-bottom: 0; list-style: none; padding: 0;
+  }
+  .cat-item .cat-specs li {
+    background: rgba(10,20,36,.45); border: 1px solid var(--line);
+    padding: 6px 8px; font-size: 10.5px; color: var(--text-2);
+    letter-spacing: .04em; line-height: 1.4;
+  }
+  .cat-item .cat-specs li b {
+    display: block; font-size: 12px; color: var(--cyan);
+    font-weight: 800; letter-spacing: 0; margin-bottom: 1px;
+  }
+  /* Full spec table for detailed product data */
+  .cat-item .spec-table {
+    margin-top: 4px;
+    background: rgba(10,20,36,.4);
+    border: 1px solid var(--line);
+  }
+  .cat-item .spec-table .spec-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(0,212,255,.1);
+    font-size: 11px;
+    line-height: 1.5;
+    gap: 8px;
+  }
+  .cat-item .spec-table .spec-row:last-child { border-bottom: none; }
+  .cat-item .spec-table .spec-row .k {
+    color: var(--cyan);
+    letter-spacing: .1em;
+    font-weight: 700;
+    font-size: 10px;
+  }
+  .cat-item .spec-table .spec-row .v {
+    color: var(--text-2);
+    word-break: break-word;
+  }
+  .cat-item .spec-table .spec-row .v b {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .cat-item .spec-title {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 9.5px; color: var(--cyan); letter-spacing: .25em;
+    margin: 12px 0 6px;
+    font-weight: 700;
+  }
+  .cat-item .cat-feat {
+    margin-top: 10px; padding-top: 10px;
+    border-top: 1px dashed var(--line);
+    display: flex; flex-wrap: wrap; gap: 5px;
+  }
+  .cat-item .cat-feat .chip {
+    font-size: 10px; color: var(--sky);
+    background: rgba(0,212,255,.08);
+    border: 1px solid rgba(0,212,255,.25);
+    padding: 3px 7px; letter-spacing: .04em;
+  }
+
   /* ========== WORKFLOW (vertical timeline) ========== */
   .workflow-section {
     background: var(--bg-1);
@@ -771,6 +1061,164 @@
   }
   .lean-form .form-success.show { display: block; animation: fadeInPage .4s ease both; }
 
+  /* ============= PHILOSOPHY ============= */
+  .philosophy { background: var(--bg-1); }
+  .vm-row {
+    display: flex; flex-direction: column; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .vm-card {
+    position: relative; overflow: hidden;
+    padding: 22px 20px 24px;
+    background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 100%);
+    border: 1px solid var(--line);
+  }
+  .vm-card.vm-vision { border-left: 3px solid var(--cyan); }
+  .vm-card.vm-mission { border-left: 3px solid var(--blue); }
+  .vm-card::after {
+    content: ""; position: absolute; top: -40%; right: -10%;
+    width: 200px; height: 200px;
+    background: radial-gradient(closest-side, rgba(0,212,255,.08), transparent 70%);
+    pointer-events: none;
+  }
+  .vm-mission::after {
+    background: radial-gradient(closest-side, rgba(0,145,255,.10), transparent 70%);
+  }
+  .vm-tag {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; font-weight: 700;
+    color: var(--cyan); letter-spacing: .28em;
+    margin-bottom: 14px;
+  }
+  .vm-mission .vm-tag { color: var(--blue); }
+  .vm-line {
+    font-size: 22px; font-weight: 800; color: var(--text);
+    line-height: 1.35; letter-spacing: .03em;
+    position: relative; z-index: 2;
+  }
+  [data-lang="en"] .vm-line { font-size: 18px; letter-spacing: .01em; }
+  .vm-line .accent {
+    color: var(--cyan); -webkit-text-fill-color: var(--cyan);
+  }
+  .vm-mission .vm-line .accent { color: var(--blue); -webkit-text-fill-color: var(--blue); }
+
+  .values-title {
+    font-size: 16px; font-weight: 800; color: var(--text);
+    letter-spacing: .04em; margin: 6px 0 14px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .values-title::after {
+    content: ""; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue));
+    box-shadow: 0 0 8px rgba(0,212,255,.5);
+  }
+  .values-title .accent { color: var(--cyan); -webkit-text-fill-color: var(--cyan); }
+
+  .values-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .val-card {
+    position: relative; overflow: hidden;
+    padding: 16px 14px 18px;
+    background: linear-gradient(160deg, var(--bg-2) 0%, var(--bg-3) 100%);
+    border: 1px solid var(--line);
+    text-align: left;
+  }
+  .val-card::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), transparent 80%);
+  }
+  .val-icon {
+    font-size: 28px; font-weight: 900; color: var(--text);
+    letter-spacing: .08em; line-height: 1;
+    margin-bottom: 4px;
+    background: linear-gradient(180deg, #fff 0%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+  /* In English mode val-icon shows a longer English verb — tighter sizing */
+  [data-lang="en"] .val-icon {
+    font-size: 20px; letter-spacing: .04em;
+  }
+  .val-en {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 9px; font-weight: 700;
+    color: var(--cyan); letter-spacing: .25em;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,212,255,.15);
+  }
+  /* In English mode val-en shows Chinese — adjust font-family + spacing */
+  [data-lang="en"] .val-en {
+    font-family: inherit;
+    letter-spacing: .15em;
+    font-size: 12px;
+  }
+  .val-desc {
+    font-size: 11.5px; line-height: 1.65;
+    color: var(--text-2);
+  }
+  [data-lang="en"] .val-desc { font-size: 10.5px; line-height: 1.55; }
+
+  /* ============= TECH PILLARS ============= */
+  .tech-pillars-section { background: var(--bg-1); }
+  .pillars {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .pillar {
+    position: relative;
+    background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 60%, var(--bg-2) 100%);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--cyan);
+    padding: 22px 18px 22px 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  }
+  .pillar::before {
+    content: ""; position: absolute; top: 0; right: 0; width: 60%; height: 100%;
+    background: radial-gradient(ellipse 80% 80% at 100% 0%, rgba(0,212,255,.08), transparent 60%);
+    pointer-events: none;
+  }
+  .pillar .p-num {
+    position: absolute; top: -16px; right: 8px;
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 110px; font-weight: 900;
+    color: rgba(0,212,255,.06);
+    letter-spacing: -.05em; line-height: 1;
+    pointer-events: none; user-select: none;
+  }
+  .pillar .p-body { position: relative; z-index: 2; }
+  .pillar .p-title {
+    font-size: 19px; font-weight: 800; color: var(--text);
+    letter-spacing: .02em; line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  [data-lang="en"] .pillar .p-title { font-size: 17px; letter-spacing: .01em; }
+  .pillar .p-title .accent {
+    color: var(--cyan); -webkit-text-fill-color: var(--cyan);
+  }
+  .pillar .p-tag {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; font-weight: 700;
+    color: var(--cyan); letter-spacing: .28em;
+    padding-bottom: 12px; margin-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .pillar .p-desc {
+    font-size: 13.5px; line-height: 1.75;
+    color: var(--text-2);
+    text-align: justify;
+  }
+  .pillar .p-desc b {
+    color: var(--text); font-weight: 700;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,212,255,.18) 60%);
+  }
+
   /* ============= TAB MICRO-SITE ============= */
   .stage { padding-bottom: calc(78px + var(--safe-bot)); }
 
@@ -787,6 +1235,41 @@
   .tab-page section.hero + section.block::after { display: none; }
   .tab-page .next-hint { display: none !important; }
   .tab-page section.block:first-child { padding-top: 90px; }
+
+  /* === Continuous flow within Tech & Mine tabs (no section breaks) === */
+  .tab-page[data-tab="tech"] section.block,
+  .tab-page[data-tab="mine"] section.block {
+    min-height: auto !important;
+    padding: 24px 20px !important;
+    justify-content: flex-start !important;
+    background: var(--bg-1) !important;
+  }
+  /* Unified background across the whole tab — no color-change boundaries */
+  .tab-page[data-tab="tech"],
+  .tab-page[data-tab="mine"] {
+    background: var(--bg-1);
+  }
+  /* First section in these tabs keeps top breathing room for fixed nav */
+  .tab-page[data-tab="tech"] section.block:first-child,
+  .tab-page[data-tab="mine"] section.block:first-child {
+    padding-top: 84px !important;
+  }
+  /* Hide per-section page numbers in continuous-flow tabs */
+  .tab-page[data-tab="tech"] section.block .page-tag,
+  .tab-page[data-tab="mine"] section.block .page-tag { display: none !important; }
+  /* Decorative pseudo backgrounds on visit section need to be flattened */
+  .tab-page[data-tab="mine"] .visit::before,
+  .tab-page[data-tab="mine"] .visit::after { opacity: .4; }
+  /* Section heads inside continuous tabs become inline-feeling subsection headers */
+  .tab-page[data-tab="tech"] section.block .section-head,
+  .tab-page[data-tab="mine"] section.block .section-head {
+    margin-bottom: 18px;
+  }
+  /* Mine tab footer flush, no big top gap */
+  .tab-page[data-tab="mine"] .foot {
+    padding-top: 20px !important;
+    border-top: 1px solid rgba(255,255,255,.04);
+  }
 
   /* Bottom Tab Bar */
   .tabbar {
@@ -848,9 +1331,51 @@
     <span class="lang-zh">无人装备 · KUKE</span>
     <span class="lang-en">UNMANNED · KUKE</span>
   </div>
-  <div class="lang-toggle">
-    <button data-lang="zh" class="active">中</button>
-    <button data-lang="en">EN</button>
+  <div class="nav-actions">
+    <button class="theme-switcher" aria-label="Theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3 a9 9 0 0 1 0 18" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="lang-toggle">
+      <button data-lang="zh" class="active">中</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </div>
+  <div class="theme-panel" aria-hidden="true">
+    <div class="theme-panel-head">
+      <span class="lang-zh">主题切换</span>
+      <span class="lang-en">Theme</span>
+    </div>
+    <button class="theme-opt active" data-theme-set="blue-dark">
+      <span class="swatch"><i style="background:#0A1424"></i><i style="background:#00D4FF"></i></span>
+      <span class="t-name">
+        <span class="lang-zh">科技蓝 · 夜间</span>
+        <span class="lang-en">Sci-Fi Blue · Dark</span>
+      </span>
+    </button>
+    <button class="theme-opt" data-theme-set="blue-light">
+      <span class="swatch"><i style="background:#F4F8FC"></i><i style="background:#0099D9"></i></span>
+      <span class="t-name">
+        <span class="lang-zh">科技蓝 · 白昼</span>
+        <span class="lang-en">Sci-Fi Blue · Light</span>
+      </span>
+    </button>
+    <button class="theme-opt" data-theme-set="red-dark">
+      <span class="swatch"><i style="background:#1A0709"></i><i style="background:#FF4D5E"></i></span>
+      <span class="t-name">
+        <span class="lang-zh">应急红 · 夜间</span>
+        <span class="lang-en">Emergency Red · Dark</span>
+      </span>
+    </button>
+    <button class="theme-opt" data-theme-set="red-light">
+      <span class="swatch"><i style="background:#FFF7F8"></i><i style="background:#BE1E2D"></i></span>
+      <span class="t-name">
+        <span class="lang-zh">应急红 · 白昼</span>
+        <span class="lang-en">Emergency Red · Light</span>
+      </span>
+    </button>
   </div>
 </header>
 
@@ -940,287 +1465,660 @@
     </div>
   </section>
 
-  <!-- ================= PRODUCTS OVERVIEW ================= -->
-  <section class="block products" id="products">
+  <!-- ================= PHILOSOPHY ================= -->
+  <section class="block philosophy">
+    <div class="section-head reveal">
+      <div class="section-num">SECTION · 01.2</div>
+      <div class="section-title">
+        <span class="lang-zh">企业 <span class="accent">理念</span></span>
+        <span class="lang-en">Corporate <span class="accent">Philosophy</span></span>
+      </div>
+      <div class="section-bar"></div>
+    </div>
+
+    <div class="vm-row">
+      <div class="vm-card vm-vision reveal">
+        <div class="vm-tag">VISION · 愿景</div>
+        <div class="vm-line">
+          <span class="lang-zh">让无人智能装备<br><span class="accent">守护每一寸土地</span></span>
+          <span class="lang-en">Empowering every frontier<br><span class="accent">with unmanned intelligence</span></span>
+        </div>
+      </div>
+      <div class="vm-card vm-mission reveal" data-delay="1">
+        <div class="vm-tag">MISSION · 使命</div>
+        <div class="vm-line">
+          <span class="lang-zh">以匠心铸精品<br><span class="accent">以科技守安全</span></span>
+          <span class="lang-en">Crafted with rigor<br><span class="accent">engineered for safety</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-title reveal" data-delay="1">
+      <span class="lang-zh">核心 <span class="accent">价值观</span></span>
+      <span class="lang-en">Core <span class="accent">Values</span></span>
+    </div>
+    <div class="values-grid">
+      <div class="val-card reveal" data-delay="2">
+        <div class="val-icon"><span class="lang-zh">创新</span><span class="lang-en">INNOVATE</span></div>
+        <div class="val-en"><span class="lang-zh">INNOVATION</span><span class="lang-en">创新</span></div>
+        <div class="val-desc">
+          <span class="lang-zh">持续突破技术边界,以自主硬核迭代驱动行业前行</span>
+          <span class="lang-en">Pushing technical frontiers — autonomous hardcore iteration leads the industry forward.</span>
+        </div>
+      </div>
+      <div class="val-card reveal" data-delay="3">
+        <div class="val-icon"><span class="lang-zh">可靠</span><span class="lang-en">ENDURE</span></div>
+        <div class="val-en"><span class="lang-zh">RELIABILITY</span><span class="lang-en">可靠</span></div>
+        <div class="val-desc">
+          <span class="lang-zh">经得起场景检验,全天候极端环境稳定履职</span>
+          <span class="lang-en">Battle-tested across scenarios — stable in 24/7 extreme conditions.</span>
+        </div>
+      </div>
+      <div class="val-card reveal" data-delay="4">
+        <div class="val-icon"><span class="lang-zh">安全</span><span class="lang-en">PROTECT</span></div>
+        <div class="val-en"><span class="lang-zh">SAFETY</span><span class="lang-en">安全</span></div>
+        <div class="val-desc">
+          <span class="lang-zh">守护每一道防线,从硬件防护到数据加密全链路可控</span>
+          <span class="lang-en">Defending every perimeter — from hardware shielding to encrypted data, fully controllable.</span>
+        </div>
+      </div>
+      <div class="val-card reveal" data-delay="5">
+        <div class="val-icon"><span class="lang-zh">务实</span><span class="lang-en">DELIVER</span></div>
+        <div class="val-en"><span class="lang-zh">PRAGMATISM</span><span class="lang-en">务实</span></div>
+        <div class="val-desc">
+          <span class="lang-zh">用得起、用得稳、用得久,真正为一线作业减负赋能</span>
+          <span class="lang-en">Affordable, durable, long-serving — real-world relief for frontline operations.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FULL PRODUCT CATALOG ================= -->
+  <section class="block catalog-section" id="products">
     <div class="section-head reveal">
       <div class="section-num">SECTION · 02</div>
       <div class="section-title">
-        <span class="lang-zh">三大 <span class="accent">硬核装备</span></span>
-        <span class="lang-en">Three <span class="accent">Powerhouses</span></span>
+        <span class="lang-zh">全系 <span class="accent">装备目录</span></span>
+        <span class="lang-en">Equipment <span class="accent">Catalog</span></span>
       </div>
       <div class="section-bar"></div>
     </div>
-    <div class="pcards">
-      <a href="#ugv" class="pcard reveal">
-        <img src="assets/ugv-product.jpg" alt="" loading="lazy" decoding="async">
-        <div class="corner">UGV · 6×6</div>
-        <div class="meta">
-          <div class="tag"><span class="lang-zh">PRODUCT · 01</span><span class="lang-en">PRODUCT · 01</span></div>
-          <h3><span class="lang-zh">全地形六轮无人车</span><span class="lang-en">6×6 All-Terrain UGV</span></h3>
-          <div class="desc"><span class="lang-zh">多任务智能作业平台</span><span class="lang-en">Multi-mission ground platform</span></div>
-          <div class="arrow">→</div>
-        </div>
-      </a>
-      <a href="#k9" class="pcard reveal" data-delay="1">
-        <img src="assets/robot-dog.jpg" alt="" loading="lazy" decoding="async">
-        <div class="corner">K9 · BIONIC</div>
-        <div class="meta">
-          <div class="tag"><span class="lang-zh">PRODUCT · 02</span><span class="lang-en">PRODUCT · 02</span></div>
-          <h3><span class="lang-zh">全地形四足机器狗</span><span class="lang-en">Quadruped K9 Robot</span></h3>
-          <div class="desc"><span class="lang-zh">无人协同作战尖兵</span><span class="lang-en">Mission wingman, bionic</span></div>
-          <div class="arrow">→</div>
-        </div>
-      </a>
-      <a href="#cuas" class="pcard reveal" data-delay="2">
-        <img src="assets/cuas-vehicle.jpg" alt="" loading="lazy" decoding="async">
-        <div class="corner">C-UAS · MOBILE</div>
-        <div class="meta">
-          <div class="tag"><span class="lang-zh">PRODUCT · 03</span><span class="lang-en">PRODUCT · 03</span></div>
-          <h3><span class="lang-zh">低空反制装备体系</span><span class="lang-en">Counter-UAS Defense</span></h3>
-          <div class="desc"><span class="lang-zh">侦测—识别—压制 全流程闭环</span><span class="lang-en">Detect · Identify · Neutralize</span></div>
-          <div class="arrow">→</div>
-        </div>
-      </a>
-    </div>
-  </section>
 
-  <!-- ================= UGV DETAIL ================= -->
-  <section class="block detail" id="ugv">
-    <div class="detail-media">
-      <img src="assets/ugv-green-flatbed.jpg" alt="全地形六轮无人车" loading="lazy" decoding="async">
-    </div>
-    <div class="detail-head reveal">
-      <div class="detail-num">PRODUCT · 01 &nbsp;·&nbsp; UGV</div>
-      <h2 class="detail-title">
-        <span class="lang-zh">全地形六轮无人车</span>
-        <span class="lang-en">All-Terrain 6×6 UGV</span>
-      </h2>
-      <div class="detail-tag">
-        <span class="lang-zh">UGV · 多任务智能作业平台</span>
-        <span class="lang-en">Multi-Mission Ground Vehicle</span>
+    <!-- ===== Category 1 ===== -->
+    <div class="cat-group reveal">
+      <div class="cat-head">
+        <span class="cat-num">CAT · 01</span>
+        <span class="cat-name"><span class="lang-zh">无人车 <span class="accent">系列</span></span><span class="lang-en">Unmanned <span class="accent">Ground Vehicles</span></span></span>
+        <span class="cat-count">6 <span class="lang-zh">款</span><span class="lang-en">items</span></span>
+      </div>
+      <div class="cat-list">
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/ugv-6wheel.jpg" alt="" loading="lazy" decoding="async"><span class="badge">UGV · 6×6</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">全地形多模块六轮无人车</span><span class="lang-en">All-Terrain 6-Wheel Modular UGV</span></h4>
+            <div class="cat-tag"><span class="lang-zh">专业户外 · 模块化 · 多任务</span><span class="lang-en">Outdoor · Modular · Multi-Mission</span></div>
+            <div class="cat-desc"><span class="lang-zh">适应专业户外非铺装路面、泥土、砂石、坑洼、湿滑等复杂路况，模块化 + 多任务能力。轮式行走，遥控/自动/跟随三种驾驶模式，无线遥控、自主避障、自主导航、自主报警、音视频回传、防倾覆、越障、涉水。专业级遥控器可延展操控所配属任务载荷。</span><span class="lang-en">Engineered for outdoor unpaved terrain — mud, gravel, ruts, slick surfaces. Modular + multi-mission capability. Wheeled chassis with remote / autonomous / follow modes, obstacle avoidance, AV feedback, anti-tip, gradient and wading abilities.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">整车尺寸</span><span class="lang-en">Dimensions</span></span><span class="v"><span class="lang-zh">≤2.2 × 1.55 × 1.8 m（不含天线）</span><span class="lang-en">≤2.2 × 1.55 × 1.8 m (no antenna)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">整车荷载</span><span class="lang-en">Payload</span></span><span class="v"><span class="lang-zh"><b>≤1000 kg</b></span><span class="lang-en"><b>≤1000 kg</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">距地高度</span><span class="lang-en">Ground clearance</span></span><span class="v"><span class="lang-zh">≥0.25 m</span><span class="lang-en">≥0.25 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大越障</span><span class="lang-en">Max step</span></span><span class="v"><span class="lang-zh">≥0.2 m（垂直越障高度）</span><span class="lang-en">≥0.2 m vertical</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大越壕</span><span class="lang-en">Max trench</span></span><span class="v"><span class="lang-zh">≥0.30 m</span><span class="lang-en">≥0.30 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大爬坡</span><span class="lang-en">Max gradient</span></span><span class="v"><span class="lang-zh"><b>≥25°</b>（纵向）</span><span class="lang-en"><b>≥25°</b> longitudinal</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大涉水</span><span class="lang-en">Max wading</span></span><span class="v"><span class="lang-zh">≥0.3 m</span><span class="lang-en">≥0.3 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">纯电续航</span><span class="lang-en">EV range</span></span><span class="v"><span class="lang-zh"><b>≥35 km</b></span><span class="lang-en"><b>≥35 km</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">续航时间</span><span class="lang-en">Standby duration</span></span><span class="v"><span class="lang-zh">≥3 h（载荷上电待机，5 km/h 行驶）</span><span class="lang-en">≥3 h (payload on, 5 km/h cruise)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">图传半径</span><span class="lang-en">Telemetry range</span></span><span class="v"><span class="lang-zh"><b>3-20 km</b>，4 路视频同时传输</span><span class="lang-en"><b>3-20 km</b>, 4× video</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">导航系统</span><span class="lang-en">Navigation</span></span><span class="v"><span class="lang-zh">雷达 + 北斗 + 视频分析 + 图传 · 支持 <b>RTK</b></span><span class="lang-en">Radar + BeiDou + AI + Video Link · <b>RTK</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">热成像云台</span><span class="lang-en">Thermal gimbal</span></span><span class="v"><span class="lang-zh">光学变焦 + 384×288 热成像双目</span><span class="lang-en">Optical zoom + 384×288 dual thermal</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">充电时间</span><span class="lang-en">Charging</span></span><span class="v"><span class="lang-zh">≤2 h（SOC 30%→80%）</span><span class="lang-en">≤2 h (SOC 30%→80%)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">工作温度</span><span class="lang-en">Operating temp</span></span><span class="v"><span class="lang-zh">-20℃ ~ +55℃</span><span class="lang-en">-20℃ ~ +55℃</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">制动方式</span><span class="lang-en">Brake</span></span><span class="v"><span class="lang-zh">电子液压制动</span><span class="lang-en">Electro-hydraulic</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">跟随速度</span><span class="lang-en">Follow speed</span></span><span class="v"><span class="lang-zh">≥5 km/h</span><span class="lang-en">≥5 km/h</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">淋雨等级</span><span class="lang-en">Rain rating</span></span><span class="v"><span class="lang-zh">中雨</span><span class="lang-en">Moderate rain</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">电池系统</span><span class="lang-en">Battery</span></span><span class="v"><span class="lang-zh"><b>快换功能模块</b></span><span class="lang-en"><b>Hot-swap module</b></span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">遥控/自动/跟随三模</span><span class="lang-en">3-Mode Drive</span></span>
+          <span class="chip"><span class="lang-zh">北斗RTK</span><span class="lang-en">BeiDou RTK</span></span>
+          <span class="chip"><span class="lang-zh">热成像双目云台</span><span class="lang-en">Dual-Spectrum Thermal</span></span>
+          <span class="chip"><span class="lang-zh">音视频实时回传</span><span class="lang-en">Live AV Feed</span></span>
+          <span class="chip"><span class="lang-zh">快换电池</span><span class="lang-en">Hot-Swap</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/ugv-4wheel.jpg" alt="" loading="lazy" decoding="async"><span class="badge">UGV · 4×4</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">轮式差速突击无人车</span><span class="lang-en">Wheeled Differential Assault UGV</span></h4>
+            <div class="cat-tag"><span class="lang-zh">紧凑型 · 战术机动</span><span class="lang-en">Compact · Tactical</span></div>
+            <div class="cat-desc"><span class="lang-zh">200kg 级紧凑型四轮战术平台，差速驱动机动灵活，人工遥控/自动驾驶双模并行，适合城市与战术环境下的快速突击与侦察作业。</span><span class="lang-en">200kg compact 4-wheel tactical platform with differential drive, manual remote + autonomous modes. Built for rapid urban and tactical operations.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">总重量</span><span class="lang-en">Weight</span></span><span class="v"><span class="lang-zh"><b>200 kg</b></span><span class="lang-en"><b>200 kg</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">外形尺寸</span><span class="lang-en">Dimensions</span></span><span class="v"><span class="lang-zh">1030 × 1050 × 740 mm</span><span class="lang-en">1030 × 1050 × 740 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">机动方式</span><span class="lang-en">Drive</span></span><span class="v"><span class="lang-zh">轮式（差速驱动）</span><span class="lang-en">Wheeled · Differential</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大速度</span><span class="lang-en">Top speed</span></span><span class="v"><span class="lang-zh"><b>8 km/h</b></span><span class="lang-en"><b>8 km/h</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大爬坡</span><span class="lang-en">Max gradient</span></span><span class="v"><span class="lang-zh"><b>30°</b></span><span class="lang-en"><b>30°</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">侧倾坡度</span><span class="lang-en">Side tilt</span></span><span class="v"><span class="lang-zh">20°</span><span class="lang-en">20°</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">垂直越障</span><span class="lang-en">Step over</span></span><span class="v"><span class="lang-zh">16 cm</span><span class="lang-en">16 cm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">越壕宽度</span><span class="lang-en">Trench</span></span><span class="v"><span class="lang-zh">0.28 m</span><span class="lang-en">0.28 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">续航时间</span><span class="lang-en">Endurance</span></span><span class="v"><span class="lang-zh"><b>≥2 h</b></span><span class="lang-en"><b>≥2 h</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">通信模式</span><span class="lang-en">Comms</span></span><span class="v"><span class="lang-zh">2.4 GHz</span><span class="lang-en">2.4 GHz</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">通信距离</span><span class="lang-en">Range</span></span><span class="v"><span class="lang-zh">通视 ≥300 m（户外空旷）</span><span class="lang-en">Line-of-sight ≥300 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">定位系统</span><span class="lang-en">Navigation</span></span><span class="v"><span class="lang-zh">北斗系统</span><span class="lang-en">BeiDou</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">侦察模块</span><span class="lang-en">Sensor</span></span><span class="v"><span class="lang-zh"><b>IP 摄像头 1080p</b></span><span class="lang-en"><b>IP camera 1080p</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">工作温度</span><span class="lang-en">Operating temp</span></span><span class="v"><span class="lang-zh">0℃ ~ 55℃</span><span class="lang-en">0℃ ~ 55℃</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">控制方式</span><span class="lang-en">Control</span></span><span class="v"><span class="lang-zh">人工遥控 / 自动驾驶</span><span class="lang-en">Remote / Autonomous</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">北斗定位</span><span class="lang-en">BeiDou</span></span>
+          <span class="chip"><span class="lang-zh">1080p IP摄像</span><span class="lang-en">1080p IP cam</span></span>
+          <span class="chip"><span class="lang-zh">300m遥控</span><span class="lang-en">300m link</span></span>
+          <span class="chip"><span class="lang-zh">差速驱动</span><span class="lang-en">Differential</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/ugv-chassis.jpg" alt="" loading="lazy" decoding="async"><span class="badge">CHASSIS · 6×6</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">六驱线控底盘</span><span class="lang-en">6-Drive Wire-Controlled Chassis</span></h4>
+            <div class="cat-tag"><span class="lang-zh">阿克曼转向 · 全地形适应</span><span class="lang-en">Ackermann · All-Terrain</span></div>
+            <div class="cat-desc"><span class="lang-zh">六轮全独立悬挂阿克曼转向底盘，全地形适应泥土、砂石、坑洼、湿滑等复杂路面。承载平台 2.5×1.5×1.5m，预留多路对外供电与 CAN 接口，可搭载各类专业任务载荷。</span><span class="lang-en">Fully independent 6-wheel Ackermann suspension chassis. All-terrain capability with 2.5×1.5×1.5m cargo deck, multi-channel power output and CAN bus interface for diverse mission payloads.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">驱动方式</span><span class="lang-en">Drive</span></span><span class="v"><span class="lang-zh">阿克曼转向 · 全地形</span><span class="lang-en">Ackermann · All-terrain</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">围栏</span><span class="lang-en">Rail</span></span><span class="v"><span class="lang-zh">螺丝固定 150mm 高度 · 六轮造型</span><span class="lang-en">Bolted 150mm · 6-wheel deck</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">承载平台</span><span class="lang-en">Cargo deck</span></span><span class="v"><span class="lang-zh"><b>2.5 × 1.5 × 1.5 m</b>，前桥阿克曼</span><span class="lang-en"><b>2.5 × 1.5 × 1.5 m</b>, front Ackermann</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大速度</span><span class="lang-en">Top speed</span></span><span class="v"><span class="lang-zh"><b>45 km/h</b></span><span class="lang-en"><b>45 km/h</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大载重</span><span class="lang-en">Payload</span></span><span class="v"><span class="lang-zh"><b>≤700 kg</b></span><span class="lang-en"><b>≤700 kg</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大越障</span><span class="lang-en">Step</span></span><span class="v"><span class="lang-zh">20 cm @ 45 km/h</span><span class="lang-en">20 cm @ 45 km/h</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">越壕过沟</span><span class="lang-en">Trench</span></span><span class="v"><span class="lang-zh"><b>1.2 m</b></span><span class="lang-en"><b>1.2 m</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大爬坡</span><span class="lang-en">Gradient</span></span><span class="v"><span class="lang-zh">30°（侧坡 25°）</span><span class="lang-en">30° (side 25°)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">电池容量</span><span class="lang-en">Battery</span></span><span class="v"><span class="lang-zh">72V 200Ah · 含充电机</span><span class="lang-en">72V 200Ah w/ charger</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">爬台阶</span><span class="lang-en">Step climb</span></span><span class="v"><span class="lang-zh">0.5 m</span><span class="lang-en">0.5 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">涉水深度</span><span class="lang-en">Wading</span></span><span class="v"><span class="lang-zh">0.5 m</span><span class="lang-en">0.5 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">续航时间</span><span class="lang-en">Endurance</span></span><span class="v"><span class="lang-zh">≥2 h</span><span class="lang-en">≥2 h</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">轮胎</span><span class="lang-en">Tires</span></span><span class="v"><span class="lang-zh">660 mm</span><span class="lang-en">660 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">对外供电</span><span class="lang-en">Aux power</span></span><span class="v"><span class="lang-zh">2 路 24V + 1 路 12V · 100W 220V 逆变器接口</span><span class="lang-en">2× 24V + 1× 12V · 100W 220V inverter</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">工作温度</span><span class="lang-en">Operating temp</span></span><span class="v"><span class="lang-zh">-20℃ ~ 60℃</span><span class="lang-en">-20℃ ~ 60℃</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">控制接口</span><span class="lang-en">Control</span></span><span class="v"><span class="lang-zh">遥控器 + CAN 通讯</span><span class="lang-en">Remote + CAN bus</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">整车设计</span><span class="lang-en">Build</span></span><span class="v"><span class="lang-zh"><b>六轮全独立悬挂</b> · 灯光/喇叭/急停</span><span class="lang-en"><b>6× independent suspension</b> · Lights/Horn/E-stop</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">阿克曼转向</span><span class="lang-en">Ackermann</span></span>
+          <span class="chip"><span class="lang-zh">六轮独立悬挂</span><span class="lang-en">6× indep suspension</span></span>
+          <span class="chip"><span class="lang-zh">CAN总线</span><span class="lang-en">CAN bus</span></span>
+          <span class="chip"><span class="lang-zh">对外供电</span><span class="lang-en">Aux power</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/ugv-recon.jpg" alt="" loading="lazy" decoding="async"><span class="badge">RECON · TRACK</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">侦察机器人</span><span class="lang-en">Reconnaissance Robot</span></h4>
+            <div class="cat-tag"><span class="lang-zh">履带式 · 战场侦察</span><span class="lang-en">Tracked · Battlefield Recon</span></div>
+            <div class="cat-desc"><span class="lang-zh">80kg 级橡胶钢芯履带侦察机器人，48V 双电机动力，CAN 总线 + PWM 通信，1500m 无线遥控通视距离，IP65 防护等级，适应高低温战场环境的隐蔽侦察任务。</span><span class="lang-en">80kg-class steel-cored rubber-tracked recon robot. 48V dual-motor, CAN + PWM comms, 1500m line-of-sight remote, IP65-sealed — ideal for stealth recon in harsh environments.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">车体尺寸</span><span class="lang-en">Body</span></span><span class="v"><span class="lang-zh">1050 × 800 × 450 mm</span><span class="lang-en">1050 × 800 × 450 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">整机质量</span><span class="lang-en">Weight</span></span><span class="v"><span class="lang-zh"><b>80 kg</b></span><span class="lang-en"><b>80 kg</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大载重</span><span class="lang-en">Payload</span></span><span class="v"><span class="lang-zh"><50 kg</span><span class="lang-en"><50 kg</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">驱动电机</span><span class="lang-en">Motor</span></span><span class="v"><span class="lang-zh">48V 800W 双电机</span><span class="lang-en">48V 800W dual motor</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">电池组</span><span class="lang-en">Battery</span></span><span class="v"><span class="lang-zh">三元单体锂电 48V 40Ah · 保护 100A</span><span class="lang-en">Li 48V 40Ah · 100A protection</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">续航时间</span><span class="lang-en">Endurance</span></span><span class="v"><span class="lang-zh"><b>2 H</b></span><span class="lang-en"><b>2 H</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">驱动控制器</span><span class="lang-en">Controller</span></span><span class="v"><span class="lang-zh">48V 80A 一拖二</span><span class="lang-en">48V 80A dual-channel</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">通信</span><span class="lang-en">Comms</span></span><span class="v"><span class="lang-zh">CAN 总线 + PWM</span><span class="lang-en">CAN bus + PWM</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">爬坡角度</span><span class="lang-en">Gradient</span></span><span class="v"><span class="lang-zh">≤30°</span><span class="lang-en">≤30°</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">行驶速度</span><span class="lang-en">Speed</span></span><span class="v"><span class="lang-zh">0-10 km/h</span><span class="lang-en">0-10 km/h</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">履带</span><span class="lang-en">Tracks</span></span><span class="v"><span class="lang-zh">橡胶（内含钢芯）</span><span class="lang-en">Rubber + steel core</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">履带宽度</span><span class="lang-en">Track width</span></span><span class="v"><span class="lang-zh">100 mm</span><span class="lang-en">100 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">操作方式</span><span class="lang-en">Operation</span></span><span class="v"><span class="lang-zh">无线遥控 · <b>通视 ≥1500 m</b></span><span class="lang-en">Remote · <b>LOS ≥1500 m</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">工作温度</span><span class="lang-en">Operating temp</span></span><span class="v"><span class="lang-zh">-20℃ ~ 60℃</span><span class="lang-en">-20℃ ~ 60℃</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">防护等级</span><span class="lang-en">Sealing</span></span><span class="v"><span class="lang-zh"><b>IP65</b></span><span class="lang-en"><b>IP65</b></span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">橡胶钢芯履带</span><span class="lang-en">Steel-core track</span></span>
+          <span class="chip"><span class="lang-zh">IP65防护</span><span class="lang-en">IP65 sealed</span></span>
+          <span class="chip"><span class="lang-zh">1500m遥控</span><span class="lang-en">1500m link</span></span>
+          <span class="chip"><span class="lang-zh">CAN+PWM</span><span class="lang-en">CAN+PWM</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/ugv-rescue.jpg" alt="" loading="lazy" decoding="async"><span class="badge">RESCUE · 6×6</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">六驱搜救与运输无人车</span><span class="lang-en">6-Drive Rescue &amp; Transport UGV</span></h4>
+            <div class="cat-tag"><span class="lang-zh">搜救 · 运输 · 伤员转运</span><span class="lang-en">Rescue · Transport · Casualty Evac</span></div>
+            <div class="cat-desc"><span class="lang-zh">额定 500kg 载荷六驱无人车，4km 无线遥控，具备白光和红外双视频通道，抗电磁干扰能力，关键部位 IP55 防水。具备 1 名伤员平躺滚动上车的转运能力，符合人机工程设计，防止伤员掉落与二次伤害。</span><span class="lang-en">500kg-payload 6-drive UGV. 4km remote, dual EO/IR video, EMI-resistant. Carries one stretchered casualty with ergonomic safety fixtures preventing fall and secondary injury.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">外廓尺寸</span><span class="lang-en">Dimensions</span></span><span class="v"><span class="lang-zh">2550 × 1650 × 1250 mm</span><span class="lang-en">2550 × 1650 × 1250 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">无线遥控</span><span class="lang-en">Remote link</span></span><span class="v"><span class="lang-zh"><b>≥4 km</b></span><span class="lang-en"><b>≥4 km</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">视频通道</span><span class="lang-en">Video channels</span></span><span class="v"><span class="lang-zh">白光 + 红外双通道</span><span class="lang-en">EO + IR dual-channel</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">额定载荷</span><span class="lang-en">Rated payload</span></span><span class="v"><span class="lang-zh"><b>500 kg</b></span><span class="lang-en"><b>500 kg</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">越野速度</span><span class="lang-en">Off-road speed</span></span><span class="v"><span class="lang-zh">≥30 km/h</span><span class="lang-en">≥30 km/h</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">最大爬坡</span><span class="lang-en">Gradient</span></span><span class="v"><span class="lang-zh">≥25°</span><span class="lang-en">≥25°</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">越障高度</span><span class="lang-en">Step</span></span><span class="v"><span class="lang-zh">≥250 mm</span><span class="lang-en">≥250 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">越壕宽度</span><span class="lang-en">Trench (max)</span></span><span class="v"><span class="lang-zh">500 mm</span><span class="lang-en">500 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">越壕宽</span><span class="lang-en">Trench (rated)</span></span><span class="v"><span class="lang-zh">≥300 mm</span><span class="lang-en">≥300 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">垂直障碍</span><span class="lang-en">Vertical obs</span></span><span class="v"><span class="lang-zh">200 mm（最大通过）</span><span class="lang-en">200 mm max</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">承载质量</span><span class="lang-en">Carry capacity</span></span><span class="v"><span class="lang-zh">≥110 kg</span><span class="lang-en">≥110 kg</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">抗扰能力</span><span class="lang-en">EMI</span></span><span class="v"><span class="lang-zh"><b>具备抗电磁干扰</b></span><span class="lang-en"><b>EMI-resistant</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">关键防水</span><span class="lang-en">Sealing</span></span><span class="v"><span class="lang-zh"><b>IP55</b></span><span class="lang-en"><b>IP55</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">跟随速度</span><span class="lang-en">Follow speed</span></span><span class="v"><span class="lang-zh">≤3 km/h</span><span class="lang-en">≤3 km/h</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">全重</span><span class="lang-en">Total weight</span></span><span class="v"><span class="lang-zh">≤1000 kg</span><span class="lang-en">≤1000 kg</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">伤员转运</span><span class="lang-en">Casualty evac</span></span><span class="v"><span class="lang-zh"><b>1 名平躺转运</b> · 车内固定 · 防伤员掉落与二次伤害</span><span class="lang-en"><b>1× stretcher</b> · Onboard fixation · No secondary injury</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">白光+红外</span><span class="lang-en">EO + IR</span></span>
+          <span class="chip"><span class="lang-zh">抗电磁干扰</span><span class="lang-en">EMI-resistant</span></span>
+          <span class="chip"><span class="lang-zh">伤员转运</span><span class="lang-en">Casualty evac</span></span>
+          <span class="chip"><span class="lang-zh">越障250mm</span><span class="lang-en">250mm step</span></span>
+          <span class="chip"><span class="lang-zh">IP55</span><span class="lang-en">IP55</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/ugv-psyops.jpg" alt="" loading="lazy" decoding="async"><span class="badge">PSYOPS · MULTI</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">加强版心理辅导无人车</span><span class="lang-en">Enhanced Psy-Ops UGV</span></h4>
+            <div class="cat-tag"><span class="lang-zh">心理战 · 强声驱散 · 激光炫目</span><span class="lang-en">PsyOps · Sonic · Laser Dazzler</span></div>
+            <div class="cat-desc"><span class="lang-zh">集成强声驱散、远程激光投影、激光炫目器、远程传单投射等非致命作战能力。高碳钢车身 + 摆式平衡减震，48V 双 1100W 动力，16 线激光雷达建图避障，30 倍光变夜视云台 + 6km 图传，是多模反恐综合作战平台。</span><span class="lang-en">Integrated sonic dispersal, long-range laser projection, dazzler and leaflet delivery. High-carbon steel body, pendulum suspension, 48V dual-1100W drive, 16-line LiDAR, 30× zoom night-vision gimbal with 6km video link — a non-lethal multi-mission platform.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">产品尺寸</span><span class="lang-en">Dimensions</span></span><span class="v"><span class="lang-zh">1300 × 960 × 550 mm</span><span class="lang-en">1300 × 960 × 550 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">驱动形式</span><span class="lang-en">Drive</span></span><span class="v"><span class="lang-zh">左右独立驱动</span><span class="lang-en">Left/right independent</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">运行速度</span><span class="lang-en">Speed</span></span><span class="v"><span class="lang-zh">9 km/h</span><span class="lang-en">9 km/h</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">产品自重</span><span class="lang-en">Weight</span></span><span class="v"><span class="lang-zh"><b>170 kg</b></span><span class="lang-en"><b>170 kg</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">越障高度</span><span class="lang-en">Step</span></span><span class="v"><span class="lang-zh">约 150 mm</span><span class="lang-en">~150 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">车身材质</span><span class="lang-en">Body</span></span><span class="v"><span class="lang-zh">高碳钢</span><span class="lang-en">High-carbon steel</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">动力系统</span><span class="lang-en">Drive power</span></span><span class="v"><span class="lang-zh">48V × 1100W × 2</span><span class="lang-en">48V × 1100W × 2</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">减震系统</span><span class="lang-en">Suspension</span></span><span class="v"><span class="lang-zh">摆式平衡减震</span><span class="lang-en">Pendulum balance</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">爬坡能力</span><span class="lang-en">Gradient</span></span><span class="v"><span class="lang-zh">30°</span><span class="lang-en">30°</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">峡沟宽度</span><span class="lang-en">Trench</span></span><span class="v"><span class="lang-zh">0.3 m</span><span class="lang-en">0.3 m</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">锂电池</span><span class="lang-en">Battery</span></span><span class="v"><span class="lang-zh">48V 100Ah · 防爆 · 充放保护 · 220V 航空充电器</span><span class="lang-en">48V 100Ah · Anti-explosion · 220V aviation charger</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">控制系统</span><span class="lang-en">Control</span></span><span class="v"><span class="lang-zh">RTK + 北斗/GPS（精度 ≤50 cm）· 图传 <b>6 km</b> · 遥控/自主导航 · 电子围栏</span><span class="lang-en">RTK + BeiDou/GPS (≤50 cm) · <b>6 km</b> video link · Remote/Auto · Geo-fence</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">激光雷达</span><span class="lang-en">LiDAR</span></span><span class="v"><span class="lang-zh"><b>16 线</b>，扫描 200 m · 自主避障</span><span class="lang-en"><b>16-line</b>, 200 m scan · Auto-avoid</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">夜视云台</span><span class="lang-en">Night cam</span></span><span class="v"><span class="lang-zh">30× 光变 · 200 万像素 · 夜视 <b>900 m</b> · IP67 · 360° 旋转</span><span class="lang-en">30× zoom · 2 MP · <b>900 m</b> night vision · IP67 · 360°</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">户外激光</span><span class="lang-en">Outdoor laser</span></span><span class="v"><span class="lang-zh">夜晚投射 <b>280 m</b> · 实时编辑图案</span><span class="lang-en"><b>280 m</b> projection · Live pattern editing</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">喊话模块</span><span class="lang-en">PA system</span></span><span class="v"><span class="lang-zh"><b>139 dB ± 2 dB</b> · 传声 <b>1000 m</b> · 对讲/播放</span><span class="lang-en"><b>139 dB ± 2 dB</b> · <b>1000 m</b> reach · Voice/Audio</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">炫目器</span><span class="lang-en">Dazzler</span></span><span class="v"><span class="lang-zh">510-530 nm · 800 LM · 55 min 续航</span><span class="lang-en">510-530 nm · 800 LM · 55 min</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">传单投射</span><span class="lang-en">Leaflet drop</span></span><span class="v"><span class="lang-zh">8 张/秒 · 最大 1000 张 · 宣传弹发射</span><span class="lang-en">8/s · 1000 max · Propaganda canister</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">综合功能</span><span class="lang-en">Functions</span></span><span class="v"><span class="lang-zh">远程遥控 / 自主导航 / 智能避障 / 自主跟随 / 北斗定位 / 强声拒止 / 云台昼夜侦察 / 远程激光 / 传单投射 / 激光炫目</span><span class="lang-en">Remote / Auto-nav / Auto-avoid / Auto-follow / BeiDou / Sonic / EO surveillance / Laser projection / Leaflet drop / Dazzler</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">强声驱散139dB</span><span class="lang-en">139dB sonic</span></span>
+          <span class="chip"><span class="lang-zh">30×夜视云台900m</span><span class="lang-en">30× night cam 900m</span></span>
+          <span class="chip"><span class="lang-zh">16线激光雷达</span><span class="lang-en">16-line LiDAR</span></span>
+          <span class="chip"><span class="lang-zh">远程激光投影</span><span class="lang-en">Laser projection</span></span>
+          <span class="chip"><span class="lang-zh">炫目器800LM</span><span class="lang-en">800LM dazzler</span></span>
+          <span class="chip"><span class="lang-zh">传单投射</span><span class="lang-en">Leaflet drop</span></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <p class="detail-lead reveal" data-delay="1">
-      <span class="lang-zh">直面泥土、砂石、坑洼、湿滑等复杂路况。<b>专业底盘 + 模块化任务载荷</b>，分钟级切换巡检、运输、反制、救援角色，让一台车胜任全场景任务。</span>
-      <span class="lang-en">Built for mud, gravel, ruts and slick surfaces. <b>A purpose-built chassis with modular payloads</b> — patrol, transport, counter-drone or rescue, swapped in minutes.</span>
-    </p>
-    <div class="specs-grid">
-      <div class="spec reveal"><div class="v">3-5<small>km</small></div><div class="l"><span class="lang-zh">图传半径</span><span class="lang-en">TELEMETRY</span></div></div>
-      <div class="spec reveal" data-delay="1"><div class="v">RTK</div><div class="l"><span class="lang-zh">北斗导航</span><span class="lang-en">NAVIGATION</span></div></div>
-      <div class="spec reveal" data-delay="2"><div class="v">IP65</div><div class="l"><span class="lang-zh">整车防护</span><span class="lang-en">PROTECTION</span></div></div>
-      <div class="spec reveal" data-delay="3"><div class="v">24<small>h</small></div><div class="l"><span class="lang-zh">快换续航</span><span class="lang-en">ENDURANCE</span></div></div>
-    </div>
-    <ul class="feature-list">
-      <li class="feature reveal">
-        <div class="icn">◎</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">三模驾驶</span><span class="lang-en">Triple-Mode Control</span></div>
-          <div class="d"><span class="lang-zh">遥控 / 自动驾驶 / 智能跟随，灵活适配各种任务场景</span><span class="lang-en">Remote · autonomous · follow — adapts to any mission</span></div>
-        </div>
-      </li>
-      <li class="feature reveal" data-delay="1">
-        <div class="icn">▣</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">热成像双目云台</span><span class="lang-en">Dual-Spectrum Gimbal</span></div>
-          <div class="d"><span class="lang-zh">昼夜无死角侦察 · 音视频实时回传 · AI 智能识别</span><span class="lang-en">24/7 surveillance · Live AV feed · AI recognition</span></div>
-        </div>
-      </li>
-      <li class="feature reveal" data-delay="2">
-        <div class="icn">↯</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">极端环境作业</span><span class="lang-en">Extreme Environment</span></div>
-          <div class="d"><span class="lang-zh">大荷载 · 强越障 · 快换电池 · 高温/严寒/雨雪稳定运行</span><span class="lang-en">Heavy payload · Step-over · Hot-swap · Any climate</span></div>
-        </div>
-      </li>
-    </ul>
-  </section>
 
-  <!-- ================= K9 DETAIL ================= -->
-  <section class="block detail" id="k9">
-    <div class="detail-media">
-      <img src="assets/robot-dog.jpg" alt="" loading="lazy" decoding="async">
-    </div>
-    <div class="detail-head reveal">
-      <div class="detail-num">PRODUCT · 02 &nbsp;·&nbsp; K9</div>
-      <h2 class="detail-title">
-        <span class="lang-zh">全地形越野四足机器狗</span>
-        <span class="lang-en">All-Terrain Quadruped K9</span>
-      </h2>
-      <div class="detail-tag">
-        <span class="lang-zh">QUADRUPED · 无人协同作战尖兵</span>
-        <span class="lang-en">Bionic · Mission Wingman</span>
+    <!-- ===== Category 2 ===== -->
+    <div class="cat-group reveal">
+      <div class="cat-head">
+        <span class="cat-num">CAT · 02</span>
+        <span class="cat-name"><span class="lang-zh">四足机器人 <span class="accent">系列</span></span><span class="lang-en">Quadruped <span class="accent">Robots</span></span></span>
+        <span class="cat-count">1 <span class="lang-zh">款</span><span class="lang-en">item</span></span>
+      </div>
+      <div class="cat-list">
+
+        <div class="cat-item" id="k9">
+          <div class="cat-img"><img src="assets/catalog/k9-quadruped.jpg" alt="" loading="lazy" decoding="async"><span class="badge">K9 · BIONIC</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">户外全地形越野四足机器人</span><span class="lang-en">Outdoor All-Terrain Quadruped Robot</span></h4>
+            <div class="cat-tag"><span class="lang-zh">仿生越野 · 空地集群协同</span><span class="lang-en">Bionic · Air-Ground Swarming</span></div>
+            <div class="cat-desc"><span class="lang-zh">适用于能源、交通、物流、应急、工业等多场景应用，具备模块化 + 多任务 + 集群协同能力。前肘后膝式仿生结构 + 深度强化学习算法，行业领先 40kg 载荷与 6 小时续航。</span><span class="lang-en">Applicable across energy, transportation, logistics, emergency response and industry. Modular + multi-mission + swarm-capable. Front-elbow rear-knee bionic geometry + deep reinforcement learning, industry-leading 40kg payload and 6-hour endurance.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">有效载荷</span><span class="lang-en">Payload</span></span><span class="v"><span class="lang-zh"><b>40 kg</b> · 行业领先</span><span class="lang-en"><b>40 kg</b> · Industry-leading</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">续航时间</span><span class="lang-en">Endurance</span></span><span class="v"><span class="lang-zh"><b>6 小时</b>电续航 · 满足长时作业</span><span class="lang-en"><b>6 hours</b> · Long-duration ops</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">仿生结构</span><span class="lang-en">Geometry</span></span><span class="v"><span class="lang-zh"><b>前肘后膝式</b> + 深度强化学习</span><span class="lang-en"><b>Front-elbow rear-knee</b> + Deep RL</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">地形适应</span><span class="lang-en">Terrain</span></span><span class="v"><span class="lang-zh">全地形越野</span><span class="lang-en">Full all-terrain</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">电磁兼容</span><span class="lang-en">EMC</span></span><span class="v"><span class="lang-zh"><b>国军标</b>电磁兼容</span><span class="lang-en"><b>MIL-grade</b> EMC</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">工作温度</span><span class="lang-en">Operating temp</span></span><span class="v"><span class="lang-zh"><b>-40℃ ~ +55℃</b> 宽温</span><span class="lang-en"><b>-40℃ ~ +55℃</b> wide range</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">本体设计</span><span class="lang-en">Body</span></span><span class="v"><span class="lang-zh">模块化 · 轻量高强度</span><span class="lang-en">Modular · Light + strong</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">协同能力</span><span class="lang-en">Coordination</span></span><span class="v"><span class="lang-zh"><b>空地无人集群自主协作</b></span><span class="lang-en"><b>Autonomous air-ground swarming</b></span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">40kg载荷</span><span class="lang-en">40kg payload</span></span>
+          <span class="chip"><span class="lang-zh">6h续航</span><span class="lang-en">6h endurance</span></span>
+          <span class="chip"><span class="lang-zh">前肘后膝</span><span class="lang-en">Front-elbow rear-knee</span></span>
+          <span class="chip"><span class="lang-zh">深度强化学习</span><span class="lang-en">Deep RL</span></span>
+          <span class="chip"><span class="lang-zh">国军标EMC</span><span class="lang-en">MIL EMC</span></span>
+          <span class="chip"><span class="lang-zh">-40~55℃</span><span class="lang-en">-40~55℃</span></span>
+          <span class="chip"><span class="lang-zh">模块化</span><span class="lang-en">Modular</span></span>
+          <span class="chip"><span class="lang-zh">空地集群</span><span class="lang-en">Swarming</span></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <p class="detail-lead reveal" data-delay="1">
-      <span class="lang-zh">仿生四足结构 + AI 智能算法，突破地形限制。<b>40cm 越障 · 1m 涉水 · 宽温域适配</b>，支持空地集群协同——巡检、搜救、运维的极致伙伴。</span>
-      <span class="lang-en">Bionic four-legged geometry meets onboard AI to clear terrain that wheels can't. <b>40cm step-over, 1m wading, wide-temperature</b> — built for inspection, rescue and air-ground swarming.</span>
-    </p>
-    <div class="specs-grid">
-      <div class="spec reveal"><div class="v">40<small>kg</small></div><div class="l"><span class="lang-zh">超大载荷</span><span class="lang-en">PAYLOAD</span></div></div>
-      <div class="spec reveal" data-delay="1"><div class="v">40<small>°</small></div><div class="l"><span class="lang-zh">爬坡能力</span><span class="lang-en">GRADIENT</span></div></div>
-      <div class="spec reveal" data-delay="2"><div class="v">6<small>h</small></div><div class="l"><span class="lang-zh">长效续航</span><span class="lang-en">ENDURANCE</span></div></div>
-      <div class="spec reveal" data-delay="3"><div class="v">IP67</div><div class="l"><span class="lang-zh">防水防尘</span><span class="lang-en">SEALING</span></div></div>
-    </div>
-    <ul class="feature-list">
-      <li class="feature reveal">
-        <div class="icn">◇</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">仿生越野结构</span><span class="lang-en">Bionic Geometry</span></div>
-          <div class="d"><span class="lang-zh">突破地形限制，行业领先性能指标</span><span class="lang-en">Defeats terrain that wheels cannot — leading specs</span></div>
-        </div>
-      </li>
-      <li class="feature reveal" data-delay="1">
-        <div class="icn">▲</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">国军标电磁兼容</span><span class="lang-en">MIL-Grade EMC</span></div>
-          <div class="d"><span class="lang-zh">符合国军标 · 复杂电磁环境稳定作业</span><span class="lang-en">Certified for complex electromagnetic environments</span></div>
-        </div>
-      </li>
-      <li class="feature reveal" data-delay="2">
-        <div class="icn">◐</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">空地集群协同</span><span class="lang-en">Air-Ground Swarming</span></div>
-          <div class="d"><span class="lang-zh">与无人机/无人车协同 · AI 自主任务规划</span><span class="lang-en">Pairs with UAV/UGV · Autonomous mission planning</span></div>
-        </div>
-      </li>
-    </ul>
-  </section>
 
-  <!-- ================= C-UAS DETAIL + WORKFLOW ================= -->
-  <section class="block detail" id="cuas">
-    <div class="detail-media">
-      <img src="assets/cuas-vehicle.jpg" alt="低空反制装备体系" loading="lazy" decoding="async">
-    </div>
-    <div class="detail-head reveal">
-      <div class="detail-num">PRODUCT · 03 &nbsp;·&nbsp; C-UAS</div>
-      <h2 class="detail-title">
-        <span class="lang-zh">低空反制装备体系</span>
-        <span class="lang-en">Counter-UAS Defense System</span>
-      </h2>
-      <div class="detail-tag">
-        <span class="lang-zh">便携 + 车载 · 双重防护体系</span>
-        <span class="lang-en">Portable + Vehicle · Dual-Layer Defense</span>
+    <!-- ===== Category 3 ===== -->
+    <div class="cat-group reveal">
+      <div class="cat-head">
+        <span class="cat-num">CAT · 03</span>
+        <span class="cat-name"><span class="lang-zh">无人机 <span class="accent">及配套</span></span><span class="lang-en">UAV <span class="accent">&amp; Accessories</span></span></span>
+        <span class="cat-count">3 <span class="lang-zh">款</span><span class="lang-en">items</span></span>
+      </div>
+      <div class="cat-list">
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/drone-fpv.jpg" alt="" loading="lazy" decoding="async"><span class="badge">FPV · MODULAR</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">多功能模块化穿越机</span><span class="lang-en">Multi-Function Modular FPV Drone</span></h4>
+            <div class="cat-tag"><span class="lang-zh">单兵负载倍增 · 战术皮轨接口</span><span class="lang-en">Payload Multiplier · Tactical Rail</span></div>
+            <div class="cat-desc"><span class="lang-zh">基于模块化机体结构，可实现单人负载能力成倍增长。可针对不同任务快速改变机型性能、以及载荷设备适应不同任务需求。并实现战场环境下进行<b>免工具快速维修</b>。</span><span class="lang-en">Modular airframe enabling exponential single-operator payload increase. Rapidly reconfigure airframe and payload per mission. Designed for <b>tool-free field maintenance</b> on the battlefield.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">尺寸</span><span class="lang-en">Frame size</span></span><span class="v"><span class="lang-zh">扩展 7-10 寸</span><span class="lang-en">7-10 inch extendable</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">有效载荷</span><span class="lang-en">Payload</span></span><span class="v"><span class="lang-zh"><b>1.95-3.5 kg</b>（根据尺寸不同核算）</span><span class="lang-en"><b>1.95-3.5 kg</b> (size-dependent)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">链路半径</span><span class="lang-en">Link radius</span></span><span class="v"><span class="lang-zh"><b>≥7 km</b>（通视环境）</span><span class="lang-en"><b>≥7 km</b> (LOS)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">续航时间</span><span class="lang-en">Endurance</span></span><span class="v"><span class="lang-zh"><b>≥28 分钟</b>（空载）</span><span class="lang-en"><b>≥28 min</b> (empty)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">图传链路</span><span class="lang-en">Video link</span></span><span class="v"><span class="lang-zh">5.8G 低延迟图传</span><span class="lang-en">5.8G low-latency</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">可扩展</span><span class="lang-en">Extension A</span></span><span class="v"><span class="lang-zh">光纤传输 <b>抗干扰链路</b></span><span class="lang-en">Fiber-optic <b>anti-jam link</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">控制链路</span><span class="lang-en">Control link</span></span><span class="v"><span class="lang-zh">868-915 MHz / 2.4G（可选）</span><span class="lang-en">868-915 MHz / 2.4G (selectable)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">可扩展</span><span class="lang-en">Extension B</span></span><span class="v"><span class="lang-zh">线控 <b>抗干扰链路</b></span><span class="lang-en">Wired <b>anti-jam link</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">扩展功能</span><span class="lang-en">Add-on</span></span><span class="v"><span class="lang-zh">夜视图传 · 电击发模块（带物理保险）</span><span class="lang-en">Night-vision · Electric trigger (mechanical safety)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">扩展接口</span><span class="lang-en">Mount</span></span><span class="v"><span class="lang-zh"><b>战术皮轨</b></span><span class="lang-en"><b>Tactical rail</b></span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">5.8G低延迟</span><span class="lang-en">5.8G low-latency</span></span>
+          <span class="chip"><span class="lang-zh">光纤抗干扰</span><span class="lang-en">Fiber anti-jam</span></span>
+          <span class="chip"><span class="lang-zh">夜视图传</span><span class="lang-en">Night vision</span></span>
+          <span class="chip"><span class="lang-zh">电击发模块</span><span class="lang-en">Electric trigger</span></span>
+          <span class="chip"><span class="lang-zh">战术皮轨</span><span class="lang-en">Tactical rail</span></span>
+          <span class="chip"><span class="lang-zh">免工具维修</span><span class="lang-en">Tool-free repair</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/drone-fiber.jpg" alt="" loading="lazy" decoding="async"><span class="badge">FIBER · GUIDED</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">制导光纤桶</span><span class="lang-en">Guided Fiber-Optic Spool</span></h4>
+            <div class="cat-tag"><span class="lang-zh">独创内绕纤 · 零电磁辐射</span><span class="lang-en">Inner-Wound · Zero EMI</span></div>
+            <div class="cat-desc"><span class="lang-zh">内嵌式光纤芯可二次熔接剩余光纤；独创内绕纤工艺出纤高速流畅，无惧缠绕；零电磁辐射安全隐蔽；设有余量观察口便于检视；长距离、低延迟、高带宽，实时高清无丢包；秒传海量数据，延迟低至 3 毫秒；轻量光缆多长度可选，运输携带零负担。</span><span class="lang-en">Reusable embedded fiber core supports field re-splicing. Proprietary inner-winding craft delivers tangle-free high-speed deployment. Zero EMI, covert. Margin observation port. Long-range, low-latency, high-bandwidth HD video with no packet loss. <b>3 ms latency</b> for massive data. Lightweight cable in multiple lengths.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">可复用</span><span class="lang-en">Reusable</span></span><span class="v"><span class="lang-zh">内嵌式光纤芯 · 可替换二次熔接</span><span class="lang-en">Embedded core · Re-spliceable</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">出纤工艺</span><span class="lang-en">Deployment</span></span><span class="v"><span class="lang-zh"><b>独创内绕纤</b> · 出纤高速流畅 · 无惧缠绕</span><span class="lang-en"><b>Proprietary inner-winding</b> · Tangle-free</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">抗干扰</span><span class="lang-en">Anti-jam</span></span><span class="v"><span class="lang-zh"><b>零电磁辐射</b> · 安全隐蔽</span><span class="lang-en"><b>Zero EMI</b> · Covert</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">可视化</span><span class="lang-en">Visibility</span></span><span class="v"><span class="lang-zh">余量观察口 · 再次起飞有信心</span><span class="lang-en">Margin viewport · Confidence on relaunch</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">信号稳</span><span class="lang-en">Signal</span></span><span class="v"><span class="lang-zh">长距离 · 低延迟 · 高带宽 · 实时高清无丢包</span><span class="lang-en">Long-range · Low-latency · HBW · Zero packet loss</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">传输速率</span><span class="lang-en">Latency</span></span><span class="v"><span class="lang-zh">秒传海量数据 · <b>延迟低至 3 ms</b></span><span class="lang-en">Massive data · <b>3 ms latency</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">便携性</span><span class="lang-en">Portability</span></span><span class="v"><span class="lang-zh"><b>轻量光缆</b> · 多长度可选 · 运输携带零负担</span><span class="lang-en"><b>Lightweight cable</b> · Multi-length · Effortless carry</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">内嵌可替换</span><span class="lang-en">Reusable core</span></span>
+          <span class="chip"><span class="lang-zh">出纤无缠绕</span><span class="lang-en">Tangle-free</span></span>
+          <span class="chip"><span class="lang-zh">余量观察口</span><span class="lang-en">Margin viewport</span></span>
+          <span class="chip"><span class="lang-zh">3ms延迟</span><span class="lang-en">3ms latency</span></span>
+          <span class="chip"><span class="lang-zh">零电磁辐射</span><span class="lang-en">Zero EMI</span></span>
+          <span class="chip"><span class="lang-zh">多长度可选</span><span class="lang-en">Multi-length</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/drone-trainer.jpg" alt="" loading="lazy" decoding="async"><span class="badge">TRAINER · SIM</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">单人无人机战术训练系统</span><span class="lang-en">Single-Operator UAV Tactical Trainer</span></h4>
+            <div class="cat-tag"><span class="lang-zh">实装模拟 · 标准化考核</span><span class="lang-en">Realistic Sim · Standardized Test</span></div>
+            <div class="cat-desc"><span class="lang-zh">主要实现无人机实装模拟、作为操作及演练的工具。提升作战人员操作能力，侧面评估人机交互效能。训练科目体系化、考核评价标准化、日常训练实战化，提供灵活训练流程，<b>减少器材损耗</b>，快速提升操作手核心能力。</span><span class="lang-en">Realistic UAV simulation for operations and exercise. Boosts operator capability with side-channel HMI evaluation. Systematic curriculum, standardized assessment, combat-realistic daily training — <b>reduces equipment wear</b> and accelerates operator skill development.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">功能定位</span><span class="lang-en">Purpose</span></span><span class="v"><span class="lang-zh">无人机<b>实装模拟</b> · 操作及演练工具</span><span class="lang-en"><b>Realistic simulation</b> · Ops & exercise tool</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">能力提升</span><span class="lang-en">Skill</span></span><span class="v"><span class="lang-zh">提升作战人员操作能力</span><span class="lang-en">Boosts operator capability</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">效能评估</span><span class="lang-en">Evaluation</span></span><span class="v"><span class="lang-zh">侧面评估<b>人机交互效能</b></span><span class="lang-en">Side-channel <b>HMI evaluation</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">训练科目</span><span class="lang-en">Curriculum</span></span><span class="v"><span class="lang-zh"><b>体系化</b>训练科目</span><span class="lang-en"><b>Systematic</b> curriculum</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">考核评价</span><span class="lang-en">Assessment</span></span><span class="v"><span class="lang-zh"><b>标准化</b>考核评价</span><span class="lang-en"><b>Standardized</b> assessment</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">日常训练</span><span class="lang-en">Daily training</span></span><span class="v"><span class="lang-zh"><b>实战化</b>日常训练</span><span class="lang-en"><b>Combat-realistic</b> daily training</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">训练流程</span><span class="lang-en">Workflow</span></span><span class="v"><span class="lang-zh">灵活训练流程</span><span class="lang-en">Flexible workflow</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">器材损耗</span><span class="lang-en">Wear</span></span><span class="v"><span class="lang-zh"><b>显著减少</b>器材损耗</span><span class="lang-en"><b>Significantly reduced</b> wear</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">核心目标</span><span class="lang-en">Core goal</span></span><span class="v"><span class="lang-zh">快速提升操作手核心能力</span><span class="lang-en">Rapid operator skill build-up</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">实装模拟</span><span class="lang-en">Realistic sim</span></span>
+          <span class="chip"><span class="lang-zh">标准化考核</span><span class="lang-en">Standardized test</span></span>
+          <span class="chip"><span class="lang-zh">实战化训练</span><span class="lang-en">Combat-realistic</span></span>
+          <span class="chip"><span class="lang-zh">零器材损耗</span><span class="lang-en">Zero wear</span></span>
+          <span class="chip"><span class="lang-zh">灵活流程</span><span class="lang-en">Flexible flow</span></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <p class="detail-lead reveal" data-delay="1">
-      <span class="lang-zh">针对无人机黑飞、非法入侵等低空安全隐患，打造<b>便携式探测反制 + 低空车载防御</b>双重防护体系，实现侦测—识别—压制全流程闭环。</span>
-      <span class="lang-en">Against unauthorized drones and low-altitude threats, we deliver a <b>portable + vehicle-mounted</b> dual-layer system — a closed loop from detection to neutralization.</span>
-    </p>
-    <ul class="feature-list">
-      <li class="feature reveal">
-        <div class="icn">◆</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">便携式反制系统</span><span class="lang-en">Portable C-UAS Kit</span></div>
-          <div class="d"><span class="lang-zh">融合雷达 · 光学 · 无线电三重侦测，5km 探测 · 2km 精准压制</span><span class="lang-en">Radar · EO · RF triple sensing. 5 km detection · 2 km jamming</span></div>
+
+    <!-- ===== Category 4 ===== -->
+    <div class="cat-group reveal">
+      <div class="cat-head">
+        <span class="cat-num">CAT · 04</span>
+        <span class="cat-name"><span class="lang-zh">反制装备 <span class="accent">系列</span></span><span class="lang-en">Counter-UAS <span class="accent">Systems</span></span></span>
+        <span class="cat-count">4 <span class="lang-zh">款</span><span class="lang-en">items</span></span>
+      </div>
+      <div class="cat-list">
+
+        <div class="cat-item" id="cuas">
+          <div class="cat-img"><img src="assets/catalog/cuas-portable.jpg" alt="" loading="lazy" decoding="async"><span class="badge">C-UAS · PORTABLE</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">便携式无人机探测与反制系统</span><span class="lang-en">Portable Drone Detection &amp; Counter System</span></h4>
+            <div class="cat-tag"><span class="lang-zh">智能化 · 小型化 · 模块化</span><span class="lang-en">Smart · Compact · Modular</span></div>
+            <div class="cat-desc"><span class="lang-zh">智能化、小型化、模块化的反无人机装备，采用<b>雷达、光学、无线电信号三种融合侦察手段</b>，可对防御区域内的低空无人机目标实现<b>快速搜索、高效识别、自动捕获</b>，利用信号压制、导航干扰等手段，对无人机目标的控制链路、图传链路实施定向打击。</span><span class="lang-en">Smart, compact, modular C-UAS unit fusing <b>radar, EO and RF</b> sensing. Rapid search, efficient identification and auto-track of low-altitude drones. RF jamming and GNSS spoofing strike control/video links with directional precision.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">装备定位</span><span class="lang-en">Platform</span></span><span class="v"><span class="lang-zh">智能化 · 小型化 · 模块化反无人机装备</span><span class="lang-en">Smart · Compact · Modular C-UAS</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">侦察手段</span><span class="lang-en">Sensing</span></span><span class="v"><span class="lang-zh"><b>雷达 + 光学 + 无线电信号</b>三重融合</span><span class="lang-en"><b>Radar + EO + RF</b> triple fusion</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">覆盖范围</span><span class="lang-en">Coverage</span></span><span class="v"><span class="lang-zh">防御区域内的低空无人机目标</span><span class="lang-en">Low-altitude drones in defense area</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">作业能力</span><span class="lang-en">Operations</span></span><span class="v"><span class="lang-zh">快速搜索 · 高效识别 · 自动捕获</span><span class="lang-en">Rapid search · Efficient ID · Auto-capture</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">反制手段</span><span class="lang-en">Counter</span></span><span class="v"><span class="lang-zh"><b>信号压制</b> · <b>导航干扰</b></span><span class="lang-en"><b>RF jamming</b> · <b>GNSS spoofing</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">打击对象</span><span class="lang-en">Strike target</span></span><span class="v"><span class="lang-zh">控制链路 / 图传链路</span><span class="lang-en">Control link / Video link</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">打击方式</span><span class="lang-en">Strike mode</span></span><span class="v"><span class="lang-zh"><b>定向打击</b></span><span class="lang-en"><b>Directional strike</b></span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">雷达+光学+无线电</span><span class="lang-en">Radar + EO + RF</span></span>
+          <span class="chip"><span class="lang-zh">三重融合</span><span class="lang-en">Triple fusion</span></span>
+          <span class="chip"><span class="lang-zh">自动捕获</span><span class="lang-en">Auto-capture</span></span>
+          <span class="chip"><span class="lang-zh">信号压制</span><span class="lang-en">RF jamming</span></span>
+          <span class="chip"><span class="lang-zh">导航干扰</span><span class="lang-en">GNSS spoof</span></span>
+          <span class="chip"><span class="lang-zh">定向打击</span><span class="lang-en">Directional</span></span>
+            </div>
+          </div>
         </div>
-      </li>
-      <li class="feature reveal" data-delay="1">
-        <div class="icn">◈</div>
-        <div class="txt">
-          <div class="ttl"><span class="lang-zh">低空车载防御平台</span><span class="lang-en">Mobile C-UAS Platform</span></div>
-          <div class="d"><span class="lang-zh">基于无人车底盘 · 电磁干扰 · 导航夺控 · 立体拦截</span><span class="lang-en">UGV-based · RF disruption · GNSS takeover · Kinetic intercept</span></div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/cuas-vehicle-cn.jpg" alt="" loading="lazy" decoding="async"><span class="badge">C-UAS · MOBILE</span><span class="coming-soon"><span class="lang-zh">标品型号即将推出</span><span class="lang-en">Standard Model · Coming Soon</span></span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">低空车载防御平台</span><span class="lang-en">Mobile C-UAS Defense Platform</span></h4>
+            <div class="cat-tag"><span class="lang-zh">车载机动 · 三种协同部署</span><span class="lang-en">Vehicle-Mounted · Tri-Coordinated</span></div>
+            <div class="cat-desc"><span class="lang-zh">基于无人车底盘开发的<b>多手段、高集成、可机动部署</b>反无人机装备体系。集成<b>便携探测与反制 + 背负反制 + 背负 FPV 反制</b>三种协同部署低空防御能力，对防御区域内低空无人机实现快速搜索、高效识别、自动捕获，构建多层次低空安全屏障。</span><span class="lang-en">UGV-chassis-based <b>multi-modal, highly-integrated, mobile</b> C-UAS suite. Combines <b>portable detection + backpack jamming + backpack FPV counter</b> in one coordinated platform for layered low-altitude defense — rapid search, identification and tracking inside the defense zone.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">装备体系</span><span class="lang-en">Platform</span></span><span class="v"><span class="lang-zh"><b>无人车底盘</b>开发 · 多手段 · 高集成 · 机动部署</span><span class="lang-en"><b>UGV chassis</b> · Multi-modal · Integrated · Mobile</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">协同模块 1</span><span class="lang-en">Module 1</span></span><span class="v"><span class="lang-zh">便携式探测与反制设备</span><span class="lang-en">Portable detection &amp; counter</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">协同模块 2</span><span class="lang-en">Module 2</span></span><span class="v"><span class="lang-zh">背负式反制设备</span><span class="lang-en">Backpack counter unit</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">协同模块 3</span><span class="lang-en">Module 3</span></span><span class="v"><span class="lang-zh">背负式 <b>FPV 反制</b>设备</span><span class="lang-en">Backpack <b>FPV counter</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">防御对象</span><span class="lang-en">Defense target</span></span><span class="v"><span class="lang-zh">防御区域内低空无人机</span><span class="lang-en">Low-altitude UAVs in defense zone</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">作业能力</span><span class="lang-en">Operations</span></span><span class="v"><span class="lang-zh">快速搜索 · 高效识别 · 自动捕获</span><span class="lang-en">Rapid search · Efficient ID · Auto-capture</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">部署方式</span><span class="lang-en">Deployment</span></span><span class="v"><span class="lang-zh"><b>三种协同部署</b> · 立体低空防御</span><span class="lang-en"><b>Tri-coordinated</b> · Volumetric defense</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">车载机动</span><span class="lang-en">Mobile</span></span>
+          <span class="chip"><span class="lang-zh">便携反制</span><span class="lang-en">Portable</span></span>
+          <span class="chip"><span class="lang-zh">背负反制</span><span class="lang-en">Backpack</span></span>
+          <span class="chip"><span class="lang-zh">FPV反制</span><span class="lang-en">FPV</span></span>
+          <span class="chip"><span class="lang-zh">三模协同</span><span class="lang-en">Tri-mode</span></span>
+          <span class="chip"><span class="lang-zh">机动部署</span><span class="lang-en">Quick deploy</span></span>
+            </div>
+          </div>
         </div>
-      </li>
-    </ul>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/cuas-backpack.jpg" alt="" loading="lazy" decoding="async"><span class="badge">C-UAS · BACKPACK</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">背负式无人机探测与反制一体化设备</span><span class="lang-en">Backpack Drone Detection &amp; Counter Integrated Unit</span></h4>
+            <div class="cat-tag"><span class="lang-zh">单人背负 · 行进中反制</span><span class="lang-en">One-Person · On-the-Move</span></div>
+            <div class="cat-desc"><span class="lang-zh">适配先进的轻量化、远距离探测设备，采用<b>探测与反制一体化设计</b>，集成度高、方便携带、锂电池内置的单人背负式无人机探测与反制设备。手持终端可实时显示背负设备的电磁信号探测结果，还可快速开启无人机导航和图传信号压制功能，能够在行进中实时<b>对低空无人机进行电子打击</b>。</span><span class="lang-en">Light, long-range backpack-style detection + counter unit with integrated design. Internal lithium battery. Handheld terminal shows real-time RF detection and toggles GNSS/video jamming, enabling <b>electronic strike on the move</b> against low-altitude drones.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">电磁探测</span><span class="lang-en">RF detection</span></span><span class="v"><span class="lang-zh"><b>≥3 km</b></span><span class="lang-en"><b>≥3 km</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">频段覆盖</span><span class="lang-en">Frequency</span></span><span class="v"><span class="lang-zh">300 MHz - 6 GHz 全频段</span><span class="lang-en">300 MHz - 6 GHz full band</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">电磁压制</span><span class="lang-en">RF jamming</span></span><span class="v"><span class="lang-zh">9134/2.4G/5.2G/5.8G/1.5G 频段 · 可全选 · <b>≥1 km</b></span><span class="lang-en">9134/2.4G/5.2G/5.8G/1.5G · All-band · <b>≥1 km</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">导航夺控</span><span class="lang-en">GNSS takeover</span></span><span class="v"><span class="lang-zh"><b>≥1.5 km</b> · GPS L1 / 北斗 B1 / GLONASS L1</span><span class="lang-en"><b>≥1.5 km</b> · GPS L1 / BDS B1 / GLONASS L1</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">飞手定位</span><span class="lang-en">Pilot fix</span></span><span class="v"><span class="lang-zh"><b>≤10 m</b>（适应距离）</span><span class="lang-en"><b>≤10 m</b> (range)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">尺寸</span><span class="lang-en">Dimensions</span></span><span class="v"><span class="lang-zh">405 × 107 × 445 mm（设备）/ 328 × 144 × 322 mm（手持）</span><span class="lang-en">405 × 107 × 445 mm (unit) / 328 × 144 × 322 mm (handheld)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">重量</span><span class="lang-en">Weight</span></span><span class="v"><span class="lang-zh">≤5 kg（设备）/ ≤1.5 kg（手持）</span><span class="lang-en">≤5 kg (unit) / ≤1.5 kg (handheld)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">功耗</span><span class="lang-en">Power</span></span><span class="v"><span class="lang-zh">≤600W</span><span class="lang-en">≤600W</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">工作温度</span><span class="lang-en">Operating temp</span></span><span class="v"><span class="lang-zh">-25℃ ~ +55℃</span><span class="lang-en">-25℃ ~ +55℃</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">供电</span><span class="lang-en">Power supply</span></span><span class="v"><span class="lang-zh">电池供电 / 充电电压 220V</span><span class="lang-en">Battery / 220V charging</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">电池</span><span class="lang-en">Battery</span></span><span class="v"><span class="lang-zh"><b>1.5 小时</b></span><span class="lang-en"><b>1.5 hours</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">充电时间</span><span class="lang-en">Charge time</span></span><span class="v"><span class="lang-zh">12-15 小时 / 30 分钟（快充）</span><span class="lang-en">12-15 h / 30 min (fast)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">精准测向</span><span class="lang-en">Precision DF</span></span><span class="v"><span class="lang-zh">无源频谱测向 · 单机定位（含合作/非合作目标）</span><span class="lang-en">Passive spectrum DF · Single-unit fix (cooperative + non)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">机型识别</span><span class="lang-en">Model ID</span></span><span class="v"><span class="lang-zh">大疆 · 道通 · 主流品牌机 · WiFi 机 · 自制机型</span><span class="lang-en">DJI · Autel · Major brands · WiFi · DIY</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">飞手轨迹</span><span class="lang-en">Pilot track</span></span><span class="v"><span class="lang-zh">实时显示飞手方位</span><span class="lang-en">Real-time pilot bearing</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">轨迹追踪</span><span class="lang-en">Drone track</span></span><span class="v"><span class="lang-zh">实时显示多架无人机飞行轨迹</span><span class="lang-en">Real-time multi-drone trajectory</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">指控接入</span><span class="lang-en">C2 integration</span></span><span class="v"><span class="lang-zh">可接入<b>指控平台</b>统一指挥</span><span class="lang-en">Plug-in <b>C2 platform</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">黑白名单</span><span class="lang-en">Whitelist</span></span><span class="v"><span class="lang-zh">一键标记 · 开关机持久 · 白名单免告警</span><span class="lang-en">One-tap mark · Persistent · Whitelist mute</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">热插拔</span><span class="lang-en">Hot-swap</span></span><span class="v"><span class="lang-zh"><b>大容量高密度弹匣电池</b> · 全天候连续作业</span><span class="lang-en"><b>Hot-swap mag battery</b> · 24/7 ops</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">人体工学</span><span class="lang-en">Ergonomics</span></span><span class="v"><span class="lang-zh">背负式 · 无辐射 · 轻量小体积 · 重心稳</span><span class="lang-en">Backpack · No-radiation · Compact · Balanced</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">精准测向</span><span class="lang-en">Precision DF</span></span>
+          <span class="chip"><span class="lang-zh">机型识别</span><span class="lang-en">Model ID</span></span>
+          <span class="chip"><span class="lang-zh">飞手定位</span><span class="lang-en">Pilot locate</span></span>
+          <span class="chip"><span class="lang-zh">轨迹追踪</span><span class="lang-en">Multi-track</span></span>
+          <span class="chip"><span class="lang-zh">黑白名单</span><span class="lang-en">Whitelist</span></span>
+          <span class="chip"><span class="lang-zh">热插拔电池</span><span class="lang-en">Hot-swap battery</span></span>
+          <span class="chip"><span class="lang-zh">全天候作业</span><span class="lang-en">24/7 ops</span></span>
+          <span class="chip"><span class="lang-zh">人体工学</span><span class="lang-en">Ergonomic</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cat-item">
+          <div class="cat-img"><img src="assets/catalog/cuas-shoulderlight.jpg" alt="" loading="lazy" decoding="async"><span class="badge">C-UAS · ALERT</span></div>
+          <div class="cat-body">
+            <h4><span class="lang-zh">无人机探测肩灯</span><span class="lang-en">Drone Detection Shoulder Light</span></h4>
+            <div class="cat-tag"><span class="lang-zh">单人巡逻 · 蓝牙报警</span><span class="lang-en">Patrol · Bluetooth Alert</span></div>
+            <div class="cat-desc"><span class="lang-zh">便于携带的无人机侦测设备，专为<b>户外巡逻、临时安保</b>等移动场景量身打造，支持手持或采用背夹方式使用。通过<b>蓝牙与安卓 APP</b>相连，实现实时报警与轨迹追踪。本设备能实时接收大疆（DJI）等主流无人机的远程识别信号（<b>Remote ID</b>），探测距离可达 <b>500-1000 米</b>，精准识别无人机型号及位置。</span><span class="lang-en">Pocket-size drone detector for patrol and event security. Hand-held or shoulder-clip. <b>Bluetooth-paired Android app</b> for real-time alerts and tracking. Decodes <b>DJI Remote ID</b> broadcasts at <b>500-1000 m</b> range, identifies model and position precisely.</span></div>
+            <div class="spec-title"><span class="lang-zh">设备技术参数</span><span class="lang-en">Technical Specifications</span></div>
+            <div class="spec-table">
+          <div class="spec-row"><span class="k"><span class="lang-zh">探测距离</span><span class="lang-en">Detection range</span></span><span class="v"><span class="lang-zh"><b>500-1000 m</b>（依据环境而定）</span><span class="lang-en"><b>500-1000 m</b> (env-dependent)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">识别机型</span><span class="lang-en">Detected models</span></span><span class="v"><span class="lang-zh">DJI Mavic / Air / Mini · Mavic 4 Pro / Air 3S / Mini 4K / Mini 4 Pro / Air 3 / Mini 3 / Mini 2 SE / Mavic 3 Pro / Mavic 3 Classic / Mavic 3</span><span class="lang-en">DJI Mavic / Air / Mini series · Mavic 4 Pro / Air 3S / Mini 4K / Mini 4 Pro / Air 3 / Mini 3 / Mini 2 SE / Mavic 3 Pro / Mavic 3 Classic / Mavic 3</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">探测半径</span><span class="lang-en">Detection radius</span></span><span class="v"><span class="lang-zh"><b>1000-1500 m</b>（视环境干扰）</span><span class="lang-en"><b>1000-1500 m</b> (env interference)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">实时显示</span><span class="lang-en">Live display</span></span><span class="v"><span class="lang-zh">无人机型号 · 高度 · 速度 · 飞手位置</span><span class="lang-en">Model · Altitude · Speed · Pilot location</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">供电方式</span><span class="lang-en">Power</span></span><span class="v"><span class="lang-zh">内置锂电池 · <b>Type-C 接口充电</b></span><span class="lang-en">Internal Li · <b>Type-C charging</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">电池容量</span><span class="lang-en">Battery</span></span><span class="v"><span class="lang-zh">续航 <b>4-6 小时</b></span><span class="lang-en"><b>4-6 hours</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">网络支持</span><span class="lang-en">Connectivity</span></span><span class="v"><span class="lang-zh"><b>蓝牙 5.0</b> 连接安卓 APP</span><span class="lang-en"><b>Bluetooth 5.0</b> Android app</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">防护等级</span><span class="lang-en">Sealing</span></span><span class="v"><span class="lang-zh">PC 材质外壳 · 防摔耐磨</span><span class="lang-en">PC casing · Drop &amp; wear resistant</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">尺寸</span><span class="lang-en">Dimensions</span></span><span class="v"><span class="lang-zh">90 × 35 × 35 mm</span><span class="lang-en">90 × 35 × 35 mm</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">重量</span><span class="lang-en">Weight</span></span><span class="v"><span class="lang-zh"><b>≤100 g</b></span><span class="lang-en"><b>≤100 g</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">定位模式</span><span class="lang-en">Geolocation</span></span><span class="v"><span class="lang-zh">APP 权限获取</span><span class="lang-en">Via app permission</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">工作温度</span><span class="lang-en">Operating temp</span></span><span class="v"><span class="lang-zh">-10℃ ~ +45℃</span><span class="lang-en">-10℃ ~ +45℃</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">声光报警</span><span class="lang-en">Audio-visual alert</span></span><span class="v"><span class="lang-zh">本地报警（闪光 + 蜂鸣器）</span><span class="lang-en">Local alarm (flash + buzzer)</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">APP 报警</span><span class="lang-en">App alert</span></span><span class="v"><span class="lang-zh">推送报警 · 支持<b>电子围栏设置</b></span><span class="lang-en">Push alerts · <b>Geo-fence support</b></span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">白名单</span><span class="lang-en">Whitelist</span></span><span class="v"><span class="lang-zh">无人机白名单过滤</span><span class="lang-en">Drone whitelist filter</span></span></div>
+          <div class="spec-row"><span class="k"><span class="lang-zh">使用场景</span><span class="lang-en">Use cases</span></span><span class="v"><span class="lang-zh">移动巡逻：公安/边防/城管等户外执勤 · 临时布防：重大活动安保/要人护卫</span><span class="lang-en">Patrol: police/border/civic ops · Temp ops: VIP &amp; event security</span></span></div>
+            </div>
+            <div class="cat-feat">
+          <span class="chip"><span class="lang-zh">DJI Remote ID</span><span class="lang-en">DJI Remote ID</span></span>
+          <span class="chip"><span class="lang-zh">蓝牙APP</span><span class="lang-en">BLE app</span></span>
+          <span class="chip"><span class="lang-zh">1000m探测</span><span class="lang-en">1000m range</span></span>
+          <span class="chip"><span class="lang-zh">声光报警</span><span class="lang-en">Audio-visual</span></span>
+          <span class="chip"><span class="lang-zh">电子围栏</span><span class="lang-en">Geo-fence</span></span>
+          <span class="chip"><span class="lang-zh">白名单过滤</span><span class="lang-en">Whitelist</span></span>
+          <span class="chip"><span class="lang-zh">≤100g</span><span class="lang-en">≤100g</span></span>
+          <span class="chip"><span class="lang-zh">Type-C快充</span><span class="lang-en">Type-C charge</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
-  <!-- ================= WORKFLOW ================= -->
-  <section class="block workflow-section">
+  <!-- ================= TECH PILLARS ================= -->
+  <section class="block tech-pillars-section">
     <div class="section-head reveal">
       <div class="section-num">SECTION · 04</div>
       <div class="section-title">
-        <span class="lang-zh">全流程 <span class="accent">闭环</span></span>
-        <span class="lang-en">Closed-Loop <span class="accent">Defense</span></span>
+        <span class="lang-zh">核心技术 <span class="accent">四大支柱</span></span>
+        <span class="lang-en">Four Core <span class="accent">Tech Pillars</span></span>
       </div>
       <div class="section-bar"></div>
     </div>
-    <div class="workflow">
-      <div class="wf-step reveal">
-        <div class="n">PHASE · 01</div>
-        <div class="t"><span class="lang-zh">侦 · DETECT</span><span class="lang-en">DETECT</span></div>
-        <div class="d"><span class="lang-zh">雷达 · 光学 · 频谱融合感知，黑飞早发现、早预警</span><span class="lang-en">Radar · EO · RF fusion sensing — catch threats early</span></div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="p-num">01</div>
+        <div class="p-body">
+          <div class="p-title">
+            <span class="lang-zh"><span class="accent">模块化</span>的全栈国产化</span>
+            <span class="lang-en">Modular <span class="accent">Full-Stack Localization</span></span>
+          </div>
+          <div class="p-tag"><span class="lang-zh">核心支撑</span><span class="lang-en">CORE FOUNDATION</span></div>
+          <div class="p-desc">
+            <span class="lang-zh">采用国产标准化模块架构，实现核心部件<b>自主可控、灵活适配</b>。</span>
+            <span class="lang-en">National standardized modular architecture delivers <b>autonomous, controllable</b> core components with flexible integration.</span>
+          </div>
+        </div>
       </div>
-      <div class="wf-step reveal" data-delay="1">
-        <div class="n">PHASE · 02</div>
-        <div class="t"><span class="lang-zh">识 · IDENTIFY</span><span class="lang-en">IDENTIFY</span></div>
-        <div class="d"><span class="lang-zh">AI 自动判型 · 敌我甄别 · 威胁等级评估</span><span class="lang-en">AI classification · Friend-or-foe · Threat scoring</span></div>
+      <div class="pillar reveal" data-delay="1">
+        <div class="p-num">02</div>
+        <div class="p-body">
+          <div class="p-title">
+            <span class="lang-zh"><span class="accent">智能化</span>的稳定性</span>
+            <span class="lang-en">Intelligent <span class="accent">Stability</span></span>
+          </div>
+          <div class="p-tag"><span class="lang-zh">运行磐石</span><span class="lang-en">OPERATIONAL BEDROCK</span></div>
+          <div class="p-desc">
+            <span class="lang-zh">依托智能算法与自主调控能力，保障系统<b>全天候持续稳定作业</b>。</span>
+            <span class="lang-en">AI-powered algorithms and autonomous regulation ensure <b>24/7 uninterrupted operation</b>.</span>
+          </div>
+        </div>
       </div>
-      <div class="wf-step reveal" data-delay="2">
-        <div class="n">PHASE · 03</div>
-        <div class="t"><span class="lang-zh">制 · NEUTRALIZE</span><span class="lang-en">NEUTRALIZE</span></div>
-        <div class="d"><span class="lang-zh">电磁压制 · 导航夺控 · 立体拦截 · 安全迫降</span><span class="lang-en">Jam · Takeover · Kinetic intercept · Safe landing</span></div>
+      <div class="pillar reveal" data-delay="2">
+        <div class="p-num">03</div>
+        <div class="p-body">
+          <div class="p-title">
+            <span class="lang-zh"><span class="accent">数据化</span>的安全性</span>
+            <span class="lang-en">Data-Driven <span class="accent">Security</span></span>
+          </div>
+          <div class="p-tag"><span class="lang-zh">核心底线</span><span class="lang-en">THE BOTTOM LINE</span></div>
+          <div class="p-desc">
+            <span class="lang-zh">筑牢数据<b>采集、传输、存储</b>全流程安全屏障,实现数字信息<b>私密、可靠、可控</b>。</span>
+            <span class="lang-en">End-to-end security barriers across <b>capture, transmission and storage</b> — keeping data <b>private, reliable, controllable</b>.</span>
+          </div>
+        </div>
       </div>
-      <div class="wf-step reveal" data-delay="3">
-        <div class="n">PHASE · 04</div>
-        <div class="t"><span class="lang-zh">证 · RECORD</span><span class="lang-en">RECORD</span></div>
-        <div class="d"><span class="lang-zh">全程音视频取证 · 回溯分析 · 数据归档</span><span class="lang-en">Full-track evidence · Replay · Archive</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CAPABILITY MATRIX ================= -->
-  <section class="block matrix-section">
-    <div class="section-head reveal">
-      <div class="section-num">SECTION · 05</div>
-      <div class="section-title">
-        <span class="lang-zh">硬核 <span class="accent">能力矩阵</span></span>
-        <span class="lang-en">Capability <span class="accent">Matrix</span></span>
-      </div>
-      <div class="section-bar"></div>
-    </div>
-    <div class="mat-grid">
-      <div class="mat-tile reveal">
-        <div class="icn-box">↯</div>
-        <div class="v">5<small>km</small></div>
-        <div class="l"><span class="lang-zh">远距侦测</span><span class="lang-en">DETECTION</span></div>
-        <div class="x"><span class="lang-zh">多源融合，黑飞早发现</span><span class="lang-en">Multi-sensor fusion. Early detection.</span></div>
-      </div>
-      <div class="mat-tile reveal" data-delay="1">
-        <div class="icn-box">◎</div>
-        <div class="v">2<small>km</small></div>
-        <div class="l"><span class="lang-zh">精准压制</span><span class="lang-en">JAMMING</span></div>
-        <div class="x"><span class="lang-zh">电磁干扰，安全迫降</span><span class="lang-en">Precision RF. Safe landing.</span></div>
-      </div>
-      <div class="mat-tile reveal" data-delay="2">
-        <div class="icn-box">◐</div>
-        <div class="v">24<small>h</small></div>
-        <div class="l"><span class="lang-zh">全天候作业</span><span class="lang-en">ALL-WEATHER</span></div>
-        <div class="x"><span class="lang-zh">昼夜不间断，气象稳定</span><span class="lang-en">Day, night, any weather.</span></div>
-      </div>
-      <div class="mat-tile reveal" data-delay="3">
-        <div class="icn-box">◇</div>
-        <div class="v">360<small>°</small></div>
-        <div class="l"><span class="lang-zh">全域覆盖</span><span class="lang-en">COVERAGE</span></div>
-        <div class="x"><span class="lang-zh">立体防护，无方向死角</span><span class="lang-en">Volumetric shield. No blind spots.</span></div>
+      <div class="pillar reveal" data-delay="3">
+        <div class="p-num">04</div>
+        <div class="p-body">
+          <div class="p-title">
+            <span class="lang-zh"><span class="accent">无人化</span>的可靠性</span>
+            <span class="lang-en">Unmanned <span class="accent">Reliability</span></span>
+          </div>
+          <div class="p-tag"><span class="lang-zh">应用保障</span><span class="lang-en">APPLICATION GUARANTEE</span></div>
+          <div class="p-desc">
+            <span class="lang-zh">强化<b>自主执行</b>与<b>远程运维</b>能力,确保无人场景下高效稳定履职。</span>
+            <span class="lang-en">Enhanced <b>autonomous execution</b> and <b>remote O&amp;M</b> guarantee high-efficiency duty in unmanned scenarios.</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- ================= LEAD FORM (compact, footer) ================= -->
-  <section class="lean-form" id="contact-form">
-    <div class="lean-form-head">
-      <span class="lang-zh"><span class="accent">留下联系方式</span> · 我们尽快与您联系</span>
-      <span class="lang-en"><span class="accent">Leave your details</span> · We'll be in touch</span>
-    </div>
-    <form id="leadForm" novalidate>
-      <div class="form-row">
-        <input type="text" name="company" required placeholder="联系单位 *" autocomplete="organization" data-ph-zh="联系单位 *" data-ph-en="Company *">
-        <input type="text" name="name" required placeholder="联系人 *" autocomplete="name" data-ph-zh="联系人 *" data-ph-en="Name *">
-      </div>
-      <div class="form-row">
-        <input type="tel" name="phone" required placeholder="联系电话 *" autocomplete="tel" data-ph-zh="联系电话 *" data-ph-en="Phone *">
-        <input type="email" name="email" placeholder="联系邮箱" autocomplete="email" data-ph-zh="联系邮箱" data-ph-en="Email">
-      </div>
-      <button type="submit" class="form-submit">
-        <span class="lang-zh">提交咨询</span>
-        <span class="lang-en">Submit</span>
-        <span>→</span>
-      </button>
-      <div class="form-success" id="formSuccess">
-        <span class="lang-zh">✓ 已为您调起邮件 App，发送即可</span>
-        <span class="lang-en">✓ Email app opened — tap send</span>
-      </div>
-    </form>
   </section>
 
   <!-- ================= VISIT US ================= -->
@@ -1247,10 +2145,10 @@
             </svg>
           </div>
           <div class="body">
-            <div class="k"><span class="lang-zh">展位地址</span><span class="lang-en">BOOTH</span></div>
+            <div class="k"><span class="lang-zh">公司地址</span><span class="lang-en">ADDRESS</span></div>
             <div class="v">
-              <span class="lang-zh">深圳会展中心（福田）<br>7B95</span>
-              <span class="lang-en">Shenzhen Convention Center<br>(Futian) · 7B95</span>
+              <span class="lang-zh">中国成都高新区<br>梓州大道4111号<br>易上创客中心</span>
+              <span class="lang-en">Yishang Maker Center<br>No. 4111 Zizhou Avenue<br>Hi-Tech Zone, Chengdu, China</span>
             </div>
           </div>
         </div>
@@ -1261,7 +2159,7 @@
             </svg>
           </div>
           <div class="body">
-            <div class="k"><span class="lang-zh">咨询热线</span><span class="lang-en">HOTLINE</span></div>
+            <div class="k"><span class="lang-zh">咨询热线 · 王先生</span><span class="lang-en">HOTLINE · Mr. Wang</span></div>
             <div class="v">18030403818</div>
           </div>
           <a href="tel:18030403818" class="call-btn"><span class="lang-zh">拨打</span><span class="lang-en">CALL</span></a>
@@ -1350,9 +2248,9 @@
     const stage = document.querySelector('.stage');
     const tabMap = {
       home:     ['.hero'],
-      products: ['#products', '#ugv', '#k9', '#cuas'],
-      tech:     ['.workflow-section', '.matrix-section'],
-      mine:     ['.about', '#visit', '#contact-form']
+      products: ['#products'],
+      tech:     ['.tech-pillars-section'],
+      mine:     ['.about', '.philosophy', '#visit']
     };
     // Build wrappers and move sections into them
     Object.keys(tabMap).forEach((key, i) => {
@@ -1469,6 +2367,47 @@
     applyLangPlaceholders(lang);
   }));
   applyLangPlaceholders(document.documentElement.dataset.lang || 'zh');
+
+  /* ============= THEME SWITCHER ============= */
+  (function() {
+    const switcher = document.querySelector('.theme-switcher');
+    const panel = document.querySelector('.theme-panel');
+    const opts = document.querySelectorAll('.theme-opt');
+    if (!switcher || !panel) return;
+
+    function applyTheme(theme) {
+      if (theme === 'blue-dark') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      try { localStorage.setItem('h5-theme', theme); } catch(e) {}
+      opts.forEach(b => b.classList.toggle('active', b.dataset.themeSet === theme));
+    }
+
+    switcher.addEventListener('click', (e) => {
+      e.stopPropagation();
+      panel.classList.toggle('open');
+    });
+
+    opts.forEach(b => {
+      b.addEventListener('click', () => {
+        applyTheme(b.dataset.themeSet);
+        panel.classList.remove('open');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!panel.contains(e.target) && !switcher.contains(e.target)) {
+        panel.classList.remove('open');
+      }
+    });
+
+    // Restore saved theme on load
+    let saved = 'blue-dark';
+    try { saved = localStorage.getItem('h5-theme') || 'blue-dark'; } catch(e) {}
+    applyTheme(saved);
+  })();
 
   /* ============= SCROLL REVEAL ============= */
   const io = new IntersectionObserver((entries) => {
