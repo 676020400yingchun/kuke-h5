@@ -205,10 +205,34 @@
     display: flex; align-items: center; gap: 8px;
     font-weight: 800; font-size: 13px; letter-spacing: .14em; color: var(--text);
   }
-  .top-nav .brand::before {
-    content: ""; width: 18px; height: 18px;
-    background: linear-gradient(135deg, var(--cyan), var(--blue));
-    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  .top-nav .brand img.brand-logo {
+    width: 26px; height: 26px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0,145,255,.4));
+    flex-shrink: 0;
+  }
+  /* === Big logo in About section === */
+  .about-logo {
+    display: flex; flex-direction: column; align-items: center;
+    margin: 8px 0 24px;
+  }
+  .about-logo img {
+    width: 78px; height: 78px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(0,145,255,.35));
+  }
+  .about-logo .brand-name {
+    margin-top: 12px;
+    font-size: 22px; font-weight: 900;
+    letter-spacing: .14em;
+    background: linear-gradient(135deg, #fff 0%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .about-logo .brand-tag {
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 10px; letter-spacing: .3em;
+    color: var(--cyan);
+    margin-top: 4px;
   }
   .lang-toggle {
     display: inline-flex; gap: 0;
@@ -420,13 +444,10 @@
   /* Last visit section: no next-hint, no separator above (already there) */
   .visit .next-hint { display: none; }
   .section-head {
-    margin-bottom: 28px;
+    margin-bottom: 22px;
+    padding-top: 6px;
   }
-  .section-num {
-    font-family: "SF Mono", Menlo, monospace;
-    font-size: 10px; color: var(--cyan); letter-spacing: .3em;
-    margin-bottom: 6px;
-  }
+  .section-num { display: none; }
   .section-title {
     font-size: 26px; font-weight: 900; line-height: 1.15; letter-spacing: .02em;
     color: var(--text);
@@ -1105,13 +1126,13 @@
   .values-title {
     font-size: 16px; font-weight: 800; color: var(--text);
     letter-spacing: .04em; margin: 6px 0 14px;
-    text-align: center;
+    text-align: left;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--line);
     position: relative;
   }
   .values-title::after {
-    content: ""; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%);
+    content: ""; position: absolute; bottom: -1px; left: 0;
     width: 48px; height: 2px;
     background: linear-gradient(90deg, var(--cyan), var(--blue));
     box-shadow: 0 0 8px rgba(0,212,255,.5);
@@ -1328,6 +1349,7 @@
 
 <header class="top-nav">
   <div class="brand">
+    <img src="assets/logo.png" alt="KUKE" class="brand-logo">
     <span class="lang-zh">无人装备 · KUKE</span>
     <span class="lang-en">UNMANNED · KUKE</span>
   </div>
@@ -1429,8 +1451,15 @@
 
   <!-- ================= ABOUT ================= -->
   <section class="block about">
+    <div class="about-logo reveal">
+      <img src="assets/logo.png" alt="KUKE">
+      <div class="brand-name">KUKE</div>
+      <div class="brand-tag">
+        <span class="lang-zh">无人装备 · 全场景方案</span>
+        <span class="lang-en">UNMANNED · FULL-SCENE</span>
+      </div>
+    </div>
     <div class="section-head reveal">
-      <div class="section-num">SECTION · 01</div>
       <div class="section-title">
         <span class="lang-zh">关于 <span class="accent">我们</span></span>
         <span class="lang-en">About <span class="accent">Us</span></span>
@@ -1468,7 +1497,6 @@
   <!-- ================= PHILOSOPHY ================= -->
   <section class="block philosophy">
     <div class="section-head reveal">
-      <div class="section-num">SECTION · 01.2</div>
       <div class="section-title">
         <span class="lang-zh">企业 <span class="accent">理念</span></span>
         <span class="lang-en">Corporate <span class="accent">Philosophy</span></span>
@@ -1536,7 +1564,6 @@
   <!-- ================= FULL PRODUCT CATALOG ================= -->
   <section class="block catalog-section" id="products">
     <div class="section-head reveal">
-      <div class="section-num">SECTION · 02</div>
       <div class="section-title">
         <span class="lang-zh">全系 <span class="accent">装备目录</span></span>
         <span class="lang-en">Equipment <span class="accent">Catalog</span></span>
@@ -2054,7 +2081,6 @@
   <!-- ================= TECH PILLARS ================= -->
   <section class="block tech-pillars-section">
     <div class="section-head reveal">
-      <div class="section-num">SECTION · 04</div>
       <div class="section-title">
         <span class="lang-zh">核心技术 <span class="accent">四大支柱</span></span>
         <span class="lang-en">Four Core <span class="accent">Tech Pillars</span></span>
@@ -2125,7 +2151,6 @@
   <section class="block visit" id="visit">
     <div class="visit-content">
       <div class="reveal">
-        <div class="section-num">SECTION · 06</div>
         <h2 class="visit-headline">
           <span class="lang-zh">聚力同行<br>智创未来</span>
           <span class="lang-en">Build The Future,<br>Unmanned.</span>
