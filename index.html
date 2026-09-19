@@ -3142,18 +3142,9 @@
     });
   })();
 
-  /* ============= NAV BAR HIDE/SHOW ON SCROLL ============= */
-  let lastY = 0;
+  /* ============= TOP NAV ALWAYS FIXED ============= */
   const nav = document.querySelector('.top-nav');
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y > 100 && y > lastY) {
-      nav.style.transform = 'translate(-50%, -110%)';
-    } else {
-      nav.style.transform = 'translateX(-50%)';
-    }
-    lastY = y;
-  }, { passive: true });
+  nav.style.transform = 'translateX(-50%)';
 
 </script>
 </body>
