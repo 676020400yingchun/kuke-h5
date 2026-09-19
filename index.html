@@ -501,7 +501,7 @@
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .section-bar {
-    width: 36px; height: 3px; background: linear-gradient(90deg, var(--cyan), transparent);
+    width: 40px; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--sky)); border-radius: 2px;
     margin-top: 10px;
   }
   [data-lang="en"] .section-title { letter-spacing: -.01em; font-size: 24px; }
@@ -692,27 +692,33 @@
   .cat-group:first-child { margin-top: 24px; }
   .cat-head {
     display: flex; align-items: center; gap: 10px;
-    padding: 10px 0; margin-bottom: 14px;
-    border-bottom: 1px solid var(--line);
+    padding: 14px 16px; margin-bottom: 16px;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     position: relative;
+    overflow: hidden;
   }
   .cat-head::before {
-    content: ""; position: absolute; left: 0; bottom: -1px;
-    width: 60px; height: 2px;
-    background: linear-gradient(90deg, var(--cyan), transparent);
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: linear-gradient(180deg, var(--cyan), var(--sky));
   }
   .cat-head .cat-num {
     font-family: "SF Mono", Menlo, monospace;
-    font-size: 10px; color: var(--cyan); letter-spacing: .3em;
+    font-size: 9px; color: var(--cyan); letter-spacing: .2em;
+    background: color-mix(in srgb, var(--cyan) 12%, transparent);
+    padding: 4px 8px; border-radius: 6px; font-weight: 600;
   }
   .cat-head .cat-name {
-    flex: 1; font-size: 18px; font-weight: 800; color: var(--text);
+    flex: 1; font-size: 17px; font-weight: 800; color: var(--text);
     letter-spacing: .02em;
   }
   .cat-head .cat-name .accent { color: var(--cyan); }
   .cat-head .cat-count {
     font-family: "SF Mono", Menlo, monospace;
-    font-size: 10px; color: var(--sky); letter-spacing: .15em;
+    font-size: 10px; color: var(--sky); letter-spacing: .1em;
+    background: color-mix(in srgb, var(--sky) 10%, transparent);
+    padding: 3px 8px; border-radius: 10px; font-weight: 600;
   }
 
   .cat-list { display: flex; flex-direction: column; gap: 14px; }
@@ -2193,8 +2199,8 @@
 
     <div class="cat-group reveal" data-cat="5">
       <div class="cat-head">
-        <span class="cat-kicker"><span class="cat-dot"></span>CAT · 05</span>
-        <h3><span class="lang-zh">线控底盘 系列</span><span class="lang-en">Chassis Series</span></h3>
+        <span class="cat-num">CAT · 05</span>
+        <span class="cat-name"><span class="lang-zh">线控底盘 <span class="accent">系列</span></span><span class="lang-en">Chassis <span class="accent">Series</span></span></span>
         <span class="cat-count">5 <span class="lang-zh">款</span><span class="lang-en">items</span></span>
       </div>
 <div class="cat-item">
