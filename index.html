@@ -1499,9 +1499,10 @@
     position: relative;
   }
   .cat-tab:not(:last-child)::after {
-    content: ""; position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
-    width: 1px; height: 16px;
-    background: var(--line);
+    content: ""; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: 2px; height: 20px;
+    background: var(--line-strong);
+    border-radius: 1px;
   }
   .cat-tab.active:not(:last-child)::after { opacity: 0; }
   .cat-tab.active {
