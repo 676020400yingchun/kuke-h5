@@ -166,6 +166,36 @@
     background: var(--bg-2);
     box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.06);
   }
+  /* Mine page light-mode fixes */
+  [data-theme$="-light"] .about-logo .brand-name {
+    background: linear-gradient(135deg, var(--text) 0%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text;
+  }
+  [data-theme$="-light"] .visit-headline {
+    background: linear-gradient(135deg, var(--text) 0%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text;
+  }
+  [data-theme$="-light"] .val-icon {
+    background: linear-gradient(180deg, var(--cyan) 0%, var(--blue) 100%);
+    -webkit-background-clip: text; background-clip: text;
+  }
+  [data-theme$="-light"] .info-card {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  [data-theme$="-light"] .info-row + .info-row {
+    border-top-color: var(--line);
+  }
+  [data-theme$="-light"] .info-row .k { color: var(--text-3); }
+  [data-theme$="-light"] .info-row .v { color: var(--text); }
+  [data-theme$="-light"] .call-btn {
+    background: color-mix(in srgb, var(--cyan) 12%, transparent);
+    color: var(--cyan);
+  }
+  [data-theme$="-light"] .visit {
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  }
   /* Form inputs in light mode */
   [data-theme$="-light"] .lean-form input {
     background: var(--bg-2); color: var(--text);
