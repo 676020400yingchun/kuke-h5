@@ -774,6 +774,24 @@
     color: var(--text);
     font-weight: 700;
   }
+  /* === Light theme override (must come AFTER dark defaults to win) === */
+  [data-theme$="-light"] .cat-item .spec-table {
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+  }
+  [data-theme$="-light"] .cat-item .spec-table .spec-row {
+    background: #FFFFFF;
+    border-bottom: 1px solid rgba(0,145,217,.12);
+  }
+  [data-theme$="-light"] .cat-item .spec-table .spec-row:last-child {
+    border-bottom: none;
+  }
+  [data-theme$="-light"] .cat-item .spec-table .spec-row .v {
+    color: var(--text-2);
+  }
+  [data-theme$="-light"] .cat-item .spec-table .spec-row .v b {
+    color: var(--text);
+  }
   .cat-item .spec-title {
     font-family: "SF Mono", Menlo, monospace;
     font-size: 9.5px; color: var(--cyan); letter-spacing: .25em;
