@@ -166,6 +166,29 @@
     background: var(--bg-2);
     box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 1px 3px rgba(0,0,0,.06);
   }
+  /* Hero light-mode fixes */
+  [data-theme$="-light"] .hero h1 {
+    background: linear-gradient(135deg, var(--text) 0%, var(--sky) 55%, var(--cyan) 100%);
+    -webkit-background-clip: text; background-clip: text;
+  }
+  [data-theme$="-light"] .hero-card {
+    border-color: color-mix(in srgb, var(--cyan) 25%, var(--line));
+    box-shadow: 0 12px 32px rgba(0,100,200,.10), 0 0 0 4px color-mix(in srgb, var(--cyan) 8%, transparent);
+  }
+  [data-theme$="-light"] .hero-card::after {
+    background: linear-gradient(180deg, transparent 50%, rgba(0,30,60,.5) 100%);
+  }
+  [data-theme$="-light"] .hero-card .card-badge {
+    background: rgba(255,255,255,.85);
+    color: var(--cyan);
+  }
+  [data-theme$="-light"] .hero-kicker {
+    background: color-mix(in srgb, var(--cyan) 8%, transparent);
+    border-color: color-mix(in srgb, var(--cyan) 20%, var(--line));
+  }
+  [data-theme$="-light"] .hero {
+    background: linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+  }
   /* Mine page light-mode fixes */
   [data-theme$="-light"] .about-logo .brand-name {
     background: linear-gradient(135deg, var(--text) 0%, var(--cyan) 100%);
