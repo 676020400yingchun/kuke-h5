@@ -1361,6 +1361,36 @@
   /* FAB raised above the tabbar */
   .fab { bottom: calc(84px + var(--safe-bot)) !important; }
 
+
+  /* ========== CATALOG FILTER TABS ========== */
+  .cat-tabs {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; gap: 6px; overflow-x: auto;
+    padding: 10px 0; margin: 4px 0 8px;
+    background: var(--bg-1);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .cat-tabs::-webkit-scrollbar { display: none; }
+  .cat-tab {
+    flex: 0 0 auto;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    color: var(--text-3);
+    font-size: 12px; font-weight: 600; letter-spacing: .03em;
+    padding: 8px 14px; border-radius: 99px; cursor: pointer;
+    white-space: nowrap; font-family: inherit;
+    transition: all .2s ease;
+  }
+  .cat-tab .en { display: block; font-size: 9px; font-weight: 400; opacity: .7; letter-spacing: .06em; margin-top: 1px; }
+  .cat-tab.active {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    border-color: transparent; color: #fff;
+    box-shadow: 0 4px 14px rgba(0,145,255,.35);
+  }
+  .cat-group { display: none; }
+  .cat-group.visible { display: block; animation: catFade .3s ease; }
+  @keyframes catFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 </style>
 </head>
 <body>
@@ -1589,8 +1619,17 @@
       <div class="section-bar"></div>
     </div>
 
+
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" data-cat-filter="all"><span class="lang-zh">全部</span><span class="lang-en">All</span></button>
+      <button class="cat-tab" data-cat-filter="1"><span class="lang-zh">无人车</span><span class="en lang-en">UGV</span></button>
+      <button class="cat-tab" data-cat-filter="2"><span class="lang-zh">四足机器人</span><span class="en lang-en">Quadruped</span></button>
+      <button class="cat-tab" data-cat-filter="3"><span class="lang-zh">无人机配套</span><span class="en lang-en">UAV</span></button>
+      <button class="cat-tab" data-cat-filter="4"><span class="lang-zh">反制装备</span><span class="en lang-en">C-UAS</span></button>
+    </div>
+
     <!-- ===== Category 1 ===== -->
-    <div class="cat-group reveal">
+    <div class="cat-group reveal" data-cat="1">
       <div class="cat-head">
         <span class="cat-num">CAT · 01</span>
         <span class="cat-name"><span class="lang-zh">无人车 <span class="accent">系列</span></span><span class="lang-en">Unmanned <span class="accent">Ground Vehicles</span></span></span>
@@ -2258,7 +2297,7 @@
     </div>
 
     <!-- ===== Category 2 ===== -->
-    <div class="cat-group reveal">
+    <div class="cat-group reveal" data-cat="2">
       <div class="cat-head">
         <span class="cat-num">CAT · 02</span>
         <span class="cat-name"><span class="lang-zh">四足机器人 <span class="accent">系列</span></span><span class="lang-en">Quadruped <span class="accent">Robots</span></span></span>
@@ -2330,7 +2369,7 @@
     </div>
 
     <!-- ===== Category 3 ===== -->
-    <div class="cat-group reveal">
+    <div class="cat-group reveal" data-cat="3">
       <div class="cat-head">
         <span class="cat-num">CAT · 03</span>
         <span class="cat-name"><span class="lang-zh">无人机 <span class="accent">及配套</span></span><span class="lang-en">UAV <span class="accent">&amp; Accessories</span></span></span>
@@ -2426,7 +2465,7 @@
     </div>
 
     <!-- ===== Category 4 ===== -->
-    <div class="cat-group reveal">
+    <div class="cat-group reveal" data-cat="4">
       <div class="cat-head">
         <span class="cat-num">CAT · 04</span>
         <span class="cat-name"><span class="lang-zh">反制装备 <span class="accent">系列</span></span><span class="lang-en">Counter-UAS <span class="accent">Systems</span></span></span>
@@ -2762,6 +2801,29 @@
 </nav>
 
 <script>
+
+  /* ========== CATALOG FILTER TABS ========== */
+  (function() {
+    var tabs = document.querySelectorAll('#catTabs .cat-tab');
+    var groups = document.querySelectorAll('.cat-group[data-cat]');
+    function apply(filter) {
+      groups.forEach(function(g) {
+        var show = (filter === 'all' || g.getAttribute('data-cat') === filter);
+        g.classList.toggle('visible', show);
+      });
+      tabs.forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-cat-filter') === filter);
+      });
+    }
+    tabs.forEach(function(t) {
+      t.addEventListener('click', function() {
+        apply(t.getAttribute('data-cat-filter'));
+      });
+    });
+    // default: show all
+    apply('all');
+  })();
+
   /* ============= TAB MICRO-SITE — group sections, switch on click ============= */
   (function() {
     const stage = document.querySelector('.stage');
