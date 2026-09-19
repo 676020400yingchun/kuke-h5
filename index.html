@@ -1492,11 +1492,18 @@
     border: none; background: transparent;
     color: var(--text-3);
     font-size: 12px; font-weight: 600; letter-spacing: .02em;
-    padding: 7px 10px; border-radius: 8px; cursor: pointer;
+    padding: 7px 12px; border-radius: 8px; cursor: pointer;
     white-space: nowrap; font-family: inherit;
     transition: all .25s ease;
     text-align: center; line-height: 1.2;
+    position: relative;
   }
+  .cat-tab:not(:last-child)::after {
+    content: ""; position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
+    width: 1px; height: 16px;
+    background: var(--line);
+  }
+  .cat-tab.active:not(:last-child)::after { opacity: 0; }
   .cat-tab.active {
     background: linear-gradient(135deg, var(--cyan), var(--blue));
     color: #fff;
