@@ -45,7 +45,7 @@
     background: var(--bg-1);
     position: relative;
     min-height: 100vh;
-    overflow: hidden;
+    overflow: visible;
   }
   @media (min-width: 481px) {
     body { background: radial-gradient(ellipse at center, #1a2540 0%, #050a14 80%); padding: 0; }
@@ -437,7 +437,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
   }
   /* Section separator: glowing diamond + line */
   section.block + section.block::before,
@@ -687,6 +687,7 @@
 
   /* ========== FULL CATALOG (装备 Tab) ========== */
   .catalog-section { background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%); }
+  .catalog-section .section-head { margin-top: 50px; }
   .cat-group { margin-top: 36px; }
   .cat-group:first-child { margin-top: 24px; }
   .cat-head {
@@ -1311,9 +1312,9 @@
   .stage { padding-bottom: calc(78px + var(--safe-bot)); }
 
   .tab-page { display: none; }
-  .tab-page.active { display: block; animation: fadeInPage .35s ease both; }
+  .tab-page.active { display: block; }
   @keyframes fadeInPage {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; }
     to   { opacity: 1; transform: translateY(0); }
   }
   /* In tab mode, hide cross-section dividers and next-hints since each tab is its own page */
@@ -1413,12 +1414,15 @@
 
   /* ========== CATALOG FILTER TABS (segmented control) ========== */
   .cat-tabs {
-    position: sticky; top: 0; z-index: 20;
+    position: fixed; top: calc(54px + var(--safe-top)); z-index: 30;
+    left: 50%; transform: translateX(-50%);
+    width: calc(100% - 24px); max-width: calc(var(--max-w) - 24px);
     display: flex; gap: 2px; overflow-x: auto;
-    padding: 4px; margin: 8px 0 12px;
+    padding: 6px;
     background: var(--bg-2);
     border: 1px solid var(--line);
     border-radius: 14px;
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--bg-0) 60%, transparent);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
