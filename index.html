@@ -1418,26 +1418,26 @@
     left: 50%; transform: translateX(-50%);
     width: calc(100% - 24px); max-width: calc(var(--max-w) - 24px);
     display: flex; gap: 2px; overflow-x: auto;
-    padding: 6px;
+    padding: 3px;
     background: var(--bg-2);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 12px;
     box-shadow: 0 4px 16px color-mix(in srgb, var(--bg-0) 60%, transparent);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
   .cat-tabs::-webkit-scrollbar { display: none; }
   .cat-tab {
-    flex: 1 1 0; min-width: 64px;
+    flex: 1 1 0; min-width: 56px;
     border: none; background: transparent;
     color: var(--text-3);
     font-size: 12px; font-weight: 600; letter-spacing: .02em;
-    padding: 9px 8px; border-radius: 10px; cursor: pointer;
+    padding: 6px 6px; border-radius: 8px; cursor: pointer;
     white-space: nowrap; font-family: inherit;
     transition: all .25s ease;
-    text-align: center; line-height: 1.2;
+    text-align: center; line-height: 1.15;
   }
-  .cat-tab .en { display: block; font-size: 9px; font-weight: 400; opacity: .55; letter-spacing: .04em; margin-top: 2px; }
+  .cat-tab .en { display: block; font-size: 8px; font-weight: 400; opacity: .5; letter-spacing: .03em; margin-top: 1px; }
   .cat-tab.active {
     background: linear-gradient(135deg, var(--cyan), var(--blue));
     color: #fff;
