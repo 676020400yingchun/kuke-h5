@@ -82,6 +82,50 @@
     --text: #1F0A0E; --text-2: #3D1722;
     --text-3: #6B3340; --text-4: #8F5F69;
   }
+  /* === Red-light theme refinements === */
+  [data-theme="red-light"] .stage {
+    box-shadow: 0 0 80px rgba(190,30,45,.10);
+  }
+  [data-theme="red-light"] .theme-opt:hover { background: rgba(190,30,45,.06); }
+  [data-theme="red-light"] .lang-toggle button.active {
+    background: linear-gradient(135deg, var(--cyan), var(--blue));
+    color: #fff;
+  }
+  [data-theme="red-light"] .hero-card {
+    border: 1px solid rgba(190,30,45,.3);
+    box-shadow: 0 0 0 6px rgba(190,30,45,.05), 0 0 40px rgba(190,30,45,.18);
+  }
+  [data-theme="red-light"] .stat,
+  [data-theme="red-light"] .pillar,
+  [data-theme="red-light"] .vm-card,
+  [data-theme="red-light"] .val-card,
+  [data-theme="red-light"] .mat-tile,
+  [data-theme="red-light"] .info-row,
+  [data-theme="red-light"] .form-card,
+  [data-theme="red-light"] .cat-item,
+  [data-theme="red-light"] .spec-table {
+    background: var(--bg-2);
+    box-shadow: 0 2px 10px rgba(190,30,45,.06), 0 1px 3px rgba(190,30,45,.08);
+  }
+  [data-theme="red-light"] .cat-tabs {
+    border-color: var(--line);
+  }
+  [data-theme="red-light"] .cat-tab.active {
+    box-shadow: 0 2px 10px rgba(190,30,45,.3);
+  }
+  [data-theme="red-light"] .chip,
+  [data-theme="red-light"] .cat-item .cat-feat .chip {
+    background: color-mix(in srgb, var(--cyan) 10%, transparent);
+    border-color: color-mix(in srgb, var(--cyan) 28%, transparent);
+  }
+  [data-theme="red-light"] .section-bar {
+    background: linear-gradient(90deg, var(--cyan), transparent);
+  }
+  [data-theme="red-light"] .lead-btn,
+  [data-theme="red-light"] .btn-primary {
+    box-shadow: 0 8px 24px rgba(190,30,45,.3);
+  }
+
 
   /* Light-mode global tweaks */
   [data-theme$="-light"] body {
@@ -697,9 +741,10 @@
   .cat-item .cat-img .badge {
     position: absolute; top: 8px; left: 8px;
     font-family: "SF Mono", Menlo, monospace; font-size: 9px;
-    color: var(--cyan); background: rgba(10,20,36,.78);
+    color: var(--cyan); background: rgba(255,255,255,.88);
     border: 1px solid var(--line-strong);
-    padding: 3px 8px; letter-spacing: .2em;
+    padding: 3px 8px; letter-spacing: .12em;
+    backdrop-filter: blur(6px);
   }
   .cat-item .cat-img .coming-soon {
     position: absolute; bottom: 8px; right: 8px;
@@ -752,9 +797,9 @@
   }
   .cat-item .spec-table .spec-row {
     display: grid;
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 100px 1fr;
     padding: 7px 10px;
-    border-bottom: 1px solid rgba(0,212,255,.1);
+    border-bottom: 1px solid var(--line);
     font-size: 11px;
     line-height: 1.5;
     gap: 8px;
@@ -762,13 +807,17 @@
   .cat-item .spec-table .spec-row:last-child { border-bottom: none; }
   .cat-item .spec-table .spec-row .k {
     color: var(--cyan);
-    letter-spacing: .1em;
+    letter-spacing: .05em;
     font-weight: 700;
     font-size: 10px;
+    line-height: 1.4;
+    word-break: keep-all;
   }
   .cat-item .spec-table .spec-row .v {
     color: var(--text-2);
     word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
   }
   .cat-item .spec-table .spec-row .v b {
     color: var(--text);
@@ -781,7 +830,7 @@
   }
   [data-theme$="-light"] .cat-item .spec-table .spec-row {
     background: #FFFFFF;
-    border-bottom: 1px solid rgba(0,145,217,.12);
+    border-bottom: 1px solid var(--line);
   }
   [data-theme$="-light"] .cat-item .spec-table .spec-row:last-child {
     border-bottom: none;
@@ -805,9 +854,9 @@
   }
   .cat-item .cat-feat .chip {
     font-size: 10px; color: var(--sky);
-    background: rgba(0,212,255,.08);
-    border: 1px solid rgba(0,212,255,.25);
-    padding: 3px 7px; letter-spacing: .04em;
+    background: color-mix(in srgb, var(--cyan) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cyan) 25%, transparent);
+    padding: 3px 8px; letter-spacing: .04em;
   }
 
   /* ========== WORKFLOW (vertical timeline) ========== */
