@@ -3197,22 +3197,34 @@
   function showMapChoice() { document.getElementById('mapPopup').classList.add('open'); }
   function closeMapChoice(e) { if (e && e.target.closest('.map-option')) return; document.getElementById('mapPopup').classList.remove('open'); }
 
-  /* Visitor counter */
+  /* Visitor counter via CountAPI (global) */
   (function() {
     var base = 578;
-    try {
-      var seen = localStorage.getItem('kuke-visitor-count');
-      if (seen) {
-        var count = parseInt(seen);
-      } else {
-        count = base;
-        localStorage.setItem('kuke-visitor-count', count);
-      }
-    } catch(e) { var count = base; }
     var el = document.getElementById('visitorNum');
     var elEn = document.getElementById('visitorNumEn');
-    if (el) el.textContent = count;
-    if (elEn) elEn.textContent = count;
+    // Only hit the API once per browser session
+    var hit = sessionStorage.getItem('kuke-visited');
+    if (!hit) {
+      sessionStorage.setItem('kuke-visited', '1');
+      fetch('https://api.countapi.xyz/hit/kuke-h5/visitors')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var n = (data.value || base) + base;
+          if (el) el.textContent = n;
+          if (elEn) elEn.textContent = n;
+        })
+        .catch(function() { if (el) el.textContent = base; if (elEn) elEn.textContent = base; });
+    } else {
+      // Returning in same session, show last known count without incrementing
+      fetch('https://api.countapi.xyz/get/kuke-h5/visitors')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var n = (data.value || base) + base;
+          if (el) el.textContent = n;
+          if (elEn) elEn.textContent = n;
+        })
+        .catch(function() {});
+    }
   })();
 
   /* ============= SCROLL REVEAL ============= */
