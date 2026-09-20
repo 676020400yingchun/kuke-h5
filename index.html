@@ -1375,20 +1375,7 @@
   [data-lang="en"] .val-icon {
     font-size: 20px; letter-spacing: .04em;
   }
-  .val-en {
-    font-family: "SF Mono", Menlo, monospace;
-    font-size: 9px; font-weight: 700;
-    color: var(--cyan); letter-spacing: .25em;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(0,212,255,.15);
-  }
-  /* In English mode val-en shows Chinese — adjust font-family + spacing */
-  [data-lang="en"] .val-en {
-    font-family: inherit;
-    letter-spacing: .15em;
-    font-size: 12px;
-  }
+  .val-en { display: none; }
   .val-desc {
     font-size: 11.5px; line-height: 1.65;
     color: var(--text-2);
@@ -1759,14 +1746,14 @@
 
     <div class="vm-row">
       <div class="vm-card vm-vision reveal">
-        <div class="vm-tag">VISION · 愿景</div>
+        <div class="vm-tag"><span class="lang-zh">愿景</span><span class="lang-en">VISION</span></div>
         <div class="vm-line">
           <span class="lang-zh">让无人智能装备<br><span class="accent">守护每一寸土地</span></span>
           <span class="lang-en">Empowering every frontier<br><span class="accent">with unmanned intelligence</span></span>
         </div>
       </div>
       <div class="vm-card vm-mission reveal" data-delay="1">
-        <div class="vm-tag">MISSION · 使命</div>
+        <div class="vm-tag"><span class="lang-zh">使命</span><span class="lang-en">MISSION</span></div>
         <div class="vm-line">
           <span class="lang-zh">以匠心铸精品<br><span class="accent">以科技守安全</span></span>
           <span class="lang-en">Crafted with rigor<br><span class="accent">engineered for safety</span></span>
