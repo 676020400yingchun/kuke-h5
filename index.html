@@ -1402,23 +1402,24 @@
   }
   .pillar {
     position: relative;
-    background: linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 60%, var(--bg-2) 100%);
+    background: var(--bg-2);
     border: 1px solid var(--line);
-    border-left: 3px solid var(--cyan);
-    padding: 22px 18px 22px 18px;
+    border-radius: 14px;
+    padding: 24px 20px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    transition: transform .2s ease, box-shadow .2s ease;
   }
   .pillar::before {
-    content: ""; position: absolute; top: 0; right: 0; width: 60%; height: 100%;
-    background: radial-gradient(ellipse 80% 80% at 100% 0%, rgba(0,212,255,.08), transparent 60%);
-    pointer-events: none;
+    content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--cyan), var(--blue));
+    border-radius: 0 4px 4px 0;
   }
   .pillar .p-num {
-    position: absolute; top: -16px; right: 8px;
+    position: absolute; top: 16px; right: 16px;
     font-family: "SF Mono", Menlo, monospace;
-    font-size: 110px; font-weight: 900;
-    color: rgba(0,212,255,.06);
+    font-size: 48px; font-weight: 900;
+    color: color-mix(in srgb, var(--cyan) 12%, transparent);
     letter-spacing: -.05em; line-height: 1;
     pointer-events: none; user-select: none;
   }
