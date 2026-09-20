@@ -387,7 +387,7 @@
   .hero {
     position: relative;
     display: flex; flex-direction: column; justify-content: flex-start;
-    padding: calc(64px + var(--safe-top)) 24px calc(50px + var(--safe-bot));
+    padding: calc(64px + var(--safe-top)) 24px calc(20px + var(--safe-bot));
     overflow: hidden;
     background:
       radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0,145,255,.18), transparent 70%),
@@ -1165,8 +1165,8 @@
 
   /* ========== FAB ========== */
   .fab {
-    position: fixed; bottom: calc(20px + var(--safe-bot)); right: 20px;
-    width: 52px; height: 52px;
+    position: absolute; bottom: 16px; right: 24px;
+    width: 48px; height: 48px;
     background: linear-gradient(135deg, var(--cyan), var(--blue));
     color: #0a1424;
     display: flex; align-items: center; justify-content: center;
@@ -1537,8 +1537,7 @@
   .tabbar .tab:active { transform: scale(.92); }
   [data-lang="en"] .tabbar .tab { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
 
-  /* FAB raised above the tabbar */
-  .fab { bottom: calc(84px + var(--safe-bot)) !important; }
+
 
 
   /* ========== CATALOG FILTER TABS (segmented control) ========== */
