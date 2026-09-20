@@ -1078,6 +1078,40 @@
     font-size: 10px; color: var(--text-4); letter-spacing: .15em;
     line-height: 1.7;
   }
+  .nav-btn { border: none; cursor: pointer; font-family: inherit; font-size: 12px; }
+  .map-popup { display: none; position: fixed; inset: 0; z-index: 200; }
+  .map-popup.open { display: block; }
+  .map-popup-mask { position: absolute; inset: 0; background: rgba(0,0,0,.4); }
+  .map-popup-panel {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--bg-2);
+    border-radius: 16px 16px 0 0;
+    padding: 16px 16px 24px;
+    animation: slideUp .25s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: none; } }
+  .map-popup-title { text-align: center; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+  .map-option {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px; border-radius: 12px;
+    background: var(--bg-1); color: var(--text);
+    text-decoration: none; font-size: 15px; font-weight: 600;
+    margin-bottom: 8px; border: 1px solid var(--line);
+  }
+  .map-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; color: #fff;
+  }
+  .map-icon.amap { background: #00a6fb; }
+  .map-icon.baidu { background: #4e6ef2; }
+  .map-icon.tencent { background: #00c389; }
+  .map-popup-cancel {
+    width: 100%; padding: 14px; border: none; border-radius: 12px;
+    background: var(--bg-1); color: var(--text-3);
+    font-size: 15px; font-weight: 600; margin-top: 6px;
+    border: 1px solid var(--line); cursor: pointer; font-family: inherit;
+  }
   .visitor-counter {
     margin-top: 10px;
     font-size: 11px;
@@ -2828,6 +2862,7 @@
               <span class="lang-en">Yishang Maker Center<br>No. 4111 Zizhou Avenue<br>Hi-Tech Zone, Chengdu, China</span>
             </div>
           </div>
+          <button class="call-btn nav-btn" onclick="showMapChoice()"><span class="lang-zh">导航</span><span class="lang-en">MAP</span></button>
         </div>
         <div class="info-row call">
           <div class="ico">
@@ -2865,6 +2900,27 @@
       </div>
     </div>
   </section>
+
+  <!-- Map choice popup -->
+  <div class="map-popup" id="mapPopup" onclick="closeMapChoice(event)">
+    <div class="map-popup-mask"></div>
+    <div class="map-popup-panel">
+      <div class="map-popup-title"><span class="lang-zh">选择导航地图</span><span class="lang-en">Choose Maps App</span></div>
+      <a href="https://uri.amap.com/marker?position=104.07,30.57&name=%E6%98%93%E4%B8%8A%E5%88%9B%E5%AE%A2%E4%B8%AD%E5%BF%83&callnative=1" target="_blank" class="map-option">
+        <span class="map-icon amap">高德</span>
+        <span class="lang-zh">高德地图</span><span class="lang-en">Amap</span>
+      </a>
+      <a href="https://api.map.baidu.com/marker?location=30.57,104.07&content=%E6%98%93%E4%B8%8A%E5%88%9B%E5%AE%A2%E4%B8%AD%E5%BF%83&output=html&src=kuke" target="_blank" class="map-option">
+        <span class="map-icon baidu">百</span>
+        <span class="lang-zh">百度地图</span><span class="lang-en">Baidu Maps</span>
+      </a>
+      <a href="https://apis.map.qq.com/uri/v1/search?region=%E6%88%90%E9%83%BD&keyword=%E6%98%93%E4%B8%8A%E5%88%9B%E5%AE%A2%E4%B8%AD%E5%BF%83&referer=kuke" target="_blank" class="map-option">
+        <span class="map-icon tencent">腾</span>
+        <span class="lang-zh">腾讯地图</span><span class="lang-en">Tencent Maps</span>
+      </a>
+      <button class="map-popup-cancel" onclick="closeMapChoice()"><span class="lang-zh">取消</span><span class="lang-en">Cancel</span></button>
+    </div>
+  </div>
 
   <footer class="foot">
     <div class="mark">大仕国工 · KUKE</div>
@@ -3112,6 +3168,9 @@
     try { saved = localStorage.getItem('h5-theme') || 'blue-light'; } catch(e) {}
     applyTheme(saved);
   })();
+
+  function showMapChoice() { document.getElementById('mapPopup').classList.add('open'); }
+  function closeMapChoice(e) { if (e && e.target.closest('.map-option')) return; document.getElementById('mapPopup').classList.remove('open'); }
 
   /* Visitor counter */
   (function() {
