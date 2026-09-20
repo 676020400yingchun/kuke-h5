@@ -47,9 +47,45 @@
     min-height: 100vh;
     overflow: visible;
   }
+  /* ====== Responsive: Tablet (481-768px) ====== */
+  :root { --max-w: 480px; }
   @media (min-width: 481px) {
-    body { background: radial-gradient(ellipse at center, #1a2540 0%, #050a14 80%); padding: 0; }
-    .stage { box-shadow: 0 0 80px rgba(0,212,255,.12); border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+    :root { --max-w: 640px; }
+    body { background: var(--bg-0); padding: 0; }
+    .stage { box-shadow: 0 0 60px rgba(0,0,0,.08); border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+    .cat-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .vm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .hero { padding: calc(70px + var(--safe-top)) 32px calc(50px + var(--safe-bot)); }
+    .hero h1 { font-size: clamp(32px, 6vw, 48px); }
+    .info-card { padding: 28px 24px; }
+  }
+  /* ====== Responsive: Desktop (>768px) ====== */
+  @media (min-width: 769px) {
+    :root { --max-w: 960px; }
+    body { background: var(--bg-0); }
+    .stage { box-shadow: 0 0 80px rgba(0,0,0,.1); }
+    .cat-list { grid-template-columns: 1fr 1fr 1fr; }
+    .stats { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .vm-row { grid-template-columns: 1fr 1fr; }
+    .pillars { grid-template-columns: 1fr 1fr; }
+    .hero { padding: calc(80px + var(--safe-top)) 48px calc(60px + var(--safe-bot)); }
+    .hero h1 { font-size: clamp(36px, 4.5vw, 56px); }
+    .hero-sub { font-size: 17px; }
+    .hero-card { max-width: 720px; margin-left: auto; margin-right: auto; }
+    .section-title { font-size: 26px; }
+    .info-card { max-width: 720px; margin-left: auto; margin-right: auto; }
+    .about-logo img { width: 96px; height: 96px; }
+    .about-logo .brand-name { font-size: 28px; }
+    .visit-headline { font-size: 38px; }
+  }
+  /* ====== Responsive: Large Desktop (>1200px) ====== */
+  @media (min-width: 1201px) {
+    :root { --max-w: 1100px; }
+    .cat-list { grid-template-columns: 1fr 1fr 1fr 1fr; }
   }
 
   /* ========== TOP NAV ========== */
@@ -1179,7 +1215,7 @@
   }
   .video-modal.open { display: flex; }
   .video-modal video {
-    width: 100%; max-width: 480px;
+    width: 100%; max-width: var(--max-w);
     background: #000; max-height: 80vh;
   }
   .video-modal .close-btn {
