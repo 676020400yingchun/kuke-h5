@@ -3200,16 +3200,15 @@
   /* Visitor counter */
   (function() {
     var base = 578;
-    var count = base;
     try {
       var seen = localStorage.getItem('kuke-visitor-count');
       if (seen) {
-        count = parseInt(seen);
+        var count = parseInt(seen);
       } else {
-        count = base + 1;
+        count = base;
         localStorage.setItem('kuke-visitor-count', count);
       }
-    } catch(e) { count = base; }
+    } catch(e) { var count = base; }
     var el = document.getElementById('visitorNum');
     var elEn = document.getElementById('visitorNumEn');
     if (el) el.textContent = count;
