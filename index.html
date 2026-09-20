@@ -3213,7 +3213,7 @@
           if (el) el.textContent = n;
           if (elEn) elEn.textContent = n;
         })
-        .catch(function() { if (el) el.textContent = base; if (elEn) elEn.textContent = base; });
+        .catch(function() {});
     } else {
       // Returning in same session, show last known count without incrementing
       fetch('https://api.countapi.xyz/get/kuke-h5/visitors')
