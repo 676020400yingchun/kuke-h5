@@ -3197,33 +3197,30 @@
   function showMapChoice() { document.getElementById('mapPopup').classList.add('open'); }
   function closeMapChoice(e) { if (e && e.target.closest('.map-option')) return; document.getElementById('mapPopup').classList.remove('open'); }
 
-  /* Visitor counter via CountAPI (global) */
+  /* Visitor counter: try CountAPI global, fallback to localStorage */
   (function() {
     var base = 578;
     var el = document.getElementById('visitorNum');
     var elEn = document.getElementById('visitorNumEn');
-    // Only hit the API once per browser session
+    function show(n) { if (el) el.textContent = n; if (elEn) elEn.textContent = n; }
     var hit = sessionStorage.getItem('kuke-visited');
-    if (!hit) {
-      sessionStorage.setItem('kuke-visited', '1');
-      fetch('https://api.countapi.xyz/hit/kuke-h5/visitors')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var n = (data.value || base) + base;
-          if (el) el.textContent = n;
-          if (elEn) elEn.textContent = n;
-        })
-        .catch(function() {});
-    } else {
-      // Returning in same session, show last known count without incrementing
-      fetch('https://api.countapi.xyz/get/kuke-h5/visitors')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var n = (data.value || base) + base;
-          if (el) el.textContent = n;
-          if (elEn) elEn.textContent = n;
-        })
-        .catch(function() {});
+    var url = hit
+      ? 'https://api.countapi.xyz/get/kuke-h5/visitors'
+      : 'https://api.countapi.xyz/hit/kuke-h5/visitors';
+    if (!hit) sessionStorage.setItem('kuke-visited', '1');
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data && typeof data.value === 'number') show(data.value + base);
+        else fallback();
+      })
+      .catch(fallback);
+    function fallback() {
+      try {
+        var seen = localStorage.getItem('kuke-visitor-count');
+        if (seen) show(parseInt(seen));
+        else { var n = base + 1; localStorage.setItem('kuke-visitor-count', n); show(n); }
+      } catch(e) { show(base); }
     }
   })();
 
