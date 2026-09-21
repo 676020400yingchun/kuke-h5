@@ -2960,9 +2960,10 @@
       <span class="lang-en">Unmanned platforms · Full-scene solutions · End-to-end<br>© 2026 · ALL RIGHTS RESERVED</span>
     </div>
     <div class="visitor-counter" id="visitorCounter">
-      <span class="lang-zh">您是第 <b id="visitorNum">578</b> 位读者</span>
-      <span class="lang-en">You are visitor <b id="visitorNumEn">578</b></span>
+      <span class="lang-zh">您是第 <b id="visitorNum"><span id="busuanzi_value_site_uv"></span></b> 位读者</span>
+      <span class="lang-en">You are visitor <b id="visitorNumEn"><span id="busuanzi_value_site_uv"></span></b></span>
     </div>
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   </footer>
 
 </main>
@@ -3197,34 +3198,19 @@
   function showMapChoice() { document.getElementById('mapPopup').classList.add('open'); }
   function closeMapChoice(e) { if (e && e.target.closest('.map-option')) return; document.getElementById('mapPopup').classList.remove('open'); }
 
-  /* Visitor counter: try CountAPI global, fallback to localStorage */
-  (function() {
-    var base = 578;
-    var el = document.getElementById('visitorNum');
-    var elEn = document.getElementById('visitorNumEn');
-    function show(n) { if (el) el.textContent = n; if (elEn) elEn.textContent = n; }
-    var hit = sessionStorage.getItem('kuke-visited');
-    var url = hit
-      ? 'https://api.countapi.xyz/get/kuke-h5/visitors'
-      : 'https://api.countapi.xyz/hit/kuke-h5/visitors';
-    if (!hit) sessionStorage.setItem('kuke-visited', '1');
-    fetch(url)
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data && typeof data.value === 'number') show(data.value + base);
-        else fallback();
-      })
-      .catch(fallback);
-    function fallback() {
-      try {
-        var seen = localStorage.getItem('kuke-visitor-count');
-        if (seen) show(parseInt(seen));
-        else { var n = base + 1; localStorage.setItem('kuke-visitor-count', n); show(n); }
-      } catch(e) { show(base); }
-    }
-  })();
+  /* Visitor counter via 不蒜子 busuanzi, offset +578 */
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var uv = document.getElementById('busuanzi_value_site_uv');
+      if (uv && uv.textContent) {
+        var n = parseInt(uv.textContent) + 578;
+        document.getElementById('visitorNum').textContent = n;
+        document.getElementById('visitorNumEn').textContent = n;
+      }
+    }, 1500);
+  });
 
-  /* ============= SCROLL REVEAL ============= */
+    /* ============= SCROLL REVEAL ============= */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
