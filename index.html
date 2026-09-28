@@ -39,6 +39,17 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     line-height: 1.6;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  /* 表单输入框允许正常选中/输入 */
+  input, textarea, select {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
   }
   [data-lang="en"] body { font-family: "Inter", "SF Pro Display", -apple-system, system-ui, sans-serif; }
 
@@ -3317,6 +3328,29 @@
   const nav = document.querySelector('.top-nav');
   nav.style.transform = 'translateX(-50%)';
 
+</script>
+
+<script>
+  /* 内容防复制 / copy-protection */
+  (function () {
+    var block = function (e) { e.preventDefault(); };
+    document.addEventListener('contextmenu', block);
+    document.addEventListener('copy', block);
+    document.addEventListener('cut', block);
+    document.addEventListener('selectstart', function (e) {
+      var t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+      e.preventDefault();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'F12') { e.preventDefault(); e.stopPropagation(); return; }
+      var k = e.key ? e.key.toLowerCase() : '';
+      var ctrl = e.ctrlKey || e.metaKey;
+      if (ctrl && ['u', 's', 'c', 'x', 'i', 'j', 'p'].indexOf(k) !== -1) {
+        e.preventDefault(); e.stopPropagation();
+      }
+    });
+  })();
 </script>
 </body>
 </html>
