@@ -1609,6 +1609,18 @@
   .cat-group { display: none; }
   .cat-group.visible { display: block; animation: catFade .3s ease; }
   @keyframes catFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ===== 文字 OCR 干扰层：低透明度斜纹，防截图直接提取文字（威慑层）===== */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(0,212,255,0.04) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(-45deg, rgba(0,212,255,0.04) 0 1px, transparent 1px 8px);
+  }
 </style>
 </head>
 <body>
