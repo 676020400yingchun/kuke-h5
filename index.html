@@ -3246,17 +3246,34 @@
   function showMapChoice() { document.getElementById('mapPopup').classList.add('open'); }
   function closeMapChoice(e) { if (e && e.target.closest('.map-option')) return; document.getElementById('mapPopup').classList.remove('open'); }
 
-  /* Visitor counter via 不蒜子 busuanzi, offset +578 */
-  window.addEventListener('load', function() {
-    setTimeout(function() {
+  /* Visitor counter via 不蒜子 busuanzi, offset +578 (robust polling) */
+  (function() {
+    var OFFSET = 578, MAX_WAIT = 20000, POLL_INT = 300, applied = false;
+    function apply() {
+      if (applied) return;
       var uv = document.getElementById('busuanzi_value_site_uv');
-      if (uv && uv.textContent) {
-        var n = parseInt(uv.textContent) + 578;
-        document.getElementById('visitorNum').textContent = n;
-        document.getElementById('visitorNumEn').textContent = n;
+      if (uv) {
+        var digits = String(uv.textContent || '').replace(/\D/g, '');
+        if (digits !== '') {
+          var n = parseInt(digits, 10) + OFFSET;
+          var vn = document.getElementById('visitorNum');
+          var vne = document.getElementById('visitorNumEn');
+          if (vn) vn.textContent = n;
+          if (vne) vne.textContent = n;
+          applied = true;
+        }
       }
-    }, 1500);
-  });
+    }
+    window.addEventListener('load', function() {
+      apply();
+      var t = 0;
+      var timer = setInterval(function() {
+        t += POLL_INT;
+        apply();
+        if (applied || t >= MAX_WAIT) clearInterval(timer);
+      }, POLL_INT);
+    });
+  })();
 
     /* ============= SCROLL REVEAL ============= */
   const io = new IntersectionObserver((entries) => {
