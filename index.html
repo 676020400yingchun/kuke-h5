@@ -3149,12 +3149,11 @@
       }
     });
     // Initial state from URL hash
-    const initial = (location.hash || '#home').slice(1);
+    let initial = (location.hash || '#home').slice(1);
+    if (!/^[a-zA-Z0-9_-]{1,20}$/.test(initial)) initial = 'home';
     const target = document.querySelector('.tabbar .tab[data-target="' + initial + '"]') ? initial
                   : (idToTab[initial] || 'home');
     activate(target, idToTab[initial] ? initial : null);
-
-    window._activateTab = activate; // exposed for debugging
   })();
 
   /* ============= PAGE TAGS + SCROLL HINTS (auto-inject) ============= */
