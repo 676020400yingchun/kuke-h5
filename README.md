@@ -35,6 +35,13 @@
 - **页面保护**：禁用复制/右键、OCR 干扰层
 - **访客统计**：不蒜子（busuanzi，轮询健壮版，实时显示"您是第 N 位读者"）
 
+## 性能与资源
+
+- **图片优化**：页面引用的 31 张 JPG 已转 **WebP**（`<picture>` 优先 WebP + JPG 兜底，兼容不支持 WebP 的老浏览器），整体体积约 **-48%**（省约 920 KB）
+- **懒加载**：装备目录图均 `loading="lazy"`；首屏 hero/logo 保持 eager，hero 带 `fetchpriority="high"`
+- **资源清理**：已移除 41 个未引用孤儿文件（未接线视频 / 大 PNG 等），`assets/` 由 14 MB 精简至 **2.8 MB**
+- **缓存控制**：图片引用统一带版本参数 `?v=…`（cache-busting），Nginx 对 `/assets/` 设 30 天缓存
+
 ## 本地开发
 
 ```bash
